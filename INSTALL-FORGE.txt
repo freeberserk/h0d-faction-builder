@@ -1,0 +1,15 @@
+H0D Faction Builder v0.1.2
+
+Manifest URL :
+https://github.com/freeberserk/h0d-faction-builder/releases/latest/download/module.json
+
+Asset attendu dans chaque release :
+h0d-faction-builder.zip
+
+Prérequis :
+- Foundry VTT 14
+- Custom System Builder 6.0.2+
+- H0D Template Manager 0.3.0+
+
+Lancement en jeu :
+macro automatique « H0D — Générateur factions ».

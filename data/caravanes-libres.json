@@ -1,0 +1,1406 @@
+{
+  "schema": "h0d-faction-profiles-v1",
+  "faction": {
+    "key": "caravanes-libres",
+    "label": "Caravanes Libres",
+    "factionValue": "CaravanesLibres",
+    "folder": "Caravanes Libres"
+  },
+  "source": {
+    "fichier": "Caravanes_Libres_PNJ_Builder(1).pdf",
+    "pages": 23,
+    "notes": "Transcription des fiches: pas de valeurs mécaniques ajoutées."
+  },
+  "doctrine": "Les Caravanes Libres ne survivent pas parce qu elles battent les machines en duel. Elles survivent par la mobilite, l harnachement rapide, les chariots, les armes bricolees, les conducteurs de brise-route et une coordination collective extreme.",
+  "focus": "Les Caravanes Libres n utilisent pas de Focus en routine. Leur expertise vient de l experience humaine, du dressage, des signaux, de l observation et de pieces de machines detournees.",
+  "regles_communes": [
+    {
+      "nom": "Harnachement rapide",
+      "activation": "Mouvement ou reaction selon la situation",
+      "effet": "Un caravanier harnache ne tombe pas automatiquement lors d une acceleration, d un freinage brutal, d un virage serre ou d un passage difficile. Il subit encore collisions, renversements et attaques directes."
+    }
+  ],
+  "profils": [
+    {
+      "id": "messager-de-caravane",
+      "nom": "Messager de caravane",
+      "menace": 1,
+      "role": "Discretion / transmission / alerte",
+      "phrase": "Rapide, discret, charge de porter les messages et de prevenir plutot que combattre.",
+      "type": "Humain / messager arme",
+      "stats": {
+        "pv": 10,
+        "def": 10,
+        "attaque": 3,
+        "initiative": 2,
+        "vitesse_m": 9,
+        "vigueur": 1,
+        "reflexes": 3,
+        "volonte": 1,
+        "dd_capacites": 12
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Vetements de discretion de route",
+        "Arbalete legere pliable",
+        "Couteau masque",
+        "Balise anti-machine de caravane",
+        "Sacoche de messages scellee",
+        "Fusee froide / signal muet"
+      ],
+      "actions": [
+        {
+          "nom": "Tir arbalete legere",
+          "type": "Distance",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Defense simple a distance."
+        },
+        {
+          "nom": "Couteau masque",
+          "type": "CAC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Peut etre tire discretement, coupe liens/sangles."
+        },
+        {
+          "nom": "Tir diversion",
+          "type": "Distance",
+          "attaque_dd": "+3",
+          "degats_effet": "1d4",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Force l attention ailleurs, ouvre une fuite."
+        },
+        {
+          "nom": "Balise anti-machine",
+          "type": "Outil",
+          "attaque_dd": "DD12",
+          "degats_effet": "Perturbation",
+          "portee": "9 m",
+          "recharge": "1/scene",
+          "notes": "Machine M1-2 ratee: perd action aggressive immediate ou se tourne vers balise 1 round. Sans effet sur ELYSIUM/majeur/rage."
+        },
+        {
+          "nom": "Fuite de messager",
+          "type": "Mouvement",
+          "attaque_dd": "-",
+          "degats_effet": "Desengage + 9 m",
+          "portee": "Personnel",
+          "recharge": "1/scene",
+          "notes": "Quitte le danger pour prevenir le convoi."
+        }
+      ],
+      "traits": [
+        "Connaissance des routes: +2 pour passages, embuscades, traces et haltes.",
+        "Priorite prevenir: evite le duel, prefere livrer l information.",
+        "Vetements camoufles: +2 Discretion si lent/cache, pas en course/combat."
+      ],
+      "pages_pdf": [
+        2
+      ]
+    },
+    {
+      "id": "caravanier-au-pavois",
+      "nom": "Caravanier au pavois",
+      "menace": 1,
+      "role": "Protection mobile / couverture / fumee",
+      "phrase": "Porteur-defenseur qui ralentit les menaces et couvre les replis.",
+      "type": "Humain / porteur defensif",
+      "stats": {
+        "pv": 12,
+        "def": 11,
+        "attaque": 2,
+        "initiative": 1,
+        "vitesse_m": 9,
+        "vigueur": 3,
+        "reflexes": 1,
+        "volonte": 2,
+        "dd_capacites": 12
+      },
+      "parametres_speciaux": {
+        "DEF sans pavois": "10"
+      },
+      "equipement": [
+        "Pavois de caravane",
+        "Grenades fumigenes",
+        "Baton de portage renforce",
+        "Couteau utilitaire",
+        "Harnais de charge",
+        "Corde et crochets"
+      ],
+      "actions": [
+        {
+          "nom": "Baton renforce",
+          "type": "CAC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Frappe de maintien."
+        },
+        {
+          "nom": "Couteau utilitaire",
+          "type": "CAC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d4",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Dernier recours."
+        },
+        {
+          "nom": "Mur de pavois",
+          "type": "Defense",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF",
+          "portee": "Personnel",
+          "recharge": "Recharge 2",
+          "notes": "Vitesse 0; peut couvrir un passage ou un blesse."
+        },
+        {
+          "nom": "Couvrir allie",
+          "type": "Defense",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF allie adjacent",
+          "portee": "Adjacent",
+          "recharge": "1/round",
+          "notes": "Protection active avec le pavois."
+        },
+        {
+          "nom": "Grenade fumigene",
+          "type": "Zone",
+          "attaque_dd": "DD12",
+          "degats_effet": "Fumee rayon 3 m",
+          "portee": "9 m",
+          "recharge": "1/scene",
+          "notes": "Duree 2 rounds; tirs a travers fumee -2; machines visuelles peuvent perdre la cible."
+        },
+        {
+          "nom": "Repli couvert",
+          "type": "Mouvement",
+          "attaque_dd": "-",
+          "degats_effet": "Desengage + 4,5 m",
+          "portee": "Personnel",
+          "recharge": "1/scene",
+          "notes": "Laisse fumee/pavois entre menace et convoi."
+        }
+      ],
+      "traits": [
+        "Ralentir, pas vaincre: son but est de gagner quelques secondes.",
+        "Habitue aux paniques: +2 Vol contre peur/panique/intimidation en protegeant allie/chariot/cargo.",
+        "Pavois passif: +1 DEF tant que porte et utilisable."
+      ],
+      "pages_pdf": [
+        3
+      ]
+    },
+    {
+      "id": "garde-de-caravane",
+      "nom": "Garde de caravane",
+      "menace": 2,
+      "role": "Protection de ligne / garde visible",
+      "phrase": "Defenseur standard des Caravanes Libres, robuste et discipliné.",
+      "type": "Humain / garde de convoi",
+      "stats": {
+        "pv": 22,
+        "def": 12,
+        "attaque": 4,
+        "initiative": 2,
+        "vitesse_m": 9,
+        "vigueur": 3,
+        "reflexes": 2,
+        "volonte": 2,
+        "dd_capacites": 13
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Lance courte de garde",
+        "Arbalete de convoi",
+        "Bouclier leger",
+        "Armure cuir renforce",
+        "Sifflet d alerte",
+        "Kit liens / menottes de corde"
+      ],
+      "actions": [
+        {
+          "nom": "Lance courte",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Tenue de ligne."
+        },
+        {
+          "nom": "Arbalete de convoi",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Tir defensif."
+        },
+        {
+          "nom": "Poussee de garde",
+          "type": "Controle",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6 + repousse 1,5 m",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Ref DD13 annule le repoussement."
+        },
+        {
+          "nom": "Tenir la ligne",
+          "type": "Defense",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF soi + adjacent",
+          "portee": "Adjacent",
+          "recharge": "Recharge 2",
+          "notes": "Formation courte autour du chariot."
+        },
+        {
+          "nom": "Sifflet d alerte",
+          "type": "Signal",
+          "attaque_dd": "-",
+          "degats_effet": "Regroupement",
+          "portee": "18 m",
+          "recharge": "1/scene",
+          "notes": "Les allies evitent surprise locale / se regroupent."
+        },
+        {
+          "nom": "Interposition",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF allie",
+          "portee": "Adjacent",
+          "recharge": "1/scene",
+          "notes": "Peut faire 1,5 m pour proteger civil/blesse/porteur."
+        }
+      ],
+      "traits": [
+        "Defendre convoi: +1 Vol pres de chariot/cargo/civil/blesse.",
+        "Formation de route: deux gardes adjacents +1 contre repoussement/peur/intimidation.",
+        "Ne poursuit pas inutilement."
+      ],
+      "pages_pdf": [
+        4
+      ]
+    },
+    {
+      "id": "guetteur-de-route",
+      "nom": "Guetteur de route",
+      "menace": 2,
+      "role": "Observation / hauteur / alerte",
+      "phrase": "Eclaireur vertical sans Focus, expert des hauteurs et des signaux.",
+      "type": "Humain / guetteur",
+      "stats": {
+        "pv": 16,
+        "def": 11,
+        "attaque": 4,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 2,
+        "dd_capacites": 13
+      },
+      "parametres_speciaux": {
+        "Escalade": "6 m"
+      },
+      "equipement": [
+        "Arc court de guetteur",
+        "Couteau de route",
+        "Grappin leger / corde nouee",
+        "Cape camouflage poussiereuse",
+        "Longue-vue artisanale",
+        "Miroir de signal / sifflet sec",
+        "Capteur directionnel bricole optionnel"
+      ],
+      "actions": [
+        {
+          "nom": "Arc court",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+1",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Tir depuis couverture."
+        },
+        {
+          "nom": "Couteau de route",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Dernier recours."
+        },
+        {
+          "nom": "Monter en hauteur",
+          "type": "Mouvement",
+          "attaque_dd": "DD13",
+          "degats_effet": "Escalade 6 m",
+          "portee": "Personnel",
+          "recharge": "Recharge 2",
+          "notes": "Atteint un point haut ou se replace verticalement."
+        },
+        {
+          "nom": "Tir depuis hauteurs",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+1",
+          "portee": "18 m",
+          "recharge": "Recharge 2",
+          "notes": "Ignore couvert leger."
+        },
+        {
+          "nom": "Signal menace",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF ou +1 Ref",
+          "portee": "18 m",
+          "recharge": "1/round",
+          "notes": "Ordre bref a un allie."
+        },
+        {
+          "nom": "Reperer embuscade",
+          "type": "Observation",
+          "attaque_dd": "DD13",
+          "degats_effet": "Annule surprise locale",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Revele une menace simple cachee."
+        }
+      ],
+      "traits": [
+        "Grimpeur de convoi: +2 escalade/equilibre.",
+        "Oeil de route: +2 Perception depuis hauteur pour machines, fumee, traces, eclaireurs, embuscades.",
+        "Pas un teneur de ligne."
+      ],
+      "pages_pdf": [
+        5
+      ]
+    },
+    {
+      "id": "recuperateur-des-routes",
+      "nom": "Recuperateur des routes",
+      "menace": 2,
+      "role": "Demonte / repare / extrait sous pression",
+      "phrase": "Technicien rapide: pas un duelliste, mais il sauve les pieces utiles.",
+      "type": "Humain / recuperateur",
+      "stats": {
+        "pv": 16,
+        "def": 11,
+        "attaque": 3,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 2,
+        "dd_capacites": 13
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Crochet de demontage express",
+        "Scie-couteau de recuperation",
+        "Pinces isolees",
+        "Mini-charge de rupture",
+        "Pulsateur magnetique de rupture",
+        "Sacoche de tri rapide",
+        "Gants de cuir blinde"
+      ],
+      "actions": [
+        {
+          "nom": "Scie-couteau",
+          "type": "CAC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Outil de coupe et defense."
+        },
+        {
+          "nom": "Crochet de demontage",
+          "type": "CAC/outil",
+          "attaque_dd": "+3",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Accroche cables, plaques, sangles."
+        },
+        {
+          "nom": "Demontage express",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "1d4 degats piece",
+          "portee": "Contact",
+          "recharge": "Recharge 2",
+          "notes": "Crit: 1d6 ou detache si piece <=2 PV."
+        },
+        {
+          "nom": "Mini-charge rupture",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "1d6 degats directs piece",
+          "portee": "Contact",
+          "recharge": "1/scene",
+          "notes": "Pas de transfert corps; echec = incident/retrait."
+        },
+        {
+          "nom": "Extraction sous pression",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Recupere piece utile",
+          "portee": "Contact",
+          "recharge": "1/scene",
+          "notes": "Sur machine detruite/neutralisee/immobilisee en 1 round."
+        },
+        {
+          "nom": "Pulsation magnetique rupture",
+          "type": "Zone",
+          "attaque_dd": "DD13",
+          "degats_effet": "Fragilise plaques",
+          "portee": "Rayon 3 m",
+          "recharge": "1/scene",
+          "notes": "Echec machine: prochaine attaque contre piece +2; bonus DEF de la piece suspendu 1 round."
+        },
+        {
+          "nom": "Repli technique",
+          "type": "Mouvement",
+          "attaque_dd": "-",
+          "degats_effet": "Desengage + 4,5 m",
+          "portee": "Personnel",
+          "recharge": "Recharge 2",
+          "notes": "Sort de la zone avec outils/piece."
+        }
+      ],
+      "traits": [
+        "Mains rapides: +2 recuperation, demontage, desamorcage, extraction avec outils.",
+        "Pas un duelliste: fuit si force au combat prolonge.",
+        "Recuperer avant fuir: prefere sauver une piece critique plutot qu achever une cible."
+      ],
+      "pages_pdf": [
+        6
+      ]
+    },
+    {
+      "id": "pisteur-de-caravane",
+      "nom": "Pisteur de caravane",
+      "menace": 2,
+      "role": "Polyvalent / survie / traces",
+      "phrase": "Le couteau suisse: il fait tout, moins bien que les experts, mais toujours utile.",
+      "type": "Humain / pisteur polyvalent",
+      "stats": {
+        "pv": 18,
+        "def": 11,
+        "attaque": 3,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 3,
+        "dd_capacites": 13
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Arc court de route",
+        "Couteau de survie",
+        "Kit de pisteur",
+        "Cape de voyage camouflee",
+        "Carte de route annotee",
+        "Balise de detour artisanale"
+      ],
+      "actions": [
+        {
+          "nom": "Tir arc court",
+          "type": "Distance",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6+1",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Tir simple."
+        },
+        {
+          "nom": "Couteau de survie",
+          "type": "CAC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Outil polyvalent."
+        },
+        {
+          "nom": "Lire les traces",
+          "type": "Exploration",
+          "attaque_dd": "DD13",
+          "degats_effet": "Identifie passage/direction/menace",
+          "portee": "Zone proche",
+          "recharge": "-",
+          "notes": "Nombre, fraicheur, fuite, combat, embuscade."
+        },
+        {
+          "nom": "Trouver un passage",
+          "type": "Soutien",
+          "attaque_dd": "DD13",
+          "degats_effet": "Reduit obstacle terrain",
+          "portee": "Groupe",
+          "recharge": "1/scene",
+          "notes": "Sentier, pente, ruines, ancien chemin."
+        },
+        {
+          "nom": "Bricolage de fortune",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Solution temporaire",
+          "portee": "Contact",
+          "recharge": "1/scene",
+          "notes": "Repare/cale/bloque/stabilise un objet simple."
+        },
+        {
+          "nom": "Fausse piste",
+          "type": "Tactique",
+          "attaque_dd": "DD13",
+          "degats_effet": "-2 poursuite ou detour 1 round",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Efface traces ou cree diversion."
+        }
+      ],
+      "traits": [
+        "Couteau suisse des routes: tente beaucoup d actions de terrain sans bonus d expert.",
+        "Experience de convoi: +2 routes, haltes, terrains dangereux pour chariot.",
+        "Reste utile sous pression: 1/round donne +1 a un allie sur Survie/Perception/Ref/deplacement."
+      ],
+      "pages_pdf": [
+        8
+      ]
+    },
+    {
+      "id": "conducteur-de-brise-route",
+      "nom": "Conducteur de brise-route",
+      "menace": 2,
+      "role": "Conduite extreme / attelage / survie du convoi",
+      "phrase": "La raison pour laquelle les Caravanes survivent: faire passer le chariot la ou il ne devrait pas passer.",
+      "type": "Humain / conducteur de convoi",
+      "stats": {
+        "pv": 16,
+        "def": 10,
+        "attaque": 2,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 3,
+        "dd_capacites": 13
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Fouet de guidage / longe sonore",
+        "Couteau de secours",
+        "Gants d attelage renforces",
+        "Harnais de controle mecanique",
+        "Sifflets codes de route",
+        "Kit reparation roue/frein"
+      ],
+      "actions": [
+        {
+          "nom": "Couteau de secours",
+          "type": "CAC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d4",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Couper une sangle, dernier recours."
+        },
+        {
+          "nom": "Coup de fouet defensif",
+          "type": "Controle",
+          "attaque_dd": "+2",
+          "degats_effet": "1d3 + recul narratif",
+          "portee": "3 m",
+          "recharge": "-",
+          "notes": "Garde une menace a distance."
+        },
+        {
+          "nom": "Manoeuvre impossible",
+          "type": "Pilotage",
+          "attaque_dd": "DD13",
+          "degats_effet": "Franchit obstacle improbable",
+          "portee": "Chariot",
+          "recharge": "1/scene",
+          "notes": "Pente, virage, eboulis, ruines, boue, riviere basse."
+        },
+        {
+          "nom": "Coup de frein brutal",
+          "type": "Pilotage",
+          "attaque_dd": "DD13",
+          "degats_effet": "Evite collision / stabilise",
+          "portee": "Chariot",
+          "recharge": "Recharge 2",
+          "notes": "Stoppe charge legere ou cargaison."
+        },
+        {
+          "nom": "Relance l attelage",
+          "type": "Attelage",
+          "attaque_dd": "DD13",
+          "degats_effet": "+3 m chariot/attelage",
+          "portee": "Chariot",
+          "recharge": "Recharge 2",
+          "notes": "Ordres codes et repartition des efforts."
+        },
+        {
+          "nom": "Tenir les renes sous panique",
+          "type": "Sang-froid",
+          "attaque_dd": "DD13",
+          "degats_effet": "Evite fuite/renversement",
+          "portee": "Attelage",
+          "recharge": "1/scene",
+          "notes": "Calme les machines synchronisees."
+        }
+      ],
+      "traits": [
+        "Ne sur les routes: +2 conduite, attelage, franchissement, stabilisation.",
+        "Parle aux machines de caravane: calme/guide sans Focus, par signaux et routines.",
+        "Pilier du convoi: harnaches pres du chariot +2 contre chutes/freinages/virages/passages dangereux.",
+        "Harnachement rapide: les caravaniers peuvent s accrocher au chariot en urgence."
+      ],
+      "pages_pdf": [
+        9
+      ]
+    },
+    {
+      "id": "tireur-iem",
+      "nom": "Tireur IEM",
+      "menace": 3,
+      "role": "Controle anti-machine / armes de chariot",
+      "phrase": "Artilleur-bricoleur: bombes IEM, fronde mecanique, harpons, filets.",
+      "type": "Humain / artilleur de convoi",
+      "stats": {
+        "pv": 22,
+        "def": 11,
+        "attaque": 4,
+        "initiative": 2,
+        "vitesse_m": 9,
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 3,
+        "dd_capacites": 14
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Fronde mecanique de convoi",
+        "Bombes IEM artisanales",
+        "Bombes fumigenes",
+        "Charges a filet compactes",
+        "Bobines de choc recuperees",
+        "Gants isoles",
+        "Lance-harpon / lance-filet de chariot"
+      ],
+      "actions": [
+        {
+          "nom": "Tir fronde mecanique",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6 impact",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Projette charges legeres."
+        },
+        {
+          "nom": "Bombe IEM projetee",
+          "type": "Zone",
+          "attaque_dd": "DD14",
+          "degats_effet": "1d4 choc + perturbe",
+          "portee": "18 m / R3 m",
+          "recharge": "1/scene",
+          "notes": "Machine rate: pas reaction, -2 prochaine attaque, pas special a recharge ce round."
+        },
+        {
+          "nom": "Fumigene projete",
+          "type": "Zone",
+          "attaque_dd": "DD14",
+          "degats_effet": "Fumee rayon 3 m",
+          "portee": "18 m",
+          "recharge": "1/scene",
+          "notes": "Duree 2 rounds."
+        },
+        {
+          "nom": "Charge filet projetee",
+          "type": "Controle",
+          "attaque_dd": "+4 / DD14",
+          "degats_effet": "Vitesse -3 m, pas charge",
+          "portee": "12 m",
+          "recharge": "Recharge 3",
+          "notes": "Succes cible: effet plein; reussite save: -1,5 m."
+        },
+        {
+          "nom": "Charge IEM ciblee",
+          "type": "Anti-piece",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6 choc a une piece",
+          "portee": "12 m",
+          "recharge": "Recharge 3",
+          "notes": "Anti-composant."
+        },
+        {
+          "nom": "Recalibrer arme chariot",
+          "type": "Technique",
+          "attaque_dd": "DD14",
+          "degats_effet": "+1 prochain tir monte",
+          "portee": "Contact",
+          "recharge": "Recharge 2",
+          "notes": "Regle harpon/filet/arme de chariot."
+        },
+        {
+          "nom": "Lance-harpon chariot",
+          "type": "Arme montee",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8+1 + cable",
+          "portee": "18 m",
+          "recharge": "Recharge 2",
+          "notes": "Ref DD14 rate: vitesse -3 m, pas charge. Cable PV6 DEF10."
+        },
+        {
+          "nom": "Lance-filet chariot",
+          "type": "Arme montee",
+          "attaque_dd": "+4",
+          "degats_effet": "Entrave leger",
+          "portee": "12 m",
+          "recharge": "Recharge 3",
+          "notes": "Cible petite/moyenne; grosse machine: -2 prochaine charge."
+        }
+      ],
+      "traits": [
+        "Artilleur de convoi: ignore malus des secousses normales avec arme montee.",
+        "Science du bricolage IEM: +2 preparer/reparer/armer bombes, bobines, harpons, filets.",
+        "Priorite ralentir: cible charges, machines rapides, menaces du conducteur, poursuivants."
+      ],
+      "pages_pdf": [
+        10
+      ]
+    },
+    {
+      "id": "defenseur-de-chariot",
+      "nom": "Defenseur de chariot",
+      "menace": 3,
+      "role": "Protection lourde / anti-charge / renversement",
+      "phrase": "La brutalite d un Pillard Rouge, tenue en laisse par la loyaute du convoi.",
+      "type": "Humain / defenseur lourd",
+      "stats": {
+        "pv": 28,
+        "def": 13,
+        "attaque": 5,
+        "initiative": 1,
+        "vitesse_m": 9,
+        "vigueur": 5,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd_capacites": 14
+      },
+      "parametres_speciaux": {
+        "DEF sans pavois": "11"
+      },
+      "equipement": [
+        "Grand pavois de chariot",
+        "Masse de rupture / marteau court",
+        "Crochet de renversement",
+        "Grenades fumigenes epaisses",
+        "Harnais d ancrage au chariot",
+        "Plaques de machine bricolees"
+      ],
+      "actions": [
+        {
+          "nom": "Coup masse rupture",
+          "type": "CAC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d8+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Frappe lourde."
+        },
+        {
+          "nom": "Coup de pavois",
+          "type": "Controle",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6+1 + repousse",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Casse l elan."
+        },
+        {
+          "nom": "Attaque lourde renversement",
+          "type": "Anti-machine",
+          "attaque_dd": "+5",
+          "degats_effet": "1d8+2 + chute possible",
+          "portee": "CAC",
+          "recharge": "Recharge 3",
+          "notes": "Machine M1-3: Vig/Ref DD14 ou tombe/perd mouvement. M4: vitesse -3 m/pas charge 1 round."
+        },
+        {
+          "nom": "Ancrage anti-charge",
+          "type": "Reaction",
+          "attaque_dd": "DD14",
+          "degats_effet": "Protege vs charge",
+          "portee": "Adjacent/chariot",
+          "recharge": "1/scene",
+          "notes": "Cible protegee +2 DEF; M1-3 perd 3 m. Echec: defenseur repousse ou tombe."
+        },
+        {
+          "nom": "Mur de chariot",
+          "type": "Defense",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF soi, +1 allie/chariot",
+          "portee": "Personnel",
+          "recharge": "Recharge 2",
+          "notes": "Vitesse 0."
+        },
+        {
+          "nom": "Fumigene couverture",
+          "type": "Zone",
+          "attaque_dd": "DD14",
+          "degats_effet": "Fumee R3 m",
+          "portee": "9 m",
+          "recharge": "1/scene",
+          "notes": "Duree 2 rounds."
+        }
+      ],
+      "traits": [
+        "Harnache au convoi: +2 contre repoussement/renversement/secousses si attache/appuye.",
+        "Briseur d elan: sur machine ayant charge, -3 m prochain deplacement, 1/round.",
+        "Pas un poursuivant: reste pres du convoi.",
+        "Force tenue en laisse: +1 Vol contre intimidation/peur/provocation en protegeant allie/chariot/cargaison/blesse; loin du convoi perd traits defensifs de caravane."
+      ],
+      "pages_pdf": [
+        12
+      ]
+    },
+    {
+      "id": "negociateur-arme",
+      "nom": "Negociateur arme",
+      "menace": 3,
+      "role": "Contrat / social / neutralisation sans arme",
+      "phrase": "Marchand inoffensif en apparence, maitre du corps a corps sans arme.",
+      "type": "Humain / negociateur martial",
+      "stats": {
+        "pv": 24,
+        "def": 12,
+        "attaque": 5,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd_capacites": 14
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Tenue de marchand renforcee",
+        "Brassards de prise",
+        "Couteau de contrat dissimule",
+        "Jetons de route / sceaux",
+        "Sifflet de synchronisation",
+        "Registre de convoi etanche"
+      ],
+      "actions": [
+        {
+          "nom": "Frappe ouverte",
+          "type": "Non arme",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6+1 non letal",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Frappe de paume/coude/genou."
+        },
+        {
+          "nom": "Desarmement sec",
+          "type": "Controle",
+          "attaque_dd": "+5",
+          "degats_effet": "1d4 non letal + desarme",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Ref DD14 rate: lache arme legere/objet. Gros objet: -2 prochaine action liee."
+        },
+        {
+          "nom": "Cle de neutralisation",
+          "type": "Controle",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6 non letal + entrave",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Vig/Ref DD14 rate: entrave leger 1 round."
+        },
+        {
+          "nom": "Parole de rupture",
+          "type": "Social",
+          "attaque_dd": "Vol DD14",
+          "degats_effet": "Perte reaction ou -2 prochain test",
+          "portee": "9 m",
+          "recharge": "1/scene",
+          "notes": "Phrase qui casse l elan."
+        },
+        {
+          "nom": "Ordre de convoi",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "+1 prochaine action",
+          "portee": "12 m",
+          "recharge": "1/round",
+          "notes": "Allie ou machine synchronisee."
+        },
+        {
+          "nom": "Prise en main synchronisee",
+          "type": "Machine convoi",
+          "attaque_dd": "DD14",
+          "degats_effet": "Calme/redirige machine",
+          "portee": "9 m",
+          "recharge": "Recharge 2",
+          "notes": "Seulement machine de caravane deja habituee; sans effet sauvage/ELYSIUM/hostile."
+        }
+      ],
+      "traits": [
+        "Apparence inoffensive: +1 ATQ premiere action CAC si la cible le sous-estime.",
+        "Maitre du conflit sans lame: choisit desarmement, chute, immobilisation, humiliation plutot que blessure.",
+        "Contrat avant violence: gagne du temps, propose echange/dette avant neutraliser.",
+        "Langage des caravanes: +2 negociation, lire intention hostile, reperer arnaque, calmer tension, faire respecter accord."
+      ],
+      "pages_pdf": [
+        14
+      ]
+    },
+    {
+      "id": "medecin-de-convoi",
+      "nom": "Medecin de convoi",
+      "menace": 3,
+      "role": "Soin / extraction / points vitaux",
+      "phrase": "Soigneur de terrain qui traverse une melee pour extraire un blesse - et connait les points vitaux.",
+      "type": "Humain / soigneur de terrain",
+      "stats": {
+        "pv": 22,
+        "def": 12,
+        "attaque": 4,
+        "initiative": 4,
+        "vitesse_m": 9,
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd_capacites": 14
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Sacoche medicale de convoi",
+        "Scalpel-couteau pliant",
+        "Injecteur de stimulant leger",
+        "Brancard pliant / sangle extraction",
+        "Cape medicale renforcee",
+        "Fumigene medical"
+      ],
+      "actions": [
+        {
+          "nom": "Scalpel-couteau",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Outil chirurgical et defense."
+        },
+        {
+          "nom": "Coup non letal",
+          "type": "Non arme",
+          "attaque_dd": "+4",
+          "degats_effet": "1d4 non letal",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Coude, genou, paume."
+        },
+        {
+          "nom": "Stabilisation rapide",
+          "type": "Soin",
+          "attaque_dd": "DD14",
+          "degats_effet": "Stabilise allie a 0 PV",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Crit: peut parler/ramper faiblement."
+        },
+        {
+          "nom": "Extraction sous pression",
+          "type": "Mouvement/soin",
+          "attaque_dd": "DD14",
+          "degats_effet": "Deplace blesse 4,5 m",
+          "portee": "Contact",
+          "recharge": "Recharge 2",
+          "notes": "Sans ouverture majeure; echec 1,5 m ou medecin expose."
+        },
+        {
+          "nom": "Injection de relance",
+          "type": "Soin",
+          "attaque_dd": "DD14",
+          "degats_effet": "Releve/deplace/booste",
+          "portee": "Contact",
+          "recharge": "1/scene",
+          "notes": "Allie conscient: se releve, bouge 4,5 m ou +2 Vig prochain jet; contrecoup fin scene."
+        },
+        {
+          "nom": "Fumigene medical",
+          "type": "Zone",
+          "attaque_dd": "-",
+          "degats_effet": "Fumee R3 m",
+          "portee": "6 m",
+          "recharge": "1/scene",
+          "notes": "Couvre extraction/stabilisation."
+        },
+        {
+          "nom": "Degats precis",
+          "type": "Precision",
+          "attaque_dd": "+4",
+          "degats_effet": "1d4+1 precis",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Humanoide vivant: Vig DD14 ou -2 prochaine attaque, vitesse -3 m, lache objet, ou pas reaction."
+        }
+      ],
+      "traits": [
+        "Pas sans mon blesse: reaction 1/scene, avance 4,5 m vers allie tombe/immobilise a 9 m.",
+        "Calme sous le chaos: +2 Medecine/Vol/Extraction si allie blesse, panique ou coince.",
+        "Connait les blessures de route: chutes, ecrasements, brulures, morsures, cables, intox, froid/deshydratation.",
+        "Cache son jeu: +1 premiere extraction ou action risquee avant revelation."
+      ],
+      "pages_pdf": [
+        16
+      ]
+    },
+    {
+      "id": "capitaine-de-caravane",
+      "nom": "Capitaine de caravane",
+      "menace": 4,
+      "role": "Commandement / strategie / coordination optimale",
+      "phrase": "Pas le meilleur combattant: la meilleure intelligence collective de la caravane.",
+      "type": "Humain / commandant de convoi",
+      "stats": {
+        "pv": 30,
+        "def": 12,
+        "attaque": 5,
+        "initiative": 4,
+        "vitesse_m": 9,
+        "vigueur": 3,
+        "reflexes": 3,
+        "volonte": 6,
+        "dd_capacites": 15
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Sabre court de capitaine",
+        "Arbalete courte",
+        "Sifflets codes de commandement",
+        "Carte de route complete",
+        "Registre des contrats",
+        "Manteau renforce",
+        "Jetons de role du convoi"
+      ],
+      "actions": [
+        {
+          "nom": "Sabre court",
+          "type": "CAC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Defense personnelle."
+        },
+        {
+          "nom": "Arbalete courte",
+          "type": "Distance",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6+1",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Tir d appoint."
+        },
+        {
+          "nom": "Ordre optimal",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "+2 prochaine action de role",
+          "portee": "18 m",
+          "recharge": "1/round",
+          "notes": "Donne l ordre exact a la bonne personne."
+        },
+        {
+          "nom": "Reorganisation convoi",
+          "type": "Strategie",
+          "attaque_dd": "DD15",
+          "degats_effet": "2 allies bougent 4,5 m",
+          "portee": "18 m",
+          "recharge": "Recharge 2",
+          "notes": "Rejoindre chariot, harnacher, couvrir, arme montee, fuite."
+        },
+        {
+          "nom": "Lire la faille",
+          "type": "Tactique",
+          "attaque_dd": "DD15",
+          "degats_effet": "+1 ATQ ou +1 DD situation",
+          "portee": "18 m",
+          "recharge": "Recharge 2",
+          "notes": "Identifie priorite, angle, piece fragile, moment IEM."
+        },
+        {
+          "nom": "Plan de sortie",
+          "type": "Commandement",
+          "attaque_dd": "DD15",
+          "degats_effet": "+2 test collectif fuite/repli",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Issue prevue: passage, cargaison sacrifiable, fumee, leurre."
+        },
+        {
+          "nom": "Ordre urgence",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "Relance test de role rate",
+          "portee": "18 m",
+          "recharge": "1/scene",
+          "notes": "Si l allie entend/comprend ordre."
+        }
+      ],
+      "traits": [
+        "Connait ses gens: 1/scene transforme un echec de role en reussite partielle adaptee.",
+        "Plus ingenieux que dangereux: transforme competences ordinaires en strategie optimale.",
+        "Autorite de route: +2 commandement, contrats, panique, arbitrage, decisions de convoi.",
+        "Tout le monde a sa place: +1 Commandement/Strategie si 3 caravaniers actifs pres d un chariot.",
+        "Pas de heros inutiles: survie du convoi > blesse > chariots > contrats > combat."
+      ],
+      "pages_pdf": [
+        18,
+        19
+      ]
+    },
+    {
+      "id": "veteran-des-routes",
+      "nom": "Veteran des routes",
+      "menace": 4,
+      "role": "Maitre d armes / survivant / mentor",
+      "phrase": "Ancien capitaine possible. Il a tout vu et corrige les erreurs mortelles.",
+      "type": "Humain / veteran martial",
+      "stats": {
+        "pv": 34,
+        "def": 13,
+        "attaque": 6,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 5,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd_capacites": 15
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Lame de route usee",
+        "Baton ferre / hampe courte",
+        "Bouclier cabosse de caravane",
+        "Armure composite de route",
+        "Sifflet exercice",
+        "Trousse reparation arme"
+      ],
+      "actions": [
+        {
+          "nom": "Lame de route",
+          "type": "CAC",
+          "attaque_dd": "+6",
+          "degats_effet": "1d8+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Sabre, coutelas lourd ou machette."
+        },
+        {
+          "nom": "Baton ferre",
+          "type": "CAC/controle",
+          "attaque_dd": "+6",
+          "degats_effet": "1d6+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Controle et parade."
+        },
+        {
+          "nom": "Parade enseignee",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF contre attaque",
+          "portee": "Personnel",
+          "recharge": "Recharge 2",
+          "notes": "Vieux reflexe de route."
+        },
+        {
+          "nom": "Correction brutale",
+          "type": "Controle",
+          "attaque_dd": "+6",
+          "degats_effet": "1d6+2 + desequilibre",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Ref DD15 rate: -2 prochaine attaque ou defense active."
+        },
+        {
+          "nom": "Geste de maitre",
+          "type": "Mentor",
+          "attaque_dd": "-",
+          "degats_effet": "Echec allie -> reussite partielle",
+          "portee": "9 m",
+          "recharge": "1/scene",
+          "notes": "Corrige attaque, parade, repli, positionnement."
+        },
+        {
+          "nom": "Tenir malgre tout",
+          "type": "Defense",
+          "attaque_dd": "DD15",
+          "degats_effet": "Ignore recul/peur/chute",
+          "portee": "Personnel",
+          "recharge": "1/scene",
+          "notes": "Echec: recule mais reste debout."
+        },
+        {
+          "nom": "Ancien commandement opt.",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "+1 defense/repositionnement",
+          "portee": "12 m",
+          "recharge": "1/scene",
+          "notes": "Ne se cumule pas avec Ordre optimal du capitaine."
+        }
+      ],
+      "traits": [
+        "Ancien capitaine possible: conseille/forme/protege; reprend les ordres si situation grave.",
+        "Maitre d armes des routes: +2 entrainement, postures, armes simples, survie face machines connues.",
+        "A tout vu ou presque: +2 Vol contre peur/intimidation/provocation en protegeant plus jeune.",
+        "Pas de beaute dans le geste: frappe genoux, mains, sangles, cables, points faibles."
+      ],
+      "pages_pdf": [
+        20
+      ]
+    },
+    {
+      "id": "ingenieur-de-caravane",
+      "nom": "Ingenieur de caravane",
+      "menace": 4,
+      "role": "Invention / forge mobile / chaos controle",
+      "phrase": "Forgeron completement tare: ses inventions menacent ennemis et caravane.",
+      "type": "Humain / inge nieur-forgero n",
+      "stats": {
+        "pv": 28,
+        "def": 12,
+        "attaque": 4,
+        "initiative": 3,
+        "vitesse_m": 9,
+        "vigueur": 4,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd_capacites": 15
+      },
+      "parametres_speciaux": {},
+      "equipement": [
+        "Marteau de forge court",
+        "Lance-bobine instable",
+        "Sacoche de composants dangereux",
+        "Gants isoles brules",
+        "Masque de soudure tribal",
+        "Mini-generateur de fortune",
+        "Plans incomprehensibles"
+      ],
+      "actions": [
+        {
+          "nom": "Marteau de forge",
+          "type": "CAC/outil",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Reparer, frapper, tordre metal."
+        },
+        {
+          "nom": "Lance-bobine instable",
+          "type": "Distance/choc",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8 choc",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Decharge issue de pieces machines."
+        },
+        {
+          "nom": "Reparation brutale",
+          "type": "Technique",
+          "attaque_dd": "DD15",
+          "degats_effet": "Repare temporairement systeme",
+          "portee": "Contact",
+          "recharge": "Recharge 2",
+          "notes": "Roue, frein, arme, cable, generateur, blindage."
+        },
+        {
+          "nom": "Bidule impossible",
+          "type": "Invention",
+          "attaque_dd": "DD15",
+          "degats_effet": "Solution improbable",
+          "portee": "Contact/zone",
+          "recharge": "1/scene",
+          "notes": "Aimant, cable, relais sonore, treuil, fumee, harpon, leurre."
+        },
+        {
+          "nom": "Surcharge controlee",
+          "type": "Technique",
+          "attaque_dd": "DD15",
+          "degats_effet": "Boost systeme + risque",
+          "portee": "Contact",
+          "recharge": "1/scene",
+          "notes": "+1 ATQ, +1d6, +3 m portee/deplacement, ou +2 DD; puis 1d6 incident."
+        },
+        {
+          "nom": "Explosion regrettable",
+          "type": "Zone",
+          "attaque_dd": "DD15",
+          "degats_effet": "2d6 feu/choc/impact",
+          "portee": "9 m / R3 m",
+          "recharge": "1/scene",
+          "notes": "Ref DD15 moitie; echec: allie/chariot/ingenieur subit 1d6 ou complication."
+        }
+      ],
+      "traits": [
+        "Genie dangereusement approximatif: reussite plus forte; echec fonctionne mais dangereusement.",
+        "Forgeron completement tare: +2 pieces machines, reparations improvisees, outils dangereux, armes chariot, mecanismes anciens simples.",
+        "Pas la moindre notion de securite: complications possibles pres du convoi.",
+        "Amour sincere du convoi: met tout le monde en danger pour sauver quelqu un ou franchir impossible.",
+        "Cauchemar du capitaine: 1/scene le capitaine reduit une complication de l ingenieur."
+      ],
+      "pages_pdf": [
+        22,
+        23
+      ],
+      "table_incidents": [
+        {
+          "d6": 1,
+          "effet": "Explosion secondaire: 1d6 dans 1,5 m"
+        },
+        {
+          "d6": 2,
+          "effet": "Fumee epaisse: visibilite reduite, zone 3 m"
+        },
+        {
+          "d6": 3,
+          "effet": "Recul violent: utilisateur repousse 3 m ou tombe"
+        },
+        {
+          "d6": 4,
+          "effet": "Surchauffe: objet inutilisable 1 round"
+        },
+        {
+          "d6": 5,
+          "effet": "Bruit enorme: attire attention proche"
+        },
+        {
+          "d6": 6,
+          "effet": "Ca marche trop bien: effet reussi mais cible/zone imprevue"
+        }
+      ]
+    }
+  ]
+}

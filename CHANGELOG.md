@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 — Caravanes Libres
+- Ajout de 13 nouveaux archétypes ; remplacement des données du Messager existant, sans doublon.
+- 14 profils Menace 1–4, 89 actions, 89 équipements de référence et 51 traits, extraits du PDF fourni.
+- Intégration des scores Vigueur / Réflexes / Volonté jusque-là absents de la fiche Messager.
+- Conservation des capacités, des contraintes de portée/recharge et des règles de convoi sous forme lisible dans la fiche.
+- Équipement généré par type (Arme, Armure/bouclier, Objet) sans bonus fictifs.
+- Ajout de l'archive intégrale `data/caravanes-libres.json`.
+- Mise en correspondance des Items embarqués par identité stable au lieu d'un index, pour la compatibilité CSB.
+- Publication Foundry automatisée par GitHub Actions.
+
 ## 0.1.2
 - Intégration des 9 profils de factions Menace 1 validés.
 - Ajout des statistiques Actor : DEF, PV, ATQ, initiative et vitesse.

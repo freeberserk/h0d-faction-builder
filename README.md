@@ -1,49 +1,30 @@
-# H0D Faction Builder
+# H0D Faction Builder — v0.2.0
 
-## v0.1.2 — PNJ de factions Menace 1
+## Caravanes Libres — 14 profils (Menace 1 à 4)
 
-Cette version intègre les neuf profils Menace 1 validés :
+Cette version conserve les neuf profils de factions de la v0.1.2 et **actualise** le Messager de caravane, sans créer de doublon, puis ajoute 13 profils Caravanes Libres.
 
-- Clan de la Dent d'Ambre — Chasseur novice de la Dent
-- Caravanes Libres — Messager de caravane
-- Pillards Rouges — Pillard recrue
-- Culte du Renouveau — Adepte du Renouveau
-- Héritiers du Soleil — Aspirant solaire
-- HELIOS — Drone de maintenance mineur
-- ELYSIUM-9 — Héritier Elys-9 novice
-- ELYSIUM-10 — Agent blanc mineur
-- HelioSium — Pacificateur instable
+Source fidèle : `data/caravanes-libres.json`, transcrite du PDF `Caravanes_Libres_PNJ_Builder(1).pdf` (23 pages), également fournie comme archive indépendante.
 
-### Génération
-Chaque profil crée :
-- un Actor basé sur `H0D_Actor-template-creature`;
-- ses armes validées avec `H0D_Arme`;
-- ses armures / boucliers avec `H0D_Armure`;
-- ses objets associés avec `H0D_Objet`.
+- Menace 1 : Messager de caravane, Caravanier au pavois.
+- Menace 2 : Garde, Guetteur, Récupérateur, Pisteur, Conducteur de brise-route.
+- Menace 3 : Tireur IEM, Défenseur de chariot, Négociateur armé, Médecin de convoi.
+- Menace 4 : Capitaine, Vétéran, Ingénieur de caravane.
 
-Les Items sont embarqués directement dans l’Actor.
+**Chaque Actor** contient les PV, DEF, ATQ, initiative, vitesse, sauvegardes et DD de la source. Les 89 actions sont conservées avec leur type, ATQ/DD, dégâts ou effet, portée, recharge et notes ; les 51 traits, le harnachement rapide et la table d'incidents Ingénieur figurent également dans les fiches.
 
-### Fidélité à la fiche source
-Les DEF, PV, ATQ, initiative, vitesse et dégâts viennent de la fiche Menace 1.
+Les armes avec attaques chiffrées deviennent des Items H0D Arme, les protections des Items Armure, le reste des Items Objet. La DEF chiffrée dans la fiche inclut déjà les protections : les Items Armure ajoutent 0 DEF pour éviter les doubles bonus. Les attributs et XP non renseignés ne sont pas inventés. L'équipement indiqué **optionnel** est documenté mais non attribué d'office ; les quantités de consommables non précisées restent non spécifiées dans les notes.
 
-Les caractéristiques, sauvegardes et XP ne sont pas fournis : ils restent volontairement à 0.
+Les capacités non automatisables (réactions, pilotage, recharges par scène, dispositifs IEM) restent disponibles en **lecture / résolution manuelle MJ** ; aucune charge ou déclencheur n'est prétendu automatique.
 
-Quand une armure ou un bouclier est cité sans bonus de DEF distinct, l’Item est bien créé mais son bonus reste à 0 : la DEF finale du profil n’est donc pas artificiellement augmentée.
+## Prérequis et lancement
 
-### Mise à jour
-Modes disponibles :
-- Mettre à jour — conserve les images personnalisées;
-- Ignorer;
-- Recréer.
+Foundry VTT 14, Custom System Builder 6.0.2+, H0D Template Manager actif.
 
-### Lancement
-Macro automatique :
-**H0D — Générateur factions**
+Macro : `H0D — Générateur factions`, ou API : `game.h0dFactionBuilder.open()`.
 
-Commande :
-`game.h0dFactionBuilder.open();`
+Modes : Ignorer, Mettre à jour, Recréer. En **Mettre à jour**, les images personnalisées sont préservées, mais les stats sont remises aux valeurs de référence et les Items générés sont réassemblés. À tester dans le BAC avant réutilisation sur une fiche modifiée en partie.
 
-### Dépendances
-- Foundry VTT 14
-- Custom System Builder 6.0.2+
-- H0D Template Manager 0.3.0+
+## Publication
+
+Une GitHub Action prépare automatiquement le ZIP et publie la release depuis la branche `main` lorsque la version de `module.json` change. Le manifest de Foundry pointe sur `releases/latest/download/module.json`.

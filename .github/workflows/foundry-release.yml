@@ -1,0 +1,27 @@
+name: Build and publish Foundry faction module
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify module sources
+        run: |
+          node --check scripts/h0d-faction-builder.js
+          python3 -m json.tool module.json > /dev/null
+          python3 -m json.tool data/caravanes-libres.json > /dev/null
+          python3 -c 'import json; d=json.load(open("data/caravanes-libres.json")); assert len(d["profils"]) == 14; assert sum(len(p["actions"]) for p in d["profils"]) == 89'
+      - name: Package and publish module
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("module.json"))["version"])')
+          TAG="$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then echo "Version $TAG déjà publiée"; exit 0; fi
+          zip -q -r h0d-faction-builder.zip module.json scripts data README.md CHANGELOG.md INSTALL-FORGE.txt
+          gh release create "$TAG" h0d-faction-builder.zip module.json data/caravanes-libres.json --target "$GITHUB_SHA" --title "H0D Faction Builder v$TAG" --notes-file CHANGELOG.md

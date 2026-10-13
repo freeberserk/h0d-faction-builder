@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1 — Correctif Modern SRD des scores d'aptitude
+- Remplacement des modificateurs erronés v0.3.0 par les scores ordinaires SRD **15, 14, 13, 12, 10, 8**, répartis par rôle.
+- Progression : +1 à **une seule caractéristique** en Menace 4 (niveau 4 équivalent) ; mod = floor((score−10)/2).
+- Nouveaux champs `H0D_Creature_XXX_SCORE`, édition synchronisée avec `H0D_Creature_XXX_MOD` pour les Caravanes Libres générées.
+- Mise à jour prudente des fiches issues des v0.2.1/v0.3.0, sauvegarde en flag et protection des personnalisations MJ.
+- Conservation des ATQ source, dégâts, capacités, PV, DEF, initiatives et sauvegardes ; notes courtes maintenues.
+- Requiert le template Créature v1.20 du H0D Template Manager v1.7.2 pour afficher les scores sur la fiche.
+
+
+
 ## 0.3.0 — Caravanes Libres et SRD (équilibrage MJ)
 - Six modificateurs approuvés pour chacun des 14 profils de Menace 1–4, avec jets compatibles avec le template Créature v1.19 et le Modern SRD.
 - Répartition base d'attaque / caractéristique / arme testée sans changer le +ATQ des profils ni leurs dégâts.

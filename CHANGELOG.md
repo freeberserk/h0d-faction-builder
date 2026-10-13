@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 — Neuf membres du Conseil héroïques uniques
+- Kael, Brok, Nerys, Maela, Odran, Sava, Eron, Tarek et Isha : 9 références héroïques niveau 4 (SRD 15/14/13/12/10/8 +1), 49 items, notes MJ complètes.
+- 9 portraits et 9 tokens WebP optimisés, joints au module.
+- Correction des portées, munitions, statuts d'équipement et des descriptions obsolètes. ATQ et dégâts théoriques inchangés après conversion des attributs.
+- Menace/CR 4 distinguée du niveau 4 ; rien n'est converti en PNJ ordinaire.
+- Actions protégées « Créer absent / Adopter / Ouvrir », sans régénération ni écrasement des Actors existants.
+- Intégration avec Créature v1.22 (Template Manager v1.7.4). Notes MJ dans dépôt public avec autorisation du MJ.
+
+
+
 ## 0.3.2 — Menace/CR et niveau distincts pour les ordinaires
 - Caravanes Libres : Menace = CR ; niveau PNJ = CR +1 (CR 1–4 / niveaux 2–5).
 - Modern SRD : scores de base 15,14,13,12,10,8 ; premier +1 de score au niveau PNJ 4 = Menace 3, pas Menace 4.

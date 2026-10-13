@@ -5,7 +5,70 @@
  * conforme au modèle 1d20 + modificateur du template PJ H0D / Modern SRD.
  * La Menace n'est pas ajoutée directement au bonus de caractéristique.
  */
-export const CARAVAN_MODS = Object.freeze({
+
+/* Valeurs SRD des PNJ ordinaires : 15, 14, 13, 12, 10, 8, dans un ordre
+ * choisi pour chaque rôle. +1 à UNE caractéristique par tranche de 4 niveaux.
+ * Menace 1 à 4 est traitée ici comme niveau équivalent 1 à 4.
+ */
+export const STANDARD_ARRAY = Object.freeze([15,14,13,12,10,8]);
+export const ABILITY_NAMES = Object.freeze(["FOR","DEX","CON","INT","SAG","CHA"]);
+
+// Scores initiaux dans l'ordre FOR / DEX / CON / INT / SAG / CHA.
+export const CARAVAN_BASE_SCORES = Object.freeze({
+  "messager-de-caravane":      [10,15,12,13,14,8],
+  "caravanier-au-pavois":      [15,10,14,8,13,12],
+  "garde-de-caravane":         [14,12,15,8,13,10],
+  "guetteur-de-route":         [8,15,12,13,14,10],
+  "recuperateur-des-routes":   [12,15,13,14,10,8],
+  "pisteur-de-caravane":       [12,14,13,10,15,8],
+  "conducteur-de-brise-route": [12,15,13,10,14,8],
+  "tireur-iem":                [10,14,12,15,13,8],
+  "defenseur-de-chariot":      [15,8,14,10,13,12],
+  "negociateur-arme":          [10,14,12,13,8,15],
+  "medecin-de-convoi":         [8,13,12,15,14,10],
+  "capitaine-de-caravane":     [8,13,10,14,12,15],
+  "veteran-des-routes":       [15,14,13,10,12,8],
+  "ingenieur-de-caravane":     [12,13,14,15,10,8]
+});
+
+// Au niveau équivalent 4, le premier bonus +1 est investi dans la
+// spécialité ; hors Menace 4, le tableau reste strictement inchangé.
+export const LEVEL4_BOOSTS = Object.freeze({
+  "capitaine-de-caravane":"CHA",
+  "veteran-des-routes":"FOR",
+  "ingenieur-de-caravane":"INT"
+});
+
+export function scoreToMod(score) {
+  if (!Number.isFinite(Number(score))) throw new Error("Score de caractéristique invalide.");
+  return Math.floor((Number(score)-10)/2);
+}
+
+export function caravanScores(profileId, menace) {
+  const values=CARAVAN_BASE_SCORES[profileId];
+  if(!values) throw new Error("Profil sans scores SRD validés : "+profileId);
+  const m=Number(menace);
+  if (!Number.isInteger(m)||m<1) throw new Error("Menace invalide : "+menace);
+  const scores=Object.fromEntries(ABILITY_NAMES.map((stat,i)=>[stat,values[i]]));
+  // La progression est celle du SRD (levels 4,8,12,...), mais les profils
+  // actuellement livrés ne couvrent que Menace 1 à 4.
+  const boosts=Math.floor(m/4);
+  if(boosts) {
+    const key=LEVEL4_BOOSTS[profileId] ?? ABILITY_NAMES[values.indexOf(15)];
+    scores[key]+=boosts;
+  }
+  return scores;
+}
+
+export function caravanMods(profileId, menace) {
+  const scores=caravanScores(profileId,menace);
+  return Object.fromEntries(ABILITY_NAMES.map(stat=>[stat,scoreToMod(scores[stat])]));
+}
+
+/** Représentation héritée de la 0.3.0, uniquement pour une migration contrôlée.
+ * Ces modificateurs ne sont PLUS utilisés à la génération.
+ */
+export const LEGACY_CARAVAN_MODS = Object.freeze({
   "messager-de-caravane":      [0,2,0,1,2,1],
   "caravanier-au-pavois":      [2,0,2,0,1,0],
   "garde-de-caravane":         [2,1,2,0,1,1],
@@ -21,13 +84,9 @@ export const CARAVAN_MODS = Object.freeze({
   "veteran-des-routes":       [3,3,3,2,3,2],
   "ingenieur-de-caravane":     [2,2,2,5,3,1]
 });
-
-export const ABILITY_NAMES = Object.freeze(["FOR","DEX","CON","INT","SAG","CHA"]);
-
-export function caravanMods(profileId) {
-  const values = CARAVAN_MODS[profileId];
-  if (!values) throw new Error("Profil sans caractéristiques validées : "+profileId);
-  return Object.fromEntries(ABILITY_NAMES.map((key,index)=>[key,values[index]]));
+export function legacyCaravanMods(profileId) {
+  const vals=LEGACY_CARAVAN_MODS[profileId];
+  return vals ? Object.fromEntries(ABILITY_NAMES.map((name,i)=>[name,vals[i]])) : null;
 }
 
 /** Copie la logique du template Créature : melee -> FOR, distance -> DEX.

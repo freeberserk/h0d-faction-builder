@@ -1,8 +1,8 @@
 {
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
-  "description": "PNJ de factions H0D : 14 profils Caravanes avec scores exacts du Modern SRD 15/14/13/12/10/8 (+1 au niveau Menace 4), jets et attaques préservés, migration prudente.",
-  "version": "0.3.1",
+  "description": "Faction Builder H0D : 14 Caravanes Libres PNJ ordinaires Modern SRD ; Menace = CR, niveau PNJ = CR + 1, scores 15/14/13/12/10/8 et progression +1 au niveau 4.",
+  "version": "0.3.2",
   "authors": [
     {
       "name": "JDR Zero Dawn"

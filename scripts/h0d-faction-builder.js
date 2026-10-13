@@ -1,7 +1,7 @@
-import {ABILITY_NAMES,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
+import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.3.1";
+const MODULE_VERSION = "0.3.2";
 const ROOT_FOLDER = "H0D — Factions générées";
 
 /*
@@ -1857,8 +1857,9 @@ async function loadCaravanesProfils(){
     }
     const notes=caravanCompactNotes(p,source);
     const st=p.stats;
-    const scores=caravanScores(p.id,p.menace);
-    const mods=caravanMods(p.id,p.menace);
+    const npcLevel=ordinaryNpcLevelFromCR(p.menace);
+    const scores=caravanScores(p.id,npcLevel);
+    const mods=caravanMods(p.id,npcLevel);
     const combatPlan=caravanAttackPlan(st,mods,weapons);
     // Répartir l'ATQ globale entre BBA de créature, FOR/DEX et bonus d'arme :
     // la somme reste rigoureusement égale au chiffre du PDF.
@@ -1870,6 +1871,7 @@ async function loadCaravanesProfils(){
       actor:{props:{
         H0D_Creature_Type:"Faction",H0D_Creature_Profil:p.nom,
         H0D_Creature_Role:p.role,H0D_Creature_Menace:String(p.menace),
+        H0D_Creature_Niveau_PNJ:String(npcLevel),H0D_Creature_Statut_PNJ:"Ordinaire",
         H0D_Creature_Faction:"CaravanesLibres",H0D_Creature_Faction_Autre:"",
         H0D_Creature_XP:"0",
         H0D_Creature_FOR_MOD:String(mods.FOR),H0D_Creature_DEX_MOD:String(mods.DEX),H0D_Creature_CON_MOD:String(mods.CON),
@@ -2118,17 +2120,19 @@ async function upgradeCaravanesProfilesSafely() {
     return {updated:0,notesOnly:0,skipped:0,failed:0};
   }
   const confirmed=await foundry.applications.api.DialogV2.confirm({
-    window:{title:"H0D — Scores SRD des Caravanes Libres"},
+    window:{title:"H0D — Menace / CR et niveau des PNJ ordinaires"},
     content:`<p><strong>${candidates.length} PNJ</strong> des Caravanes Libres détectés.</p>
-      <p>Attribuer les six <strong>scores SRD 15/14/13/12/10/8</strong> selon le rôle,
-      avec +1 à une caractéristique au niveau de Menace 4.</p>
-      <p>Les statistiques sont mises à jour uniquement si elles correspondent
-      <strong>exactement à la génération 0.2.1 ou 0.3.0</strong>.
-      Les attaques, dés de dégâts, PV, DEF, sauvegardes, items et capacités sont préservés.
-      Les anciennes notes longues sont raccourcies si non personnalisées.</p>
-      <p>Une sauvegarde des valeurs remplacées est ajoutée aux flags de chaque Actor.
-      Effectuer un snapshot de sécurité du monde BAC avant confirmation.</p>`,
-    yes:{label:"Migrer les scores SRD",icon:"fa-solid fa-dice-d20"},
+      <p>Menace = CR ; pour les PNJ ordinaires du Modern SRD :
+      <strong>Niveau PNJ = Menace + 1</strong> (pour ces Menaces 1 à 4).
+      Un seul point de caractéristique est acquis au niveau 4, soit
+      dès la Menace 3, et conservé en Menace 4.</p>
+      <p>Seules les fiches encore conformes aux profils générés en v0.2.1,
+      v0.3.0 ou v0.3.1 sont recalculées. Les modifications personnelles sont
+      préservées, tout comme les dégâts, PV, DEF, sauvegardes, capacités,
+      images et Items.</p>
+      <p>Une sauvegarde des valeurs concernées est ajoutée aux flags de chaque
+      Actor. Sauvegarder le monde BAC avant de valider.</p>`,
+    yes:{label:"Harmoniser les niveaux et scores",icon:"fa-solid fa-dice-d20"},
     no:{label:"Annuler"}
   });
   if(!confirmed)return {updated:0,notesOnly:0,skipped:candidates.length,failed:0};
@@ -2138,89 +2142,107 @@ async function upgradeCaravanesProfilesSafely() {
     const loadout=LOADOUTS.get(arch.defaultLoadout);
     const props=actor.system?.props??{},expected=arch.actor.props;
     const oldAttack=Number(arch.sourceAttack),weapons=loadout?.weapons??[];
-    const oldMods=legacyCaravanMods(arch.key==="messager-caravane"?"messager-de-caravane":arch.key);
-    if(!oldMods||!Number.isFinite(oldAttack)){summary.skipped++;continue;}
-    const oldPlan=caravanAttackPlan({attaque:oldAttack},oldMods,weapons);
-    const candidatesModes=[
-      {key:"0.2.1",mods:Object.fromEntries(ABILITY_NAMES.map(k=>[k,0])),attack:oldAttack,bonuses:weapons.map(()=>0)},
-      {key:"0.3.0",mods:oldMods,attack:oldPlan.base,bonuses:oldPlan.weaponBonuses}
+    const id=arch.key==="messager-caravane"?"messager-de-caravane":arch.key;
+    const legacyMods=legacyCaravanMods(id);
+    if(!legacyMods||!Number.isFinite(oldAttack)){summary.skipped++;continue;}
+    const menace=Number(props.H0D_Creature_Menace??expected.H0D_Creature_Menace);
+    // Une Menace éditée par le MJ n'est jamais corrigée implicitement.
+    if(menace!==Number(expected.H0D_Creature_Menace)){summary.skipped++;continue;}
+    const oldLevel=menace,newLevel=ordinaryNpcLevelFromCR(menace);
+    const prevScores=caravanScores(id,oldLevel);
+    const prevMods=caravanMods(id,oldLevel);
+    const legacyPlan=caravanAttackPlan({attaque:oldAttack},legacyMods,weapons);
+    const prevPlan=caravanAttackPlan({attaque:oldAttack},prevMods,weapons);
+    const profiles=[
+      {key:"0.2.1",scores:null,mods:Object.fromEntries(ABILITY_NAMES.map(k=>[k,0])),attack:oldAttack,bonuses:weapons.map(()=>0)},
+      {key:"0.3.0",scores:null,mods:legacyMods,attack:legacyPlan.base,bonuses:legacyPlan.weaponBonuses},
+      {key:"0.3.1",scores:prevScores,mods:prevMods,attack:prevPlan.base,bonuses:prevPlan.weaponBonuses}
     ];
-    const scoresUntouched=ABILITY_NAMES.every(stat=>{
-      const score=props["H0D_Creature_"+stat+"_SCORE"];
-      return score===undefined||score===null||score===""||Number(score)===0;
-    });
-    let matched=null,docs=[];
-    if(scoresUntouched && Number(props.H0D_Creature_Attaque_Divers??0)===0){
-      docs=weapons.map(source=>Array.from(actor.items??[]).find(item=>
-        item.getFlag(MODULE_ID,"generated")===true &&
-        item.getFlag(MODULE_ID,"kind")==="weapon" &&
-        item.getFlag(MODULE_ID,"entryKey")===source.key
-      ));
-      if(!docs.includes(undefined)){
-        matched=candidatesModes.find(mode=>
-          Number(props.H0D_Creature_Attaque_Base)===mode.attack &&
-          ABILITY_NAMES.every(stat=>
-            Number(props["H0D_Creature_"+stat+"_MOD"]??0)===mode.mods[stat]
-          ) &&
-          docs.every((item,i)=>{
-            const p=item.system?.props??{};
-            return Number(p.H0D_Arme_Bonus_Attaque)===mode.bonuses[i] &&
-              String(p.H0D_Arme_Categorie??"")===String(weapons[i].props.H0D_Arme_Categorie) &&
-              String(p.H0D_Arme_Carac_Attaque??"aucune")==="aucune";
-          })
-        )??null;
-      }
-    }
-    const updates={},previous={},previousWeapons=[];
+    const docs=weapons.map(source=>Array.from(actor.items??[]).find(item=>
+      item.getFlag(MODULE_ID,"generated")===true &&
+      item.getFlag(MODULE_ID,"kind")==="weapon" &&
+      item.getFlag(MODULE_ID,"entryKey")===source.key
+    ));
+    const hasAllWeapons=weapons.length>0&&!docs.includes(undefined);
+    const matches=profile=>hasAllWeapons &&
+      Number(props.H0D_Creature_Attaque_Base)===profile.attack &&
+      Number(props.H0D_Creature_Attaque_Divers??0)===0 &&
+      ABILITY_NAMES.every(stat=>{
+        const mod=props["H0D_Creature_"+stat+"_MOD"];
+        const score=props["H0D_Creature_"+stat+"_SCORE"];
+        const expectedScore=profile.scores?.[stat];
+        return Number(mod??0)===profile.mods[stat] &&
+          (expectedScore===undefined
+            ? (score===undefined||score===null||score===""||Number(score)===0)
+            : Number(score)===expectedScore);
+      }) &&
+      docs.every((item,i)=>{
+        const ip=item.system?.props??{};
+        return Number(ip.H0D_Arme_Bonus_Attaque)===profile.bonuses[i] &&
+          String(ip.H0D_Arme_Categorie??"")===String(weapons[i].props.H0D_Arme_Categorie) &&
+          String(ip.H0D_Arme_Carac_Attaque??"aucune")==="aucune";
+      });
+    // Sécurité : ne jamais réécrire un niveau personnalisé.
+    const levelRaw=props.H0D_Creature_Niveau_PNJ;
+    const levelUntouched=levelRaw===undefined||levelRaw===null||levelRaw===""||
+      Number(levelRaw)===oldLevel||Number(levelRaw)===newLevel;
+    const matched=levelUntouched?profiles.find(matches):null;
+    const updates={},oldValues=[],oldWeapons=[];
     const note=String(props.H0D_Creature_Notes??"");
     if(note.startsWith("Source :") && note.includes("DD général des capacités")){
-      previous.H0D_Creature_Notes=props.H0D_Creature_Notes;
+      oldValues.push(["H0D_Creature_Notes",props.H0D_Creature_Notes]);
       updates["system.props.H0D_Creature_Notes"]=expected.H0D_Creature_Notes;
     }
-    if(matched){
-      for(const stat of ABILITY_NAMES){
-        for(const suffix of ["SCORE","MOD"]){
-          const key="H0D_Creature_"+stat+"_"+suffix;
-          previous[key]=props[key];
-          updates["system.props."+key]=expected[key];
-        }
+    if(matched) {
+      for(const stat of ABILITY_NAMES)for(const suffix of ["SCORE","MOD"]){
+        const key="H0D_Creature_"+stat+"_"+suffix;
+        oldValues.push([key,props[key]]);
+        updates["system.props."+key]=expected[key];
       }
-      previous.H0D_Creature_Attaque_Base=props.H0D_Creature_Attaque_Base;
-      updates["system.props.H0D_Creature_Attaque_Base"]=expected.H0D_Creature_Attaque_Base;
-      docs.forEach((item,i)=>previousWeapons.push({id:item.id,bonus:item.system.props.H0D_Arme_Bonus_Attaque,next:weapons[i].props.H0D_Arme_Bonus_Attaque}));
+      for(const key of ["H0D_Creature_Attaque_Base","H0D_Creature_Niveau_PNJ","H0D_Creature_Statut_PNJ"]){
+        oldValues.push([key,props[key]]);
+        updates["system.props."+key]=expected[key];
+      }
+      docs.forEach((item,i)=>oldWeapons.push({
+        id:item.id,before:item.system.props.H0D_Arme_Bonus_Attaque,
+        after:weapons[i].props.H0D_Arme_Bonus_Attaque
+      }));
     }
     if(!Object.keys(updates).length){summary.skipped++;continue;}
     try{
-      await actor.setFlag(MODULE_ID,"caravanesSRDMigrationBackup",{
-        savedAt:new Date().toISOString(),oldValues:previous,priorWeapons:previousWeapons,previousGeneration:matched?.key??"notes-only"
+      await actor.setFlag(MODULE_ID,"caravanesOrdinaryCRMigrationBackup",{
+        savedAt:new Date().toISOString(),oldValues,priorWeapons:oldWeapons,
+        previousGeneration:matched?.key??"notes-only"
       });
       await actor.update(updates);
-      if(matched) {
-        for(const w of previousWeapons){
+      if(matched){
+        for(const w of oldWeapons) {
           const item=actor.items.get(w.id);
-          await item.update({"system.props.H0D_Arme_Bonus_Attaque":w.next});
+          await item.update({"system.props.H0D_Arme_Bonus_Attaque":w.after});
         }
         summary.updated++;
       } else summary.notesOnly++;
     }catch(err){
       summary.failed++;
-      console.error(`${MODULE_ID} | migration SRD (${actor.name})`,err);
+      console.error(`${MODULE_ID} | migration Menace/CR (${actor.name})`,err);
       try{
-        const restore={};
-        for(const [key,value] of Object.entries(previous)){
-          if(value===undefined||value===null)restore["system.props.-="+key]=null;
-          else restore["system.props."+key]=value;
+        const rollback={};
+        for(const [key,value] of oldValues){
+          if(value===undefined||value===null)rollback["system.props.-="+key]=null;
+          else rollback["system.props."+key]=value;
         }
-        if(Object.keys(restore).length)await actor.update(restore);
-        for(const w of previousWeapons){
+        if(Object.keys(rollback).length)await actor.update(rollback);
+        for(const w of oldWeapons){
           const item=actor.items.get(w.id);
-          if(item)await item.update({"system.props.H0D_Arme_Bonus_Attaque":w.bonus});
+          if(item)await item.update({"system.props.H0D_Arme_Bonus_Attaque":w.before});
         }
-      }catch(rollbackError){console.error(`${MODULE_ID} | restauration SRD impossible`,rollbackError);}
+      }catch(rollbackError){
+        console.error(`${MODULE_ID} | restauration Menace/CR impossible (${actor.name})`,rollbackError);
+      }
     }
   }
   notify(summary.failed?"warn":"info",
-    `H0D SRD : ${summary.updated} PNJ ajustés, ${summary.notesOnly} notes seules, ${summary.skipped} ignorés, ${summary.failed} erreurs.`);
+    `H0D PNJ ordinaires : ${summary.updated} harmonisés, ${summary.notesOnly} notes seules, ${summary.skipped} ignorés, ${summary.failed} erreurs.`);
   return summary;
 }
 
@@ -2283,7 +2305,7 @@ async function openBuilder(){
           <select name="action">
             <option value="build">Générer / mettre à jour un PNJ</option>
             <option value="repair-capabilities">Réparer les capacités des PNJ déjà générés</option>
-            <option value="upgrade-caravanes">Corriger vers les scores SRD (15/14/13/12/10/8)</option>
+            <option value="upgrade-caravanes">Harmoniser PNJ ordinaires (Menace/CR et niveau)</option>
           </select>
         </div>
 
@@ -2303,7 +2325,7 @@ async function openBuilder(){
 
         <p style="opacity:.75">
           L’équipement standard validé est ajouté automatiquement.
-          Les 14 Caravanes Libres utilisent les six scores SRD 15/14/13/12/10/8, attribués selon le métier (+1 au niveau équivalent Menace 4). Les autres profils conservent leurs données d’origine ; XP non inventés.
+          Les 14 Caravanes Libres sont des PNJ ordinaires SRD : Menace = CR, niveau = CR + 1 (pour CR 1 à 4), scores 15/14/13/12/10/8, +1 à un score au niveau 4 (Menace 3). Les chefs de factions héroïques seront un type séparé. Les autres profils restent inchangés.
           Les armures/boucliers sans bonus chiffré distinct sont créés avec un bonus DEF neutre (0) afin de conserver la DEF finale du profil.
         </p>
       </div>`,

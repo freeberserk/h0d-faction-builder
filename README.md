@@ -1,4 +1,15 @@
-# H0D Faction Builder — v0.3.0
+# H0D Faction Builder — v0.3.1
+
+## v0.3.1 — Correction Modern SRD : SCORES, pas modificateurs libres
+Le standard Modern SRD pour un PNJ ordinaire est la répartition des **six scores 15, 14, 13, 12, 10, 8** au niveau 1, en fonction du rôle. Un seul score gagne **+1 tous les quatre niveaux**. Les profils de Menace 1–4 utilisent ici la Menace comme **niveau équivalent** : **premier +1 seulement en Menace 4**.
+
+Les valeurs effectives deviennent des modificateurs calculés comme sur la fiche PJ H0D : **floor((score−10)/2)**. Ainsi 15 donne +2, 14 donne +2, 13 donne +1, 12 donne +1, 10 donne +0, 8 donne −1. Au rang 4, une spécialité à 15 devient 16 (+3). Il ne s'agit PAS d'ajouter directement +3/+4/+5 comme dans la version 0.3.0.
+
+Le template Créature **v1.20** du Template Manager **v1.7.2** affiche les scores SRD éditables seulement pour les **Caravanes Libres**, en plus des modificateurs et dés. Lorsque le MJ modifie un score, le Faction Builder synchronise son modificateur sur l'Actor (sans toucher aux sauvegardes, PV ou DEF).
+
+**Migration depuis v0.2.1 OU v0.3.0** : une action manuelle « Corriger vers les scores SRD » examine chaque Actor généré, ne remplace ses statistiques que si toutes les anciennes valeurs de caractéristiques, attaque et armes correspondent exactement à celles du générateur antérieur ; sinon elle préserve les changements MJ. Avant modification, chaque Actor reçoit un flag de sauvegarde `caravanesSRDMigrationBackup`. Les profils déjà personnalisés peuvent être laissés intacts. Ne pas utiliser « Mettre à jour » pour réparer une fiche jouée : cela remplace les Items générés.
+
+Les **ATQ finales de la source** sont conservées sur toutes les armes générées, au prix d'une répartition adaptée base/caractéristique/bonus de l'arme. Les jets de dégâts, les PV, la DEF, l'initiative et les sauvegardes de la source sont maintenus.
 
 ## 0.3.0 — Caravanes Libres : caractéristiques, notes courtes, migration sûre
 

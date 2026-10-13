@@ -16,8 +16,11 @@ jobs:
           node --check scripts/h0d-caravanes-stats.js
           node tests/caravanes-stats.mjs
           node tests/caravanes-ordinary-migration.mjs
+          node --check scripts/h0d-council-unique.js
+          node tests/conseil-unique.mjs
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null
+          python3 -m json.tool data/conseil-dent-ambre.json > /dev/null
           python3 -c 'import json; d=json.load(open("data/caravanes-libres.json")); assert len(d["profils"]) == 14; assert sum(len(p["actions"]) for p in d["profils"]) == 89'
       - name: Package and publish module
         env:
@@ -26,5 +29,5 @@ jobs:
           VERSION=$(python3 -c 'import json; print(json.load(open("module.json"))["version"])')
           TAG="$VERSION"
           if gh release view "$TAG" >/dev/null 2>&1; then echo "Version $TAG déjà publiée"; exit 0; fi
-          zip -q -r h0d-faction-builder.zip module.json scripts data README.md CHANGELOG.md INSTALL-FORGE.txt
+          zip -q -r h0d-faction-builder.zip module.json scripts data assets README.md CHANGELOG.md INSTALL-FORGE.txt
           gh release create "$TAG" h0d-faction-builder.zip module.json data/caravanes-libres.json --target "$GITHUB_SHA" --title "H0D Faction Builder v$TAG" --notes-file CHANGELOG.md

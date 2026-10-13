@@ -1,8 +1,8 @@
 {
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
-  "description": "Générateur de PNJ de factions H0D pour Foundry VTT : 9 profils historiques et 14 profils complets des Caravanes Libres (Menace 1 à 4), avec actions, traits et équipements.",
-  "version": "0.2.0",
+  "description": "Générateur de PNJ H0D : 9 profils historiques et 14 Caravanes Libres ; capacités de tables CSB corrigées et réparation non destructive des PNJ existants.",
+  "version": "0.2.1",
   "authors": [
     {
       "name": "JDR Zero Dawn"

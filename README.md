@@ -1,4 +1,12 @@
-# H0D Faction Builder — v0.2.0
+# H0D Faction Builder — v0.2.1
+
+## Correctif 0.2.1 — Fiches de factions qui refusent de s'ouvrir
+
+Les capacités sont désormais indexées numériquement (0, 1, 2, etc.) conformément au parcours des lignes de Custom System Builder 6.0.2. L'ancien générateur utilisait des IDs aléatoires, provoquant une erreur `dynamicProps[line] is undefined` dans `DynamicTable.js` lors de l'ouverture des fiches des Caravanes Libres. Le Chasseur novice, sans capacités, restait ouvrable.
+
+Pour réparer **les PNJ déjà créés** : lancer `H0D — Générateur factions`, sélectionner l'action **Réparer les capacités des PNJ déjà générés**, exécuter puis confirmer. L'opération ne touche que la table `H0D_Creature_Capacites_Table` des fiches générées H0D de type Faction qui ont des clés non séquentielles ; elle conserve les textes, DD, autres champs et Items. Une copie de la table d'origine est conservée en flag d'Actor `h0d-faction-builder.capabilitiesTableRepairBackup`. Les Actors ne sont pas recréés. Le mode **Mettre à jour** purge également les anciens index.
+
+L'ouverture réelle des fiches reste à tester dans Foundry. Utiliser d'abord le monde BAC et exporter un snapshot pour prudence.
 
 ## Caravanes Libres — 14 profils (Menace 1 à 4)
 

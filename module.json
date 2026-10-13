@@ -1,8 +1,8 @@
 {
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
-  "description": "Générateur de PNJ H0D : 9 profils historiques et 14 Caravanes Libres ; capacités de tables CSB corrigées et réparation non destructive des PNJ existants.",
-  "version": "0.2.1",
+  "description": "Générateur de PNJ de factions : 14 Caravanes Libres à caractéristiques harmonisées SRD, attaques inchangées, notes courtes et migration ciblée.",
+  "version": "0.3.0",
   "authors": [
     {
       "name": "JDR Zero Dawn"

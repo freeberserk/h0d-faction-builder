@@ -1,8 +1,8 @@
 {
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
-  "description": "Générateur de PNJ de factions : 14 Caravanes Libres à caractéristiques harmonisées SRD, attaques inchangées, notes courtes et migration ciblée.",
-  "version": "0.3.0",
+  "description": "PNJ de factions H0D : 14 profils Caravanes avec scores exacts du Modern SRD 15/14/13/12/10/8 (+1 au niveau Menace 4), jets et attaques préservés, migration prudente.",
+  "version": "0.3.1",
   "authors": [
     {
       "name": "JDR Zero Dawn"

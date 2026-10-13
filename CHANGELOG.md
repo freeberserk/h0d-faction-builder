@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 — Correction des tables de capacités des factions
+- Correction des clés de lignes de `H0D_Creature_Capacites_Table` : indices numériques séquentiels au lieu d'identifiants aléatoires.
+- Réparation manuelle et ciblée des fiches déjà générées, avec sauvegarde locale des tables originales.
+- Correction du mode Mettre à jour pour supprimer les anciennes clés avant réinjection des lignes canoniques.
+- Aucun changement de statistiques, de profils, d'armes ni de protections.
+
+
 ## 0.2.0 — Caravanes Libres
 - Ajout de 13 nouveaux archétypes ; remplacement des données du Messager existant, sans doublon.
 - 14 profils Menace 1–4, 89 actions, 89 équipements de référence et 51 traits, extraits du PDF fourni.

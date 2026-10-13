@@ -1,7 +1,9 @@
 import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
+import {installCouncilUnique} from "./h0d-council-unique.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.3.2";
+const MODULE_VERSION = "0.4.0";
+let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 
 /*
@@ -2317,12 +2319,20 @@ async function openBuilder(){
             <option value="build">Générer / mettre à jour un PNJ</option>
             <option value="repair-capabilities">Réparer les capacités des PNJ déjà générés</option>
             <option value="upgrade-caravanes">Harmoniser PNJ ordinaires (Menace/CR et niveau)</option>
+            <option value="council-create">Conseil — Créer un PNJ unique absent</option>
+            <option value="council-adopt">Conseil — Adopter une fiche existante (sans modification)</option>
+            <option value="council-open">Conseil — Ouvrir une fiche</option>
           </select>
         </div>
 
         <div class="form-group">
           <label>Profil PNJ</label>
           <select name="archetype">${profileOptions()}</select>
+        </div>
+
+        <div class="form-group">
+          <label>Membre du Conseil de la Dent d'Ambre</label>
+          <select name="councilMember">${COUNCIL?.options()??'<option value="">Conseil indisponible</option>'}</select>
         </div>
 
         <div class="form-group">
@@ -2335,7 +2345,7 @@ async function openBuilder(){
         </div>
 
         <p style="opacity:.75">
-          L’équipement standard validé est ajouté automatiquement.
+          Les neuf membres du Conseil sont des PNJ héroïques uniques (niveau 4). Créer absent / Adopter / Ouvrir ne réinitialise jamais leurs données jouées. L’équipement standard validé des profils ordinaires est ajouté automatiquement.
           Les 14 Caravanes Libres sont des PNJ ordinaires SRD : Menace = CR, niveau = CR + 1 (pour CR 1 à 4), scores 15/14/13/12/10/8, +1 à un score au niveau 4 (Menace 3). Les chefs de factions héroïques seront un type séparé. Les autres profils restent inchangés.
           Les armures/boucliers sans bonus chiffré distinct sont créés avec un bonus DEF neutre (0) afin de conserver la DEF finale du profil.
         </p>
@@ -2355,6 +2365,20 @@ async function openBuilder(){
   if(result.action === "upgrade-caravanes"){
     try{await upgradeCaravanesProfilesSafely();}
     catch(err){console.error(`${MODULE_ID} | migration Caravanes`,err);notify("error",`H0D Faction Builder : ${err?.message??err}`);}
+    return;
+  }
+  if(String(result.action||"").startsWith("council-")){
+    if(!COUNCIL)return notify("error","Références du Conseil indisponibles.");
+    const action=String(result.action),key=String(result.councilMember||"");
+    if(!key)return notify("warn","Choisis un membre du Conseil.");
+    try {
+      const actor=action==="council-create" ? await COUNCIL.create(key)
+        : action==="council-adopt" ? await COUNCIL.adopt(key)
+        : await COUNCIL.open(key);
+      if(actor && action!=="council-open")actor.sheet?.render(true);
+      if(actor && action==="council-create")notify("info","Conseiller créé : "+actor.name);
+      if(actor && action==="council-adopt")notify("info","Conseiller adopté sans modification : "+actor.name);
+    }catch(err){console.error(MODULE_ID+" | Conseil",err);notify("error","Conseil : "+(err?.message??err));}
     return;
   }
   if(!result.archetype){
@@ -2403,11 +2427,17 @@ async function ensureLauncherMacro() {
 Hooks.once("ready", async () => {
   try { await loadCaravanesProfils(); }
   catch (err) { console.error(`${MODULE_ID} | chargement Caravanes Libres`,err); notify("error",`Caravanes Libres : ${err?.message||err}`); }
+  try{
+    COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
+      templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
+      clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify});
+  }catch(err){console.error(MODULE_ID+" | Conseil",err);notify("error","Conseil : "+(err?.message??err));}
   const api = {
     open: openBuilder,
     buildFactionActor,
     repairGeneratedFactionCapabilityTables,
     upgradeCaravanesProfilesSafely,
+    council:COUNCIL,
     registerFaction,
     registerFactions,
     registerArchetype,

@@ -1,4 +1,23 @@
-# H0D Faction Builder — v0.3.2
+# H0D Faction Builder — v0.4.0
+
+## v0.4.0 — Conseil de la Dent d'Ambre : neuf PNJ héroïques uniques
+
+**Neuf conseillers inclus :** Kael (Voie), Brok (Forge), Nerys (Yeux Bleus), Maela (Chasses), Odran (Machines Douces), Sava (Récupération), Eron des Racines (Remèdes), Tarek (Défenses), Isha (Récits).
+
+- **49 équipements et objets** repris de l'export de référence, transférés dans les templates H0D actuels. Les portées des 17 armes sont numériques ; les 11 armures/boucliers et quatre lots de munitions sont normalisés.
+- **9 portraits (576×864 WebP) et 9 tokens carrés transparents (512×512 WebP)** inclus dans `assets/conseil/`. Ces images proviennent du pack fourni par le MJ et restent intégrées au module. Les portraits/tokens existants ne sont pas écrasés.
+- **PNJ héroïques de niveau 4** avec scores Modern SRD répartis **15/14/13/12/10/8**, avec un seul +1 à une caractéristique au niveau 4. `Menace 4` est une valeur d'adversité cible issue du pack source, distincte du niveau. Les caractéristiques remplacent d'anciens modificateurs très élevés ; base d'attaque et bonus d'armes ont été compensés afin de préserver **ATQ finale et dégâts des exports**. PV, DEF, sauvegardes et initiatives de référence restent inchangés.
+- **Canon narratif :** toutes les notes MJ, descriptions, capacités et aptitudes du ZIP sont conservées, avec des précisions sur les Focus de Nerys, la machine de suture fixe d'Eron, le mystère d'Isha, le signal du Scrapper d'Odran et l'arc magnétique de Maela. L'arc magnétique et une éventuelle grenade IEM ne sont **pas créés arbitrairement** : l'équipement déjà joué dans Foundry doit prévaloir.
+- Les neuf personnages ne dépendent d'aucun compendium ; fiches de référence publiques stockées dans `data/conseil-dent-ambre.json` conformément à l'accord du MJ. Chaque fiche créée est un Actor persistant du monde.
+
+**Procédure avec H0D — Générateur factions :** choisir un membre dans le champ « Membre du Conseil » puis l'une des **trois nouvelles actions distinctes** :
+1. **Conseil — Créer un PNJ unique absent :** crée une seule fois sa fiche et son inventaire sous `H0D — Factions générées / Clan de la Dent d'Ambre / Conseil`. Si une fiche homonyme existe déjà dans le monde, l'action refuse de créer un doublon.
+2. **Conseil — Adopter une fiche existante :** associe un Actor déjà importé. Seuls les flags d'identification sont ajoutés avec confirmation ; **aucun changement de stats, objets, note, PV, image, token ou dossier**.
+3. **Conseil — Ouvrir une fiche :** retrouve le conseiller déjà créé ou existant et ouvre sa fiche.
+
+**Jamais de « Mettre à jour » pour les membres du Conseil.** Le mode générique du Faction Builder reste réservé aux PNJ générables. Les neuf fiches uniques ne sont ni synchronisées, ni régénérées automatiquement après publication d'une nouvelle version. Si des fiches du Conseil existent déjà, utiliser **Adopter** et préserver leur équipement réellement joué.
+
+**Template recommandé :** H0D Template Manager **v1.7.4**, Créature **v1.22**, qui rend les scores SRD visibles sur les PNJ héroïques en plus des Caravanes Libres. Installer le template, faire un snapshot puis synchroniser les Actors **avant** de créer les conseillers. Tests GitHub ne remplacent pas la validation finale dans Foundry BAC.
 
 ## v0.3.2 — Menace (CR) distincte du niveau du PNJ ordinaire
 

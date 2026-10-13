@@ -1991,6 +1991,12 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
   };
   if(!props.H0D_Creature_Faction && faction.factionValue) props.H0D_Creature_Faction=faction.factionValue;
   await forceTemplateAndProps(actor,actorTemplate,props);
+  // Le mode « Mettre à jour » doit également purger les anciennes lignes
+  // randomID avant d'injecter la table canonique 0..N-1.
+  if (Object.prototype.hasOwnProperty.call(props,"H0D_Creature_Capacites_Table")) {
+    await actor.update({"system.props.-=H0D_Creature_Capacites_Table":null});
+    await actor.update({"system.props.H0D_Creature_Capacites_Table":clone(props.H0D_Creature_Capacites_Table)});
+  }
   await actor.update({
     name:displayName,folder:threatFolder.id,"prototypeToken.name":displayName,
     [`flags.${MODULE_ID}.generated`]:true,[`flags.${MODULE_ID}.buildKey`]:buildKey,

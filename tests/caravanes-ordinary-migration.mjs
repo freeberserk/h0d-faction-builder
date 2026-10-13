@@ -13,7 +13,7 @@ const game={user:{isGM:true},actors:[],modules:{get:()=>null}};
 const ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 const Hooks={on:(k,fn)=>hooks[k]=fn,once:()=>{}};
 const get=await new Function("foundry","game","ui","Hooks","fetch",
- helper.replace(/export\\s+(?=const|function)/g,"")+
+ helper.replace(/export\s+(?=const|function)/g,"")+
  "\n"+builder.replace(/^import[^\n]+\n/m,"")+
  "\nreturn {loadCaravanesProfils,ARCHETYPES,LOADOUTS,caravanScores,caravanMods,caravanAttackPlan,upgradeCaravanesProfilesSafely};"
 )(foundry,game,ui,Hooks,async()=>({ok:true,json:async()=>source}));

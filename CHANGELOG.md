@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.2 — Menace/CR et niveau distincts pour les ordinaires
+- Caravanes Libres : Menace = CR ; niveau PNJ = CR +1 (CR 1–4 / niveaux 2–5).
+- Modern SRD : scores de base 15,14,13,12,10,8 ; premier +1 de score au niveau PNJ 4 = Menace 3, pas Menace 4.
+- Stockage explicite du niveau PNJ ordinaire ; futurs chefs héroïques séparés.
+- Migration manuelle protectrice des Actors issus des v0.2.1, v0.3.0 ou v0.3.1 ; aucune régénération des Items.
+- Attaques/dégâts et autres chiffres du PDF préservés ; compatibilité Créature v1.21.
+
+
+
 ## 0.3.1 — Correctif Modern SRD des scores d'aptitude
 - Remplacement des modificateurs erronés v0.3.0 par les scores ordinaires SRD **15, 14, 13, 12, 10, 8**, répartis par rôle.
 - Progression : +1 à **une seule caractéristique** en Menace 4 (niveau 4 équivalent) ; mod = floor((score−10)/2).

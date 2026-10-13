@@ -8,7 +8,8 @@
 
 /* Valeurs SRD des PNJ ordinaires : 15, 14, 13, 12, 10, 8, dans un ordre
  * choisi pour chaque rôle. +1 à UNE caractéristique par tranche de 4 niveaux.
- * Menace 1 à 4 est traitée ici comme niveau équivalent 1 à 4.
+ * La Menace est le CR (difficulté) ; pour un PNJ ordinaire SRD, CR = niveau-1.
+ * Ainsi Menace 1..4 correspond à niveaux de PNJ 2..5, et non 1..4.
  */
 export const STANDARD_ARRAY = Object.freeze([15,14,13,12,10,8]);
 export const ABILITY_NAMES = Object.freeze(["FOR","DEX","CON","INT","SAG","CHA"]);
@@ -31,8 +32,8 @@ export const CARAVAN_BASE_SCORES = Object.freeze({
   "ingenieur-de-caravane":     [12,13,14,15,10,8]
 });
 
-// Au niveau équivalent 4, le premier bonus +1 est investi dans la
-// spécialité ; hors Menace 4, le tableau reste strictement inchangé.
+// Au niveau réel 4 (Menace/CR 3), le premier bonus +1 est investi dans la
+// spécialité. Un PNJ Menace/CR 4 est niveau 5 et conserve ce bonus unique.
 export const LEVEL4_BOOSTS = Object.freeze({
   "capitaine-de-caravane":"CHA",
   "veteran-des-routes":"FOR",
@@ -44,24 +45,29 @@ export function scoreToMod(score) {
   return Math.floor((Number(score)-10)/2);
 }
 
-export function caravanScores(profileId, menace) {
+export function ordinaryNpcLevelFromCR(cr) {
+  const rating=Number(cr);
+  // Cette collection référence seulement des CR entiers 1 à 4.
+  if(!Number.isInteger(rating)||rating<1)throw new Error("CR ordinaire invalide : "+cr);
+  return rating+1;
+}
+
+export function caravanScores(profileId,npcLevel) {
   const values=CARAVAN_BASE_SCORES[profileId];
-  if(!values) throw new Error("Profil sans scores SRD validés : "+profileId);
-  const m=Number(menace);
-  if (!Number.isInteger(m)||m<1) throw new Error("Menace invalide : "+menace);
+  if(!values)throw new Error("Profil sans scores SRD validés : "+profileId);
+  const level=Number(npcLevel);
+  if(!Number.isInteger(level)||level<1)throw new Error("Niveau de PNJ invalide : "+npcLevel);
   const scores=Object.fromEntries(ABILITY_NAMES.map((stat,i)=>[stat,values[i]]));
-  // La progression est celle du SRD (levels 4,8,12,...), mais les profils
-  // actuellement livrés ne couvrent que Menace 1 à 4.
-  const boosts=Math.floor(m/4);
-  if(boosts) {
+  const boosts=Math.floor(level/4);
+  if(boosts){
     const key=LEVEL4_BOOSTS[profileId] ?? ABILITY_NAMES[values.indexOf(15)];
     scores[key]+=boosts;
   }
   return scores;
 }
 
-export function caravanMods(profileId, menace) {
-  const scores=caravanScores(profileId,menace);
+export function caravanMods(profileId,npcLevel) {
+  const scores=caravanScores(profileId,npcLevel);
   return Object.fromEntries(ABILITY_NAMES.map(stat=>[stat,scoreToMod(scores[stat])]));
 }
 

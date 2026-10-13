@@ -1,4 +1,14 @@
-# H0D Faction Builder — v0.3.1
+# H0D Faction Builder — v0.3.2
+
+## v0.3.2 — Menace (CR) distincte du niveau du PNJ ordinaire
+
+**Décision de campagne :** les 14 Caravanes Libres sont des **PNJ ordinaires** du Modern SRD. Les profils **héroïques** sont réservés à certains chefs de faction et seront traités séparément (aucun profil Caravanes Libres transformé en héroïque).
+
+La **Menace** désigne le CR d'un adversaire, **pas** son niveau de personnage. Pour un ordinaire de niveau 2+, le SRD indique **CR = niveau − 1** ; les 14 profils Menace 1, 2, 3 et 4 sont donc respectivement de **niveau PNJ 2, 3, 4 et 5**. Le CR décrit une difficulté individuelle indicative, pas un niveau de classe ni une garantie d'équilibrage pour les trois PJ.
+
+Tous gardent les scores de départ SRD **15, 14, 13, 12, 10, 8** selon leur métier ; **un unique +1 au niveau 4** est donc acquis **à partir de Menace 3**, et reste acquis en Menace 4 (pas de deuxième bonus). Le champ `H0D_Creature_Niveau_PNJ` stocke leur niveau distinct de `H0D_Creature_Menace`. Le Template Manager **1.7.3** / Créature **v1.21** affiche cette distinction sur les fiches Caravanes Libres.
+
+Les PV, DEF, jets de sauvegarde, initiative, dégâts, actions et équipements restent ceux du PDF, et chaque arme générée conserve **exactement son bonus d'attaque total**. La commande de migration des Caravanes reconnaît les générations **0.2.1**, **0.3.0** et **0.3.1** tant qu'elles ne sont pas personnalisées. Sauvegarder le monde avant toute migration ; ne pas utiliser « Mettre à jour » sur une fiche jouée.
 
 ## v0.3.1 — Correction Modern SRD : SCORES, pas modificateurs libres
 Le standard Modern SRD pour un PNJ ordinaire est la répartition des **six scores 15, 14, 13, 12, 10, 8** au niveau 1, en fonction du rôle. Un seul score gagne **+1 tous les quatre niveaux**. Les profils de Menace 1–4 utilisent ici la Menace comme **niveau équivalent** : **premier +1 seulement en Menace 4**.

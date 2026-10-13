@@ -2186,7 +2186,18 @@ async function upgradeCaravanesProfilesSafely() {
     const levelRaw=props.H0D_Creature_Niveau_PNJ;
     const levelUntouched=levelRaw===undefined||levelRaw===null||levelRaw===""||
       Number(levelRaw)===oldLevel||Number(levelRaw)===newLevel;
-    const matched=levelUntouched?profiles.find(matches):null;
+    const alreadyCurrent=Number(levelRaw)===newLevel &&
+      ABILITY_NAMES.every(stat=>
+        Number(props["H0D_Creature_"+stat+"_SCORE"])===Number(expected["H0D_Creature_"+stat+"_SCORE"]) &&
+        Number(props["H0D_Creature_"+stat+"_MOD"])===Number(expected["H0D_Creature_"+stat+"_MOD"])
+      ) &&
+      Number(props.H0D_Creature_Attaque_Base)===Number(expected.H0D_Creature_Attaque_Base) &&
+      hasAllWeapons && docs.every((item,i)=>
+        Number(item.system?.props?.H0D_Arme_Bonus_Attaque)===
+        Number(weapons[i].props.H0D_Arme_Bonus_Attaque)
+      );
+    // Ré-exécuter la migration sur un PNJ déjà corrigé n'écrit rien.
+    const matched=alreadyCurrent?null:(levelUntouched?profiles.find(matches):null);
     const updates={},oldValues=[],oldWeapons=[];
     const note=String(props.H0D_Creature_Notes??"");
     if(note.startsWith("Source :") && note.includes("DD général des capacités")){

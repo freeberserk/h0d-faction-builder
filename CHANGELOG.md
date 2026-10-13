@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 — Caravanes Libres et SRD (équilibrage MJ)
+- Six modificateurs approuvés pour chacun des 14 profils de Menace 1–4, avec jets compatibles avec le template Créature v1.19 et le Modern SRD.
+- Répartition base d'attaque / caractéristique / arme testée sans changer le +ATQ des profils ni leurs dégâts.
+- Notes courtes sans duplication des actions et traits.
+- Migration manuelle des Actors déjà générés avec gardes anti-écrasement et sauvegarde de l'état précédent.
+- Aucun changement aux neuf archétypes Menace 1 historiques ni au Creature Builder.
+
+
+
 ## 0.2.1 — Correction des tables de capacités des factions
 - Correction des clés de lignes de `H0D_Creature_Capacites_Table` : indices numériques séquentiels au lieu d'identifiants aléatoires.
 - Réparation manuelle et ciblée des fiches déjà générées, avec sauvegarde locale des tables originales.

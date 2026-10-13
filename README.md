@@ -1,4 +1,16 @@
-# H0D Faction Builder — v0.2.1
+# H0D Faction Builder — v0.3.0
+
+## 0.3.0 — Caravanes Libres : caractéristiques, notes courtes, migration sûre
+
+Les **14 Caravanes Libres (Menace 1–4)** disposent maintenant de six modificateurs FOR/DEX/CON/INT/SAG/CHA, définis selon leur rôle et le niveau de Menace. Ces valeurs sont **une adaptation d'équilibrage MJ** et non des chiffres du PDF source. Comme pour les PJ H0D suivant le Modern SRD, les jets sont **1d20 + modificateur**. Les caractéristiques peuvent être lancées depuis le template Créature v1.19 du H0D Template Manager v1.7.1.
+
+**ATQ préservée :** pour chaque arme fournie par les 14 profils, le builder répartit le total du PDF entre attaque de base, FOR/DEX et bonus propre à l'arme. Les dés de dégâts, la DEF, les PV, les sauvegardes, l'initiative, les capacités et les items de défense ne changent pas.
+
+**Notes courtes :** seule la synthèse tactique, la source, les paramètres particuliers et les équipements optionnels sont conservés ; les actions/traits déjà décrits dans la table de capacités ne sont plus dupliqués.
+
+**PNJ déjà générés :** choisir `H0D — Générateur factions` → Action `Migrer prudemment les 14 Caravanes Libres (stats et notes)`. Migration **manuelle** et ciblée, avec confirmation : les modificateurs et armes ne sont réécrits que s'ils sont encore au format d'origine (caracs à 0, attaque globale brute, bonus d'arme nul). Les valeurs personnalisées ne sont pas écrasées. Les notes ne sont raccourcies que si leur texte long correspond à l'ancienne génération. Chaque fiche modifiée conserve ses anciennes valeurs sous `flags.h0d-faction-builder.caravanesStatsMigrationBackup` (snapshot de sécurité du monde recommandé). **Ne pas utiliser « Mettre à jour » pour une fiche déjà personnalisée**, cette commande remplace toujours la plupart de ses champs et les Items générés.
+
+L'ancien bouton de réparation des tables CSB est conservé. Les neuf profils historiques restent inchangés.
 
 ## Correctif 0.2.1 — Fiches de factions qui refusent de s'ouvrir
 

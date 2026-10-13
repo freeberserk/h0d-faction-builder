@@ -1,5 +1,5 @@
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.2.0";
+const MODULE_VERSION = "0.2.1";
 const ROOT_FOLDER = "H0D — Factions générées";
 
 /*
@@ -1837,7 +1837,9 @@ async function loadCaravanesProfils(){
     }
     const capacities={};
     function addCapacity(row){
-      capacities[foundry.utils.randomID(16)]=row;
+      // CSB DynamicTable parcourt les lignes par indices 0..N-1
+      // (dynamicProps[line]); les IDs aléatoires rendent la fiche illisible.
+      capacities[String(Object.keys(capacities).length)] = row;
     }
     for(const a of p.actions){
       const matched=String(a.attaque_dd).match(/DD\s*(\d+)/i);
@@ -2010,6 +2012,81 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
   return actor;
 }
 
+
+/**
+ * CSB 6.0.2 lit une table dynamique par index numérique 0..N-1.
+ * Les anciennes Caravanes Libres utilisaient des clés randomID(16) : la fiche
+ * refusait de s'ouvrir lorsque DynamicTable.js consultait dynamicProps[line].
+ * Ce correctif ne change ni les lignes ni les autres propriétés de l'Actor.
+ */
+function normalizeCapabilityRows(table) {
+  if (!table || typeof table !== "object" || Array.isArray(table)) return null;
+  const entries = Object.entries(table);
+  if (!entries.length || entries.every(([key],i) => key === String(i))) return null;
+  if (!entries.every(([,row]) => row && typeof row === "object" && !Array.isArray(row))) {
+    throw new Error("La table de capacités contient une ligne non valide ; réparation annulée.");
+  }
+  return Object.fromEntries(entries.map(([,row],i) => [String(i),clone(row)]));
+}
+
+async function repairGeneratedFactionCapabilityTables() {
+  if (!game.user?.isGM) throw new Error("Réparation réservée au MJ.");
+  const candidates = Array.from(game.actors ?? []).filter(actor =>
+    actor.getFlag(MODULE_ID,"generated") === true &&
+    actor.system?.props?.H0D_Creature_Type === "Faction" &&
+    normalizeCapabilityRows(actor.system?.props?.H0D_Creature_Capacites_Table) !== null
+  );
+  if (!candidates.length) {
+    notify("info","H0D : aucune table de capacités de faction à réparer.");
+    return {repaired:0,failed:0,skipped:0};
+  }
+
+  const confirmed = await foundry.applications.api.DialogV2.confirm({
+    window:{title:"H0D — Réparer les tables de capacités"},
+    content:`<p>Réindexer les capacités de <strong>${candidates.length} PNJ généré(s)</strong> pour Custom System Builder 6.0.2 ?</p>
+      <p>Seules les clés de lignes de <code>H0D_Creature_Capacites_Table</code> seront corrigées.
+      Les textes, DD, autres statistiques, équipements et images restent inchangés.</p>
+      <p>Une sauvegarde de la table originale sera enregistrée dans les flags de chaque Actor concerné.</p>`,
+    yes:{label:"Réparer les tables",icon:"fa-solid fa-screwdriver-wrench"},
+    no:{label:"Annuler"}
+  });
+  if (!confirmed) return {repaired:0,failed:0,skipped:candidates.length};
+
+  let repaired=0,failed=0;
+  for (const actor of candidates) {
+    const oldTable=clone(actor.system.props.H0D_Creature_Capacites_Table);
+    const newTable=normalizeCapabilityRows(oldTable);
+    if (!newTable) continue;
+    try {
+      await actor.setFlag(MODULE_ID,"capabilitiesTableRepairBackup",{
+        savedAt:new Date().toISOString(),table:oldTable
+      });
+      // En Foundry, une mise à jour d'objet fusionne ses clés.
+      // Supprimer l'ancien champ avant de le reposer évite de garder les randomID.
+      await actor.update({"system.props.-=H0D_Creature_Capacites_Table":null});
+      await actor.update({"system.props.H0D_Creature_Capacites_Table":newTable});
+      const actual=actor.system?.props?.H0D_Creature_Capacites_Table ?? {};
+      if (normalizeCapabilityRows(actual) !== null ||
+          Object.keys(actual).length !== Object.keys(oldTable).length) {
+        throw new Error("Échec de validation des lignes après mise à jour.");
+      }
+      repaired++;
+    } catch(err) {
+      failed++;
+      console.error(`${MODULE_ID} | réparation capacités de ${actor.name}`,err);
+      // Sauvegarde conservée ; tentative de restauration des données initiales.
+      try {
+        await actor.update({"system.props.-=H0D_Creature_Capacites_Table":null});
+        await actor.update({"system.props.H0D_Creature_Capacites_Table":oldTable});
+      } catch(restoreError) {
+        console.error(`${MODULE_ID} | restauration impossible pour ${actor.name}`,restoreError);
+      }
+    }
+  }
+  notify(failed?"warn":"info",`H0D : tables de capacités réparées — ${repaired} PNJ, ${failed} échec(s).`);
+  return {repaired,failed,skipped:0};
+}
+
 function profileOptions(){
   if(!ARCHETYPES.size) return `<option value="">Aucun profil validé enregistré</option>`;
   const groups=new Map();
@@ -2041,6 +2118,14 @@ async function openBuilder(){
         <hr>
 
         <div class="form-group">
+          <label>Action</label>
+          <select name="action">
+            <option value="build">Générer / mettre à jour un PNJ</option>
+            <option value="repair-capabilities">Réparer les capacités des PNJ déjà générés</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label>Profil PNJ</label>
           <select name="archetype">${profileOptions()}</select>
         </div>
@@ -2064,6 +2149,14 @@ async function openBuilder(){
   });
 
   if(!result) return;
+  if(result.action === "repair-capabilities"){
+    try { await repairGeneratedFactionCapabilityTables(); }
+    catch(err) {
+      console.error(`${MODULE_ID} | réparation tables`,err);
+      notify("error",`H0D Faction Builder : ${err?.message??err}`);
+    }
+    return;
+  }
   if(!result.archetype){
     notify("warn","Choisis d’abord un profil PNJ.");
     return;
@@ -2113,6 +2206,7 @@ Hooks.once("ready", async () => {
   const api = {
     open: openBuilder,
     buildFactionActor,
+    repairGeneratedFactionCapabilityTables,
     registerFaction,
     registerFactions,
     registerArchetype,

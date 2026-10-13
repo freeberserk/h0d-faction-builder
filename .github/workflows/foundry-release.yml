@@ -13,6 +13,8 @@ jobs:
       - name: Verify module sources
         run: |
           node --check scripts/h0d-faction-builder.js
+          node --check scripts/h0d-caravanes-stats.js
+          node tests/caravanes-stats.mjs
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null
           python3 -c 'import json; d=json.load(open("data/caravanes-libres.json")); assert len(d["profils"]) == 14; assert sum(len(p["actions"]) for p in d["profils"]) == 89'

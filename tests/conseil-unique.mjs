@@ -99,7 +99,11 @@ for (const [key,name] of legacies){
   const old={id:"legacy-"+key,name,img:"https://forge-vtt.example/old/"+key+".png",
     items:[{name:"Original "+key}],system:{props:{PV:27,Notes:"Journal de campagne privé"}},
     flags:{"h0d-conseil":{packVersion:"1.0",equivalentLevel:4}},
-    getFlag:function(ns,k){return this.flags[ns]?.[k];},
+    getFlag:function(ns,k){
+      // Foundry v14 : un scope d'ancien module désactivé provoque une erreur.
+      if(ns==="h0d-conseil")throw new Error('Flag scope "h0d-conseil" is not valid or not currently active');
+      return this.flags[ns]?.[k];
+    },
     update:async function(changes){this.edits=changes;
       for(const [k,v] of Object.entries(changes)){
         if(k.startsWith("flags.h0d-faction-builder."))this.flags["h0d-faction-builder"]={
@@ -122,4 +126,20 @@ for (const [key,name] of legacies){
   assert.equal(isLegacyCouncilActor(sameName,npc),false,"An untagged namesake must not be recognized as legacy Council.");
   game.actors=[];
 }
-console.log("OK: 9 heroic Council entries; legacy Brok/Eron/Isha recognized and adopted without duplicates or data changes.");
+// Régression : créer Maela avec les trois anciennes fiches Conseil conservées
+// dans le monde doit fonctionner même si le scope de leur module est désactivé.
+game.actors=legacies.map(([key,name])=>({
+  id:"old-"+key,name,flags:{"h0d-conseil":{packVersion:"1.0"}},
+  getFlag(ns,k){
+    if(ns==="h0d-conseil")throw new Error('Flag scope "h0d-conseil" is not valid or not currently active');
+    return this.flags[ns]?.[k];
+  }
+}));
+assert.equal(council.suggestedAction("maela"),"create","Menu should offer Maela creation");
+const createdMaela=await council.create("maela");
+assert.equal(createdMaela.name,"Maela");
+assert.ok(createdMaela.items.length>0,"Maela's equipment must be imported");
+assert.equal(council.suggestedAction("maela"),"open");
+assert.equal(game.actors.filter(actor=>actor.name==="Maela").length,1,"Maela must not be duplicated");
+await assert.rejects(council.create("maela"),/existe déjà/);
+console.log("OK: inactive h0d-conseil scope read safely; Maela creation and old Council adoption work.");

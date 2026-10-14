@@ -1,4 +1,12 @@
-# H0D Faction Builder — v0.5.0
+# H0D Faction Builder — v0.5.1
+
+## v0.5.1 — Correctif création des membres du Conseil (Foundry v14)
+
+Corrige l'erreur `Flag scope "h0d-conseil" is not valid or not currently active` lors de la création de Maela et des autres conseillers. La détection anti-doublons consultait les flags historiques avec `actor.getFlag("h0d-conseil","packVersion")` : Foundry rejette ce scope lorsque l'ancien pack Conseil n'est plus actif.
+
+Les données sont désormais lues sans appel à `getFlag`, via `actor.flags["h0d-conseil"].packVersion`, avec vérification de leur présence. Cela permet toujours de reconnaître les fiches historiques Brok, Eron et Isha, tout en créant Maela ou un autre conseiller réellement absent.
+
+Aucune modification du contenu des personnages, de leurs équipements, images, statistiques ou des templates ; la fenêtre du Faction Builder reste ouverte après la génération. Un test reproduit explicitement l'exception de Foundry pour l'ancien scope désactivé.
 
 ## v0.5.0 — Navigation contextuelle et création en série
 

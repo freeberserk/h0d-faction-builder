@@ -2307,77 +2307,104 @@ async function openBuilder(){
   const state=templateState();
   if(!state.ok)return notify("error","H0D Faction Builder : "+state.message);
 
-  // Collecte des catégories dynamiquement depuis les profils réellement chargés.
   const archetypes=Array.from(ARCHETYPES.values());
   const factions=Array.from(FACTIONS.values()).map(f=>({
     key:f.key,label:f.label,hasProfiles:archetypes.some(a=>a.factionKey===f.key)
   }));
   const councilEntries=COUNCIL?Array.from(COUNCIL.entries.values()):null;
-  const result=await foundry.applications.api.DialogV2.input({
+
+  // DialogV2.wait reste affiché pendant l'exécution ; seul « Fermer »
+  // ou la croix le ferme. Les sélections persistent entre deux créations.
+  await foundry.applications.api.DialogV2.wait({
     window:{title:"H0D Faction Builder v"+MODULE_VERSION},
     content:menuHTML({factions,esc}),
-    render:(_event,dialog)=>attachFactionMenu(dialog,{
-      factions,archetypes,councilEntries,esc,
-      suggestCouncilAction:key=>COUNCIL?.suggestedAction?.(key)
-    }),
-    ok:{label:"Valider",icon:"fa-solid fa-users"}
+    buttons:[{action:"close",label:"Fermer",icon:"fa-solid fa-xmark"}],
+    rejectClose:false,
+    render:(_event,dialog)=>{
+      attachFactionMenu(dialog,{
+        factions,archetypes,councilEntries,esc,
+        suggestCouncilAction:key=>COUNCIL?.suggestedAction?.(key)
+      });
+      const root=dialog.element?.querySelector(".h0d-faction-menu");
+      const button=root?.querySelector("[data-h0d-run]");
+      const status=root?.querySelector("[data-h0d-status]");
+      if(!button||!status||button.dataset.ready==="1")return;
+      button.dataset.ready="1";
+      let busy=false;
+      button.addEventListener("click",async()=>{
+        if(busy)return;
+        const form=dialog.element?.querySelector("form");
+        if(!form)return;
+        const data=Object.fromEntries(new FormData(form).entries());
+        const choice=resolveMenuSelection(data,factions,archetypes,councilEntries);
+        if(!choice.ok){
+          status.textContent=choice.message;
+          notify("warn",choice.message);
+          return;
+        }
+        busy=true;
+        button.disabled=true;
+        button.textContent="Opération en cours…";
+        status.textContent="Traitement en cours, ne ferme pas la fenêtre…";
+        try{
+          if(choice.kind==="maintenance"){
+            if(choice.action==="repair-capabilities")await repairGeneratedFactionCapabilityTables();
+            else if(choice.action==="upgrade-caravanes")await upgradeCaravanesProfilesSafely();
+            status.textContent="Maintenance terminée. Tu peux continuer ou fermer.";
+            return;
+          }
+          if(choice.kind==="council"){
+            if(!COUNCIL)throw new Error("Références du Conseil indisponibles.");
+            const actor=choice.action==="create"?await COUNCIL.create(choice.target):
+              choice.action==="adopt"?await COUNCIL.adopt(choice.target):
+              await COUNCIL.open(choice.target);
+            if(actor&&choice.action!=="open")actor.sheet?.render(true);
+            if(actor){
+              if(choice.action==="create"||choice.action==="adopt"){
+                root.querySelector('select[name="action"]').value="open";
+              }
+              status.textContent=actor.name+" : "+(
+                choice.action==="create"?"créé":choice.action==="adopt"?"adopté":"ouvert"
+              )+". Choisis le prochain personnage.";
+              if(choice.action!=="open")notify("info","Conseiller prêt : "+actor.name);
+            }
+            return;
+          }
+          if(choice.kind!=="profile")throw new Error("Choix de PNJ non reconnu.");
+          if(choice.action==="update"||choice.action==="replace"){
+            const label=choice.action==="replace"?"SUPPRIMER puis recréer":"METTRE À JOUR";
+            const confirmed=await foundry.applications.api.DialogV2.confirm({
+              window:{title:"H0D — Confirmation requise"},
+              content:"<p><strong>"+esc(label)+"</strong> le profil <strong>"+esc(choice.target)+
+                "</strong> ?</p><p>Les équipements générés peuvent être supprimés puis recréés, "+
+                "et les personnalisations de la fiche peuvent être perdues. "+
+                "Sauvegarde le monde avant de continuer.</p>",
+              yes:{label:"Confirmer la modification",icon:"fa-solid fa-triangle-exclamation"},
+              no:{label:"Annuler"}
+            });
+            if(!confirmed){status.textContent="Modification annulée.";return;}
+          }
+          const arch=ARCHETYPES.get(choice.target);
+          const actor=await buildFactionActor(choice.target,{
+            loadoutKey:arch?.defaultLoadout??null,mode:choice.action
+          });
+          actor?.sheet?.render(true);
+          if(actor){
+            status.textContent="PNJ prêt : "+actor.name+". Choisis le suivant.";
+            notify("info","PNJ prêt : "+actor.name);
+          }
+        }catch(err){
+          console.error(MODULE_ID+" | dialogue persistant",err);
+          status.textContent="Erreur : "+(err?.message??err);
+          notify("error","H0D Faction Builder : "+(err?.message??err));
+        }finally{
+          busy=false;
+          button.disabled=false;
+          button.innerHTML='<i class="fa-solid fa-play"></i> Exécuter';
+        }
+      });
+    }
   });
-  if(!result)return;
-  const choice=resolveMenuSelection(result,factions,archetypes,councilEntries);
-  if(!choice.ok)return notify("warn",choice.message);
-
-  if(choice.kind==="maintenance"){
-    try{
-      if(choice.action==="repair-capabilities")await repairGeneratedFactionCapabilityTables();
-      else if(choice.action==="upgrade-caravanes")await upgradeCaravanesProfilesSafely();
-    }catch(err){
-      console.error(MODULE_ID+" | maintenance",err);
-      notify("error","H0D Faction Builder : "+(err?.message??err));
-    }
-    return;
-  }
-  if(choice.kind==="council"){
-    if(!COUNCIL)return notify("error","Références du Conseil indisponibles.");
-    try{
-      const actor=choice.action==="create"?await COUNCIL.create(choice.target):
-        choice.action==="adopt"?await COUNCIL.adopt(choice.target):
-        await COUNCIL.open(choice.target);
-      if(actor&&choice.action!=="open")actor.sheet?.render(true);
-      if(actor&&choice.action==="create")notify("info","Conseiller créé : "+actor.name);
-      if(actor&&choice.action==="adopt")notify("info","Conseiller adopté sans modification : "+actor.name);
-    }catch(err){
-      console.error(MODULE_ID+" | Conseil",err);
-      notify("error","Conseil : "+(err?.message??err));
-    }
-    return;
-  }
-  if(choice.kind!=="profile")return notify("error","Choix de PNJ non reconnu.");
-
-  // Ne jamais réinitialiser un profil par un simple clic sur « Valider ».
-  if(choice.action==="update"||choice.action==="replace"){
-    const label=choice.action==="replace"?"SUPPRIMER puis recréer":"METTRE À JOUR";
-    const confirm=await foundry.applications.api.DialogV2.confirm({
-      window:{title:"H0D — Confirmation requise"},
-      content:"<p><strong>"+esc(label)+"</strong> le profil <strong>"+esc(choice.target)+
-        "</strong> ?</p><p>Les équipements générés peuvent être supprimés puis recréés, "+
-        "et les personnalisations de la fiche peuvent être perdues. "+
-        "Sauvegarde le monde BAC avant de continuer.</p>",
-      yes:{label:"Confirmer la modification",icon:"fa-solid fa-triangle-exclamation"},
-      no:{label:"Annuler"}
-    });
-    if(!confirm)return;
-  }
-  try{
-    const arch=ARCHETYPES.get(choice.target);
-    const actor=await buildFactionActor(choice.target,{
-      loadoutKey:arch?.defaultLoadout??null,mode:choice.action
-    });
-    actor?.sheet?.render(true);
-    if(actor)notify("info","PNJ prêt : "+actor.name);
-  }catch(err){
-    console.error(MODULE_ID+" | génération",err);
-    notify("error","H0D Faction Builder : "+(err?.message??err));
-  }
 }
 
 async function ensureLauncherMacro() {

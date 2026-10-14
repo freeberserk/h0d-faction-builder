@@ -1998,6 +1998,19 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
     H0D_Creature_Type:"Faction",
     ...clone(arch.actor?.props??{})
   };
+  // Chef de bande : garder seulement les techniques de la variante choisie,
+  // avec indices de table CSB strictement séquentiels.
+  if(arch.key==="chef-bande-rouge"&&chosenLoadout){
+    const excluded=chosenLoadout.key.endsWith("-casseur")
+      ? ["Lame d'ecorcheur","Crochet barbele"]
+      : ["Marteau de chef - variante","Frappe dans les rotules - variante"];
+    const rows=Object.values(props.H0D_Creature_Capacites_Table??{})
+      .filter(row=>!excluded.includes(row.H0D_Creature_Capacite_Nom));
+    props.H0D_Creature_Capacites_Table=Object.fromEntries(
+      rows.map((row,i)=>[String(i),row])
+    );
+    props.H0D_Creature_Notes+="\nÉquipement de variante : "+chosenLoadout.label+".";
+  }
   if(!props.H0D_Creature_Faction && faction.factionValue) props.H0D_Creature_Faction=faction.factionValue;
   await forceTemplateAndProps(actor,actorTemplate,props);
   // Le mode « Mettre à jour » doit également purger les anciennes lignes

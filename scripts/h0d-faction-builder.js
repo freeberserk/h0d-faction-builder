@@ -2426,7 +2426,7 @@ async function openBuilder(){
           }
           const arch=ARCHETYPES.get(choice.target);
           const actor=await buildFactionActor(choice.target,{
-            loadoutKey:choice.loadout||arch?.defaultLoadout??null,mode:choice.action
+            loadoutKey:choice.loadout || arch?.defaultLoadout || null,mode:choice.action
           });
           actor?.sheet?.render(true);
           if(actor){

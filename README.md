@@ -1,4 +1,18 @@
-# H0D Faction Builder — v0.5.1
+# H0D Faction Builder — v0.6.0
+
+## v0.6.0 — Faction complète des Pillards Rouges (PDF validé)
+
+**Source :** `Pillards_Rouges_Archetypes_Faction_Builder-1.pdf`, 14 pages. Le module contient désormais **10 profils Pillards Rouges de Menace 2 à 5** : Sang-neuf, Maraudeur, Myrmidon, Brûleur, Briseur, Artilleur, Dompteur, Chef de bande, Conducteur de ferraille et Roi Rouge. Le PDF valide **59 actions**, **32 traits**, **7 compositions de rencontre**, sans archétype Pillard Rouge de Menace 1. La vieille **« Pillard recrue »** n'apparaît donc plus dans le menu, mais les Actors déjà créés dans un monde ne sont pas supprimés.
+
+L'intégralité des actions et des traits du PDF est copiée dans la **table de capacités CSB**, indexée de 0 à N−1. Les valeurs PDF PV, DEF, ATQ, Initiative, Vigueur, Réflexes, Volonté et DD sont préservées. Les armes documentées sont de vrais Items H0D, équipés et utilisables ; les autres matériels sont des Items (armure/bouclier ou objet) **sans inventer de charges ni d'effets mécaniques absents du PDF**. Les armures ont un bonus DEF neutre car la DEF du bloc source représente déjà la protection totale. Les armes répartissent l'ATQ totale entre base, FOR/DEX automatiques et ajustement d'arme, sans changer les chiffres du PDF.
+
+**Équilibrage SRD explicitement adapté :** le PDF ne fixe pas de scores FOR/DEX/CON/INT/SAG/CHA. Les neuf profils ordinaires reçoivent le tableau 15/14/13/12/10/8 attribué selon leur fonction, et niveau PNJ = Menace + 1 ; premier point de progression au niveau 4 (Menace 3). **Roi Rouge : héros exceptionnel Menace 5, niveau héroïque 5** (convention de création, pas donnée d'origine du PDF). Les valeurs de combat validées restent inchangées.
+
+**Variantes du Chef :** même archétype, deux équipements sélectionnables dans un sous-menu contextuel : **Écorcheur** et **Casseur de rotules**. Les deux ont une identité d'Actor distincte dans le Builder ; une mise à jour éventuelle des profils génériques requiert confirmation.
+
+**Groupes de rencontre :** `Pillards Rouges → Groupes de rencontre` propose 7 compositions de l'annexe. L'option **Préparer les profils** crée uniquement les fiches modèles manquantes des PNJ cités ; **elle ne place pas de tokens sur les scènes et ne multiplie pas les Actor pour atteindre les quantités indiquées**. Les choix alternatifs et les machines d'arène restent des consignes de mise en scène, car le PDF ne fixe pas tous les effectifs. L'intégralité des quantités, alternatives et notes est consultable via `game.h0dFactionBuilder.encounters`.
+
+**Sécurité :** aucun remplacement automatique des fiches déjà générées, aucune régénération des Caravanes ou du Conseil, aucune suppression de l'ancien Actor « Pillard recrue ». Les portraits des Pillards restent à personnaliser : ce PDF ne fournit pas d'illustrations individuelles.
 
 ## v0.5.1 — Correctif création des membres du Conseil (Foundry v14)
 

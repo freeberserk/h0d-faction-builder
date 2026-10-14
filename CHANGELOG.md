@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 — Anti-doublons des anciens conseillers du BAC
+- Reconnaissance sûre des fiches existantes Brok, Eron et Isha avec leurs noms longs et le flag `h0d-conseil.packVersion`.
+- « Créer absent » les détecte et demande l'adoption ; aucun acteur, équipement ou portrait supplémentaire n'est généré.
+- « Adopter » n'écrit que des flags de liaison, sans toucher aux caractéristiques et aux notes MJ.
+- Tests automatisés de non-duplication, conservation des équipements et protection des homonymes.
+
+
+
 ## 0.4.0 — Neuf membres du Conseil héroïques uniques
 - Kael, Brok, Nerys, Maela, Odran, Sava, Eron, Tarek et Isha : 9 références héroïques niveau 4 (SRD 15/14/13/12/10/8 +1), 49 items, notes MJ complètes.
 - 9 portraits et 9 tokens WebP optimisés, joints au module.

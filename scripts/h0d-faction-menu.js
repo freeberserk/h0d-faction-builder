@@ -58,7 +58,9 @@ export function menuHTML({factions,esc}) {
       '<select name="target"><option value="">— Choisir un personnage —</option></select></div>'+
     '<div class="form-group" data-role="action" hidden><label>4 · Action</label>'+
       '<select name="action"><option value="">— Choisir une action —</option></select></div>'+
-    '<p data-role="hint" style="opacity:.75;margin:0">Choisis une faction pour afficher ses groupes.</p></div>';
+    '<p data-role="hint" style="opacity:.75;margin:0">Choisis une faction pour afficher ses groupes.</p>'+
+    '<button type="button" data-h0d-run><i class="fa-solid fa-play"></i> Exécuter</button>'+
+    '<p data-h0d-status role="status" aria-live="polite" style="margin:0;min-height:1.2em;opacity:.8"></p></div>';
 }
 export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,esc,suggestCouncilAction}) {
   const root=dialog.element?.querySelector(".h0d-faction-menu");

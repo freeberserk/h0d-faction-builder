@@ -1,8 +1,9 @@
 import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
+import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-menu.js";
 import {installCouncilUnique} from "./h0d-council-unique.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.4.1";
+const MODULE_VERSION = "0.5.0";
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 
@@ -2302,102 +2303,108 @@ function profileOptions(){
 }
 
 async function openBuilder(){
-  if(!game.user?.isGM) return notify("warn","H0D Faction Builder est réservé au MJ.");
-
+  if(!game.user?.isGM)return notify("warn","H0D Faction Builder est réservé au MJ.");
   const state=templateState();
-  const result=await foundry.applications.api.DialogV2.input({
-    window:{title:`H0D Faction Builder v${MODULE_VERSION}`},
-    content:`
-      <div class="h0d-faction-builder" style="display:flex;flex-direction:column;gap:10px;">
-        <p><strong>Templates :</strong> ${state.ok?"✅":"❌"} ${esc(state.message)}</p>
-        <p><strong>Profils intégrés :</strong> ${FACTIONS.size} faction(s) · ${ARCHETYPES.size} profil(s) · ${LOADOUTS.size} équipement(s) standard.</p>
-        <hr>
+  if(!state.ok)return notify("error","H0D Faction Builder : "+state.message);
 
-        <div class="form-group">
-          <label>Action</label>
-          <select name="action">
-            <option value="build">Générer / mettre à jour un PNJ</option>
-            <option value="repair-capabilities">Réparer les capacités des PNJ déjà générés</option>
-            <option value="upgrade-caravanes">Harmoniser PNJ ordinaires (Menace/CR et niveau)</option>
-            <option value="council-create">Conseil — Créer un PNJ unique absent</option>
-            <option value="council-adopt">Conseil — Adopter une fiche existante (sans modification)</option>
-            <option value="council-open">Conseil — Ouvrir une fiche</option>
-          </select>
-        </div>
+  const archetypes=Array.from(ARCHETYPES.values());
+  const factions=Array.from(FACTIONS.values()).map(f=>({
+    key:f.key,label:f.label,hasProfiles:archetypes.some(a=>a.factionKey===f.key)
+  })).filter(f=>f.hasProfiles||(f.key==="dent-ambre"&&!!COUNCIL));
+  const councilEntries=COUNCIL?Array.from(COUNCIL.entries.values()):null;
 
-        <div class="form-group">
-          <label>Profil PNJ</label>
-          <select name="archetype">${profileOptions()}</select>
-        </div>
-
-        <div class="form-group">
-          <label>Membre du Conseil de la Dent d'Ambre</label>
-          <select name="councilMember">${COUNCIL?.options()??'<option value="">Conseil indisponible</option>'}</select>
-        </div>
-
-        <div class="form-group">
-          <label>Si l’Actor existe déjà</label>
-          <select name="mode">
-            <option value="update">Mettre à jour (conserve les images)</option>
-            <option value="skip">Ignorer</option>
-            <option value="replace">Recréer</option>
-          </select>
-        </div>
-
-        <p style="opacity:.75">
-          Les neuf membres du Conseil sont des PNJ héroïques uniques (niveau 4). Créer absent / Adopter / Ouvrir ne réinitialise jamais leurs données jouées. L’équipement standard validé des profils ordinaires est ajouté automatiquement.
-          Les 14 Caravanes Libres sont des PNJ ordinaires SRD : Menace = CR, niveau = CR + 1 (pour CR 1 à 4), scores 15/14/13/12/10/8, +1 à un score au niveau 4 (Menace 3). Les chefs de factions héroïques seront un type séparé. Les autres profils restent inchangés.
-          Les armures/boucliers sans bonus chiffré distinct sont créés avec un bonus DEF neutre (0) afin de conserver la DEF finale du profil.
-        </p>
-      </div>`,
-    ok:{label:"Générer / mettre à jour",icon:"fa-solid fa-users"}
-  });
-
-  if(!result) return;
-  if(result.action === "repair-capabilities"){
-    try { await repairGeneratedFactionCapabilityTables(); }
-    catch(err) {
-      console.error(`${MODULE_ID} | réparation tables`,err);
-      notify("error",`H0D Faction Builder : ${err?.message??err}`);
+  // DialogV2.wait reste affiché pendant l'exécution ; seul « Fermer »
+  // ou la croix le ferme. Les sélections persistent entre deux créations.
+  await foundry.applications.api.DialogV2.wait({
+    window:{title:"H0D Faction Builder v"+MODULE_VERSION},
+    content:menuHTML({factions,esc}),
+    buttons:[{action:"close",label:"Fermer",icon:"fa-solid fa-xmark"}],
+    rejectClose:false,
+    render:(_event,dialog)=>{
+      attachFactionMenu(dialog,{
+        factions,archetypes,councilEntries,esc,
+        suggestCouncilAction:key=>COUNCIL?.suggestedAction?.(key)
+      });
+      const root=dialog.element?.querySelector(".h0d-faction-menu");
+      const button=root?.querySelector("[data-h0d-run]");
+      const status=root?.querySelector("[data-h0d-status]");
+      if(!button||!status||button.dataset.ready==="1")return;
+      button.dataset.ready="1";
+      let busy=false;
+      button.addEventListener("click",async()=>{
+        if(busy)return;
+        const form=dialog.element?.querySelector("form");
+        if(!form)return;
+        const data=Object.fromEntries(new FormData(form).entries());
+        const choice=resolveMenuSelection(data,factions,archetypes,councilEntries);
+        if(!choice.ok){
+          status.textContent=choice.message;
+          notify("warn",choice.message);
+          return;
+        }
+        busy=true;
+        button.disabled=true;
+        button.textContent="Opération en cours…";
+        status.textContent="Traitement en cours, ne ferme pas la fenêtre…";
+        try{
+          if(choice.kind==="maintenance"){
+            if(choice.action==="repair-capabilities")await repairGeneratedFactionCapabilityTables();
+            else if(choice.action==="upgrade-caravanes")await upgradeCaravanesProfilesSafely();
+            status.textContent="Maintenance terminée. Tu peux continuer ou fermer.";
+            return;
+          }
+          if(choice.kind==="council"){
+            if(!COUNCIL)throw new Error("Références du Conseil indisponibles.");
+            const actor=choice.action==="create"?await COUNCIL.create(choice.target):
+              choice.action==="adopt"?await COUNCIL.adopt(choice.target):
+              await COUNCIL.open(choice.target);
+            if(actor&&choice.action!=="open")actor.sheet?.render(true);
+            if(actor){
+              if(choice.action==="create"||choice.action==="adopt"){
+                root.querySelector('select[name="action"]').value="open";
+              }
+              status.textContent=actor.name+" : "+(
+                choice.action==="create"?"créé":choice.action==="adopt"?"adopté":"ouvert"
+              )+". Choisis le prochain personnage.";
+              if(choice.action!=="open")notify("info","Conseiller prêt : "+actor.name);
+            }
+            return;
+          }
+          if(choice.kind!=="profile")throw new Error("Choix de PNJ non reconnu.");
+          if(choice.action==="update"||choice.action==="replace"){
+            const label=choice.action==="replace"?"SUPPRIMER puis recréer":"METTRE À JOUR";
+            const confirmed=await foundry.applications.api.DialogV2.confirm({
+              window:{title:"H0D — Confirmation requise"},
+              content:"<p><strong>"+esc(label)+"</strong> le profil <strong>"+esc(choice.target)+
+                "</strong> ?</p><p>Les équipements générés peuvent être supprimés puis recréés, "+
+                "et les personnalisations de la fiche peuvent être perdues. "+
+                "Sauvegarde le monde avant de continuer.</p>",
+              yes:{label:"Confirmer la modification",icon:"fa-solid fa-triangle-exclamation"},
+              no:{label:"Annuler"}
+            });
+            if(!confirmed){status.textContent="Modification annulée.";return;}
+          }
+          const arch=ARCHETYPES.get(choice.target);
+          const actor=await buildFactionActor(choice.target,{
+            loadoutKey:arch?.defaultLoadout??null,mode:choice.action
+          });
+          actor?.sheet?.render(true);
+          if(actor){
+            status.textContent="PNJ prêt : "+actor.name+". Choisis le suivant.";
+            notify("info","PNJ prêt : "+actor.name);
+          }
+        }catch(err){
+          console.error(MODULE_ID+" | dialogue persistant",err);
+          status.textContent="Erreur : "+(err?.message??err);
+          notify("error","H0D Faction Builder : "+(err?.message??err));
+        }finally{
+          busy=false;
+          button.disabled=false;
+          button.innerHTML='<i class="fa-solid fa-play"></i> Exécuter';
+        }
+      });
     }
-    return;
-  }
-  if(result.action === "upgrade-caravanes"){
-    try{await upgradeCaravanesProfilesSafely();}
-    catch(err){console.error(`${MODULE_ID} | migration Caravanes`,err);notify("error",`H0D Faction Builder : ${err?.message??err}`);}
-    return;
-  }
-  if(String(result.action||"").startsWith("council-")){
-    if(!COUNCIL)return notify("error","Références du Conseil indisponibles.");
-    const action=String(result.action),key=String(result.councilMember||"");
-    if(!key)return notify("warn","Choisis un membre du Conseil.");
-    try {
-      const actor=action==="council-create" ? await COUNCIL.create(key)
-        : action==="council-adopt" ? await COUNCIL.adopt(key)
-        : await COUNCIL.open(key);
-      if(actor && action!=="council-open")actor.sheet?.render(true);
-      if(actor && action==="council-create")notify("info","Conseiller créé : "+actor.name);
-      if(actor && action==="council-adopt")notify("info","Conseiller adopté sans modification : "+actor.name);
-    }catch(err){console.error(MODULE_ID+" | Conseil",err);notify("error","Conseil : "+(err?.message??err));}
-    return;
-  }
-  if(!result.archetype){
-    notify("warn","Choisis d’abord un profil PNJ.");
-    return;
-  }
-
-  try{
-    const arch=ARCHETYPES.get(String(result.archetype));
-    const actor=await buildFactionActor(
-      String(result.archetype),
-      {loadoutKey:arch?.defaultLoadout??null,mode:String(result.mode||"update")}
-    );
-    actor.sheet?.render(true);
-    notify("info",`PNJ généré : ${actor.name}`);
-  }catch(err){
-    console.error(`${MODULE_ID} | génération`,err);
-    notify("error",`H0D Faction Builder : ${err?.message??err}`);
-  }
+  });
 }
 
 async function ensureLauncherMacro() {

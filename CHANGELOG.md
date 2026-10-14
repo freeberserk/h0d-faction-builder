@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0 — Navigation contextuelle et création en série
+
+- Interface Faction → Groupe → Profil/Conseiller → Action, sous-menus dynamiques. L'action Exécuter garde la fenêtre ouverte et conserve les choix pour enchaîner plusieurs PNJ. Par défaut, aucun Actor existant n'est réinitialisé ; les actions destructives demandent confirmation. Conseil héroïque et outils MJ séparés.
+- Aucun changement aux templates H0D ni aux règles de combat.
+
+
+
 ## 0.4.1 — Anti-doublons des anciens conseillers du BAC
 - Reconnaissance sûre des fiches existantes Brok, Eron et Isha avec leurs noms longs et le flag `h0d-conseil.packVersion`.
 - « Créer absent » les détecte et demande l'adoption ; aucun acteur, équipement ou portrait supplémentaire n'est généré.

@@ -18,6 +18,8 @@ jobs:
           node tests/caravanes-ordinary-migration.mjs
           node --check scripts/h0d-council-unique.js
           node tests/conseil-unique.mjs
+          node --check scripts/h0d-faction-menu.js
+          node tests/contextual-menu.mjs
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null
           python3 -m json.tool data/conseil-dent-ambre.json > /dev/null

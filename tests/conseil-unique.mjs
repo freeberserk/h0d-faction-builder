@@ -43,7 +43,7 @@ for(const npc of source.characters){
  }
 }
 const original=await readFile(new URL("../scripts/h0d-council-unique.js",import.meta.url),"utf8");
-const {installCouncilUnique}=await import("data:text/javascript,"+encodeURIComponent(original));
+const {installCouncilUnique,isLegacyCouncilActor}=await import("data:text/javascript,"+encodeURIComponent(original));
 globalThis.game={user:{isGM:true},actors:[]};
 globalThis.ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 globalThis.foundry={utils:{getRoute:x=>x,escapeHTML:x=>x},
@@ -88,4 +88,38 @@ assert.equal(adopted,older);
 assert.equal(older.img,"custom.png");
 assert.equal(older.system.props.PV,33);
 assert.ok(!Object.keys(older.edits).some(k=>k.startsWith("system.")));
-console.log("OK: 9 unique heroic Council actors, 49 items, images, source attacks, protected create/adopt/open.");
+const legacies=[
+  ["brok","Brok - Maitres de la Forge"],
+  ["eron","Eron - Maitre des Soins"],
+  ["isha","Isha - Maitresse des Récits"]
+];
+game.actors=[];
+for (const [key,name] of legacies){
+  const npc=source.characters.find(x=>x.key===key);
+  const old={id:"legacy-"+key,name,img:"https://forge-vtt.example/old/"+key+".png",
+    items:[{name:"Original "+key}],system:{props:{PV:27,Notes:"Journal de campagne privé"}},
+    flags:{"h0d-conseil":{packVersion:"1.0",equivalentLevel:4}},
+    getFlag:function(ns,k){return this.flags[ns]?.[k];},
+    update:async function(changes){this.edits=changes;
+      for(const [k,v] of Object.entries(changes)){
+        if(k.startsWith("flags.h0d-faction-builder."))this.flags["h0d-faction-builder"]={
+          ...(this.flags["h0d-faction-builder"]??{}),[k.split(".").at(-1)]:v};
+      }
+    }
+  };
+  game.actors.push(old);
+  assert.equal(isLegacyCouncilActor(old,npc),true,key+": legacy alias not recognized");
+  await assert.rejects(council.create(key),/existe déjà/,key+": should never duplicate the legacy Actor");
+  const adopted=await council.adopt(key);
+  assert.equal(adopted,old);
+  assert.equal(old.img,"https://forge-vtt.example/old/"+key+".png");
+  assert.equal(old.items.length,1);
+  assert.equal(old.system.props.PV,27);
+  assert.equal(old.system.props.Notes,"Journal de campagne privé");
+  assert.ok(Object.keys(old.edits).every(k=>k.startsWith("flags.")),key+": adoption must write flags only");
+  assert.ok(old.flags["h0d-faction-builder"].councilUnique,key+": adoption did not mark actor");
+  const sameName={...old,flags:{},getFlag:()=>undefined};
+  assert.equal(isLegacyCouncilActor(sameName,npc),false,"An untagged namesake must not be recognized as legacy Council.");
+  game.actors=[];
+}
+console.log("OK: 9 heroic Council entries; legacy Brok/Eron/Isha recognized and adopted without duplicates or data changes.");

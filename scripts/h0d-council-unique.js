@@ -5,6 +5,25 @@
  * L'import d'origine et les portraits sont uniquement utilisés à la création.
  * Les options "adopter" et "ouvrir" n'écrasent aucune fiche existante.
  */
+/** Anciennes fiches du Conseil importées sous des noms étendus dans le BAC.
+ * La validation du flag h0d-conseil évite d'associer un homonyme par hasard.
+ * L'identification n'entraîne aucune réécriture des données du personnage.
+ */
+export const LEGACY_COUNCIL_NAMES = Object.freeze({
+  brok: ["Brok - Maitres de la Forge", "Brok - Maitre de la Forge"],
+  eron: ["Eron - Maitre des Soins", "Eron - Maitre des Remedes"],
+  isha: ["Isha - Maitresse des Recits"]
+});
+export function isLegacyCouncilActor(actor,entry) {
+  if(!actor || !entry?.key || typeof actor.getFlag!=="function")return false;
+  if(!actor.getFlag("h0d-conseil","packVersion"))return false;
+  const normalized=value=>String(value??"")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/\s+/g," ").trim().toLowerCase();
+  const actual=normalized(actor.name);
+  return (LEGACY_COUNCIL_NAMES[entry.key]??[]).some(name=>normalized(name)===actual);
+}
+
 export async function installCouncilUnique({
   moduleId,rootFolder,templateState,template,actorTemplateKey,
   clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify
@@ -26,6 +45,7 @@ export async function installCouncilUnique({
   function candidates(entry){
     return Array.from(game.actors??[]).filter(a=>
       a.name===entry.name || a.id===entry.sourceActorId ||
+      isLegacyCouncilActor(a,entry) ||
       (isCouncil(a) && a.getFlag(moduleId,"councilKey")===entry.key)
     );
   }

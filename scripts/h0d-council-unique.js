@@ -138,6 +138,13 @@ export async function installCouncilUnique({
     a.sheet?.render(true);
     return a;
   }
+  // Pour l'interface : proposer Ouvrir, Adopter ou Créer selon le monde.
+  // Les opérations elles-mêmes restent strictement protégées.
+  function suggestedAction(key){
+    const entry=getEntry(key);
+    if(existing(key))return "open";
+    return candidates(entry).length ? "adopt" : "create";
+  }
   function options(){
     return Array.from(entries.values()).map(e=>
       '<option value="'+foundry.utils.escapeHTML(e.key)+'">'+
@@ -147,5 +154,5 @@ export async function installCouncilUnique({
   }
 
   notify("info","H0D Conseil : 9 références héroïques prêtes, aucune fiche existante modifiée.");
-  return {entries,create,adopt,open,existing,options,version:"1",count:entries.size};
+  return {entries,create,adopt,open,existing,suggestedAction,options,version:"1",count:entries.size};
 }

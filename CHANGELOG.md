@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0 — Les Pillards Rouges, Menaces 2 à 5
+
+- Import des 10 archétypes validés du PDF, avec 59 actions et 32 traits conservés dans les capacités CSB.
+- Huit profils ordinaires standards, Chef de bande ordinaire, Roi Rouge héroïque ; scores 15/14/13/12/10/8 adaptés aux rôles, progression par niveau PNJ (Menace ≠ niveau).
+- Équipements complets : armes, protections, objets, pièges et éléments de scène, sans inventer leurs charges ; source des attaques inchangée et pas de cumul de DEF.
+- Deux variantes de loadout pour le Chef (Écorcheur / Casseur de rotules), menu contextuel.
+- Sept compositions de rencontre, préparant leurs fiches modèles manquantes sans créer de doublons.
+- L'ancienne recrue Menace 1 n'est plus sélectionnable, mais ses Actors existants ne sont pas supprimés.
+- Tests de progression SRD, conservation des valeurs PDF, attaques, variantes, capacités, rencontres et équipement.
+
 ## 0.5.1 — Hotfix Foundry v14 : scope inactif de l'ancien Conseil
 
 - Suppression de `getFlag("h0d-conseil", "packVersion")` : les anciennes données sont consultées directement dans `actor.flags`, même si le module historique est désactivé.

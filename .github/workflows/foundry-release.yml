@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verify persistent builder UI
+        run: |
+          node tests/persistent-dialog.mjs
+          node tests/faction-menu.mjs
       - name: Verify module sources
         run: |
           node --check scripts/h0d-faction-builder.js

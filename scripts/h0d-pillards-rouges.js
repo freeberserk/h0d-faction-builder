@@ -108,8 +108,9 @@ export function buildPillardsDefinitions(source) {
       H0D_Creature_Aptitudes_Table:{},H0D_Creature_Capacites_Table:capacities(p),
       H0D_Creature_Notes:p.fonction+"\n"+p.note_mj+
         "\nSource : "+source.source.fichier+", p. "+p.pages_pdf[0]+
-        ". Scores : adaptation SRD (absents du PDF)."+
+        ". DD général "+stats.dd+". Scores : adaptation SRD (absents du PDF)."+
         (p.id==="conducteur-ferraille"?" Le chariot est un élément de scène distinct, avec ses PV/DEF consignés dans les capacités.":"")+
+        (p.id==="artilleur-rouge"?" Vitesse : 9 m à pied / 6 m avec harnais, selon le PDF.":"")+
         (p.id==="roi-rouge"?" Niveau 5 héroïque : convention de conversion CR/niveau (non précisé dans le PDF).":"")
     };
     for(const stat of STATS){
@@ -125,9 +126,9 @@ export function buildPillardsDefinitions(source) {
       for(const name of all){
         const actionName=lookup[name];
         const action=p.actions.find(a=>a.name===actionName);
+        if(isArmor(name))armors.push(armor(name,p));
         if(action)weapons.push(weapon(name,action,p));
-        else if(isArmor(name))armors.push(armor(name,p));
-        else objects.push(object(name,p));
+        else if(!isArmor(name))objects.push(object(name,p));
       }
       // Le PDF fixe l'ATQ totale : base + mod FOR/DEX + bonus d'arme.
       const maxMod=Math.max(0,...weapons.map(w=>profile.mods[w.props.H0D_Arme_Categorie==="distance"?"DEX":"FOR"]));

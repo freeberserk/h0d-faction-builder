@@ -1,4 +1,12 @@
-# H0D Faction Builder — v0.4.0
+# H0D Faction Builder — v0.4.1
+
+## v0.4.1 — Reconnaissance des conseillers déjà présents dans le BAC
+
+L'audit du BAC du 14 octobre 2026 confirme que **Brok - Maitres de la Forge**, **Eron - Maitre des Soins** et **Isha - Maitresse des Récits** existent déjà dans le monde avec le flag hérité `h0d-conseil.packVersion = "1.0"`. Leurs noms et identifiants ne correspondent pas aux neuf fiches de référence du nouveau pack : en v0.4.0, « Créer absent » risquait donc de générer des doublons.
+
+Le Faction Builder v0.4.1 reconnaît **explicitement** ces trois variantes anciennes (accents acceptés), mais **uniquement** si l'Actor porte le flag du pack Conseil historique. Il bloque alors « Créer absent » et permet d'utiliser **« Conseil — Adopter une fiche existante (sans modification) »**. L'adoption n'écrit que des flags de liaison ; portraits Forge, nom, notes MJ, capacités, PV, objets, fiches et dossiers ne sont pas modifiés. En cas de plusieurs candidats, le Builder refuse l'adoption pour éviter une erreur d'identité.
+
+**Recommandation BAC :** après sauvegarde et installation du template Créature v1.22, adopter d'abord Brok, Eron et Isha ; créer uniquement les six absents Kael, Maela, Nerys, Odran, Sava et Tarek. Les trois fiches adoptées gardent volontairement leurs anciennes caractéristiques et leur équipement : l'adoption n'est **pas** une réharmonisation mécanique SRD. Ne pas effacer les anciennes fiches.
 
 ## v0.4.0 — Conseil de la Dent d'Ambre : neuf PNJ héroïques uniques
 

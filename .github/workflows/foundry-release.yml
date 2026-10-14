@@ -26,6 +26,7 @@ jobs:
           node tests/contextual-menu.mjs
           node --check scripts/h0d-pillards-rouges.js
           node tests/pillards-rouges.mjs
+          node tests/pillards-menu.mjs
           python3 -m json.tool data/pillards-rouges.json > /dev/null
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null

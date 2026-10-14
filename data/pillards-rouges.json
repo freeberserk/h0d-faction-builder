@@ -1,0 +1,1000 @@
+{
+  "schema": "h0d-pillards-rouges-v1",
+  "faction": {
+    "key": "pillards-rouges",
+    "label": "Pillards Rouges",
+    "factionValue": "PillardsRouges",
+    "folder": "Pillards Rouges"
+  },
+  "source": {
+    "fichier": "Pillards_Rouges_Archetypes_Faction_Builder-1.pdf",
+    "pages": 14,
+    "notes": "10 archétypes validés ; aucun Pillard Rouge combattant de Menace 1. Les valeurs de caractéristiques et niveaux PNJ sont une adaptation SRD distincte des chiffres PDF."
+  },
+  "doctrine": [
+    "Arènes rouges",
+    "Récupération prédatrice",
+    "Capturer plutôt que tuer",
+    "Terroriser pour commander",
+    "Violence sans discipline"
+  ],
+  "exclusions": [
+    "Tortionnaire Rouge : fusionné dans Chef de bande",
+    "Dépeceur Rouge : rôles répartis entre Briseur, Artilleur et Dompteur",
+    "Menace 1 : figurants narratifs, pas véritables Pillards"
+  ],
+  "profils": [
+    {
+      "id": "sang-neuf-rouge",
+      "nom": "Sang-neuf Rouge",
+      "menace": 2,
+      "role": "Chien fou / aspirant",
+      "fonction": "Jeune combattant d'arene, aspirant maraudeur, dangereux parce qu'il veut etre reconnu quitte a mourir.",
+      "stats": {
+        "pv": 18,
+        "def": 11,
+        "attaque": 4,
+        "initiative": 3,
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 1,
+        "dd": 13,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        14,
+        15,
+        12,
+        8,
+        10,
+        13
+      ],
+      "augmentation_carac_niv4": "DEX",
+      "type": "ordinaire",
+      "equipement": [
+        "Armure rouge incomplete",
+        "Lame courte de fosse",
+        "Bouclier de ferraille leger",
+        "Couteau de preuve"
+      ],
+      "traits": [
+        {
+          "name": "Chien fou",
+          "effect": "Gagne +1 ATQ quand il charge, attaque une cible blessee, ou agit sous le regard d'un superieur Pillard. Apres une attaque beneficiant de ce bonus, il subit -1 DEF jusqu'a son prochain tour."
+        },
+        {
+          "name": "Reconnaissance ou mort",
+          "effect": "Tant qu'un superieur Pillard le voit, il ne fuit pas volontairement. A 6 PV ou moins, il doit continuer a attaquer avec +1 degat, ou tester Volonte DD13 pour se replier. En cas d'echec, il attaque la cible la plus proche ou la plus visible."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Lame courte de fosse",
+          "effect": "+4 - 1d6+1 tranchant."
+        },
+        {
+          "name": "Couteau de preuve",
+          "effect": "+4 - 1d4+1 perforant."
+        },
+        {
+          "name": "Coup de bouclier nerveux",
+          "effect": "+4 - 1d4+1 contondant. Vigueur DD13 ou recul de 1,5 m. Recharge 2 rounds."
+        },
+        {
+          "name": "Charge du chien fou",
+          "effect": "Se deplace jusqu'a 9 m et attaque a +5 pour 1d6+1 tranchant. Ensuite -1 DEF jusqu'a son prochain tour. Recharge 2 rounds."
+        },
+        {
+          "name": "Cri d'arene",
+          "effect": "Une cible a 9 m, Volonte DD13. Echec : -1 a la prochaine action defensive ou tentative de fuite. 1/scene."
+        }
+      ],
+      "note_mj": "Profil de fosse et de premiere vague. Il n'est pas faible : il est instable, bruyant, et facile a pousser a la faute.",
+      "pages_pdf": [
+        4
+      ]
+    },
+    {
+      "id": "maraudeur-rouge",
+      "nom": "Maraudeur Rouge",
+      "menace": 3,
+      "role": "Chair à canon / bande",
+      "fonction": "Combattant de masse adulte. Il remplit les groupes de raid, encercle, fait tomber et traine les prisonniers.",
+      "stats": {
+        "pv": 24,
+        "def": 12,
+        "attaque": 5,
+        "initiative": 2,
+        "vigueur": 4,
+        "reflexes": 2,
+        "volonte": 1,
+        "dd": 14,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        15,
+        13,
+        14,
+        8,
+        10,
+        12
+      ],
+      "augmentation_carac_niv4": "FOR",
+      "type": "ordinaire",
+      "equipement": [
+        "Armure rouge de recuperation",
+        "Hache dentee de recuperation",
+        "Couteau de prise",
+        "Javelot de ferraille"
+      ],
+      "traits": [
+        {
+          "name": "Meute rouge",
+          "effect": "Gagne +1 ATQ contre une cible menacee par au moins un autre Pillard Rouge. Inflige +1 degat contre une cible au sol, entravee, blessee, isolee ou menacee par au moins deux Pillards Rouges. Ces bonus ne se cumulent pas plusieurs fois."
+        },
+        {
+          "name": "Chair a canon rouge",
+          "effect": "Tant qu'un superieur visible est debout, le Maraudeur ignore le premier test de moral. Sans superieur et avec la moitie du groupe tombee, il teste Volonte DD14 ou se desorganise."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Hache dentee",
+          "effect": "+5 - 1d8+1 tranchant."
+        },
+        {
+          "name": "Couteau de prise",
+          "effect": "+5 - 1d4+1 perforant. +1 degat contre cible au sol, entravee ou agrippee."
+        },
+        {
+          "name": "Javelot de ferraille",
+          "effect": "+5 - 1d6 perforant - portee 12 m."
+        },
+        {
+          "name": "Faire tomber",
+          "effect": "+5 - 1d6+1 contondant. Si la cible est blessee, isolee ou menacee par deux Pillards : Vigueur DD14 ou chute. Recharge 2 rounds."
+        },
+        {
+          "name": "Empoigner le prisonnier",
+          "effect": "Condition : cible au sol, entravee ou a 0 PV. Le Maraudeur la traine de 3 m. Liberation : Vigueur ou Reflexes DD14."
+        }
+      ],
+      "note_mj": "Le Maraudeur n'est pas un dueliste. Il est dangereux parce qu'il agit en groupe et transforme le combat en lynchage.",
+      "pages_pdf": [
+        5
+      ]
+    },
+    {
+      "id": "myrmidon-rouge",
+      "nom": "Myrmidon Rouge",
+      "menace": 3,
+      "role": "Entrave lourde / blocage",
+      "fonction": "Bloqueur lourd. Filet, chaine, pieu et ancrage pour capturer prisonniers et petites machines.",
+      "stats": {
+        "pv": 28,
+        "def": 13,
+        "attaque": 4,
+        "initiative": 1,
+        "vigueur": 5,
+        "reflexes": 1,
+        "volonte": 2,
+        "dd": 14,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        15,
+        10,
+        14,
+        12,
+        13,
+        8
+      ],
+      "augmentation_carac_niv4": "FOR",
+      "type": "ordinaire",
+      "equipement": [
+        "Filet lourd de ferraille",
+        "Chaine d'ancrage",
+        "Pieu / crochet de sol",
+        "Gantelets renforces",
+        "Armure rouge lourde"
+      ],
+      "traits": [
+        {
+          "name": "Bloqueur de fosse",
+          "effect": "Gagne +1 a ses tests ou attaques visant a entraver, retenir, tirer au sol, empecher une fuite ou maintenir une cible dans une zone. Ne s'applique pas aux degats."
+        },
+        {
+          "name": "Anti-petites machines",
+          "effect": "Son filet peut entraver une machine Menace 1-2, ou une Menace 3 deja blessee, ralentie ou surprise. Contre Menace 4+, il gene seulement la charge ou impose -3 m pendant 1 round, sauf scene preparee."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Chaine d'ancrage",
+          "effect": "+4 - 1d6+2 contondant - portee 3 m. Peut remplacer les degats par vitesse -3 m jusqu'au prochain tour de la cible."
+        },
+        {
+          "name": "Filet lourd",
+          "effect": "+4 - portee 6 m - Reflexes DD14. Echec : entrave lourde, vitesse 3 m, pas de charge, -1 ATQ, -1 DEF. Reussite : vitesse -3 m pendant 1 round. Recharge : 1 round pour recuperer/rearmer."
+        },
+        {
+          "name": "Planter l'ancre",
+          "effect": "Cible deja entravee. Vigueur DD14 ou elle ne peut pas s'eloigner a plus de 3 m du point d'ancrage. Liberation : Vigueur/Reflexes DD16, outil ou aide."
+        },
+        {
+          "name": "Tirer au sol",
+          "effect": "Cible entravee par chaine ou filet. Vigueur DD14 ou chute au sol. Reussite : perd reaction ou 1,5 m de deplacement."
+        },
+        {
+          "name": "Mur rouge",
+          "effect": "+2 DEF contre charge, bousculade, renversement ou passage force. Le Myrmidon ne peut pas se deplacer volontairement jusqu'a son prochain tour."
+        }
+      ],
+      "note_mj": "Il bloque. Les Maraudeurs frappent. Le Dompteur ou le Chef decide si la cible part en cage ou en arene.",
+      "pages_pdf": [
+        6
+      ]
+    },
+    {
+      "id": "bruleur-rouge",
+      "nom": "Brûleur Rouge",
+      "menace": 3,
+      "role": "Feu / fumée / panique",
+      "fonction": "Controle de zone. Il incendie les abris, coupe les lignes de fuite et couvre les captures par la fumee.",
+      "stats": {
+        "pv": 22,
+        "def": 12,
+        "attaque": 4,
+        "initiative": 3,
+        "vigueur": 3,
+        "reflexes": 3,
+        "volonte": 2,
+        "dd": 14,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        10,
+        15,
+        12,
+        14,
+        13,
+        8
+      ],
+      "augmentation_carac_niv4": "DEX",
+      "type": "ordinaire",
+      "equipement": [
+        "Lance-flammes artisanal court",
+        "Bombes incendiaires rouges",
+        "Fumigenes epais",
+        "Masque de cuir et metal",
+        "Reservoir instable de Blaze",
+        "Couteau brule",
+        "Armure rouge ignifugee bricolee"
+      ],
+      "traits": [
+        {
+          "name": "Feu de panique",
+          "effect": "Gagne +1 ATQ ou +1 DD contre une cible coincee dans la fumee, adjacente a une zone en feu, entravee ou separee de ses allies. Ne s'applique pas aux attaques de melee ordinaires."
+        },
+        {
+          "name": "Tete brulee",
+          "effect": "Ignore la peur, l'hesitation et le premier test de moral tant qu'il garde ses ennemis a distance ou derriere feu/fumee. Perd cet avantage s'il est engage au corps-a-corps, si son reservoir est touche, ou si une cible traverse les flammes pour l'atteindre."
+        },
+        {
+          "name": "Reservoir instable",
+          "effect": "Si critique, degats de feu, ou reservoir cible : Reflexes DD14. Echec : 1d6 feu et petite zone brulante adjacente. Echec critique : explosion mineure, rayon 1,5 m, 2d6 feu, Reflexes DD14 moitie."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Jet de flammes court",
+          "effect": "Cone 4,5 m - Reflexes DD14. Echec : 1d6 feu. Echec critique ou cible inflammable : en feu leger. Recharge 2 rounds."
+        },
+        {
+          "name": "Bombe incendiaire rouge",
+          "effect": "Portee 9 m - rayon 1,5 m - Reflexes DD14. Echec : 1d6 feu et zone brulante 1 round. Reussite : demi-degats. 1/scene."
+        },
+        {
+          "name": "Fumigene rouge",
+          "effect": "Rayon 3 m. Gene la ligne de vue pendant 2 rounds. Les Pillards habitues a la fumee ignorent la premiere penalite legere. Recharge 3 rounds."
+        },
+        {
+          "name": "Couteau brule",
+          "effect": "+4 - 1d4+1 tranchant/perforant. +1 degat contre une cible paniquee, entravee ou au sol."
+        },
+        {
+          "name": "Rire derriere le feu",
+          "effect": "Volonte DD14. Echec : -1 a la prochaine action defensive ou tentative de fuite. 1/scene."
+        }
+      ],
+      "note_mj": "Il rend le terrain invivable plus qu'il ne gagne les duels.",
+      "pages_pdf": [
+        7
+      ]
+    },
+    {
+      "id": "briseur-rouge",
+      "nom": "Briseur Rouge",
+      "menace": 4,
+      "role": "Marteau lourd / casse-plaque",
+      "fonction": "Combattant lourd. Gros marteau a deux mains, degats massifs, plaques decrochees, equipements casses.",
+      "stats": {
+        "pv": 34,
+        "def": 13,
+        "attaque": 6,
+        "initiative": 1,
+        "vigueur": 6,
+        "reflexes": 1,
+        "volonte": 3,
+        "dd": 15,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        15,
+        10,
+        14,
+        8,
+        13,
+        12
+      ],
+      "augmentation_carac_niv4": "FOR",
+      "type": "ordinaire",
+      "equipement": [
+        "Marteau rouge a deux mains",
+        "Masse de demolition",
+        "Armure lourde de plaques rouges"
+      ],
+      "traits": [
+        {
+          "name": "Decroche-plaques",
+          "effect": "Gagne +1 degat contre cible en armure lourde, bouclier, machine avec plaque visible, objet, porte, cage, roue ou piece mecanique. Une plaque/protection touchee peut etre fissuree, tordue ou partiellement arrachee."
+        },
+        {
+          "name": "Arme de machine arrachee - variante rare",
+          "effect": "Certains Briseurs veterans peuvent porter une machoire de Scrapper montee en marteau, une plaque de Charger transformee en masse, une bobine de choc sur marteau, ou une lame de machine sur hampe lourde. Toujours lourd, instable, rare et dangereux."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Marteau rouge a deux mains",
+          "effect": "+6 - 1d10+3 contondant."
+        },
+        {
+          "name": "Coup briseur",
+          "effect": "+6 - 1d10+3 contondant. Si cible porte armure, bouclier, plaque ou equipement expose : Vigueur DD15 ou l'objet est abime. Recharge 2 rounds."
+        },
+        {
+          "name": "Fracasser la garde",
+          "effect": "+6 - 1d8+3 contondant. Si bouclier, garde ou couverture : Vigueur DD15. Echec : repousse 1,5 m et perd reaction. Echec critique : chute. Recharge 2 rounds."
+        },
+        {
+          "name": "Casser l'objet",
+          "effect": "Cible : porte, roue, cage, arme, ancrage, mecanisme, plaque ou piece de machine. Attaque +6 ou Force DD15. 2d6+3 degats a l'objet/piece, ignore 1 protection."
+        },
+        {
+          "name": "Frappe de demolition",
+          "effect": "Condition : cible au sol, entravee, ancree ou coincee. +6 - 2d8+3 contondant. Contrecoup : -1 DEF jusqu'au prochain tour. Recharge 3 rounds."
+        }
+      ],
+      "note_mj": "La reponse des Pillards aux portes, boucliers, plaques de machine et PJ trop statiques.",
+      "pages_pdf": [
+        8
+      ]
+    },
+    {
+      "id": "artilleur-rouge",
+      "nom": "Artilleur Rouge",
+      "menace": 4,
+      "role": "Armes de machines",
+      "fonction": "Specialiste des armes de machines montees sur vehicule, affut ou harnais pour les modeles plus petits.",
+      "stats": {
+        "pv": 28,
+        "def": 12,
+        "attaque": 6,
+        "initiative": 2,
+        "vigueur": 4,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd": 15,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        12,
+        15,
+        13,
+        14,
+        10,
+        8
+      ],
+      "augmentation_carac_niv4": "DEX",
+      "type": "ordinaire",
+      "equipement": [
+        "Canon de machine arrache",
+        "Harnais porte-canon",
+        "Affut de vehicule",
+        "Bobines instables",
+        "Outils de deblocage",
+        "Couteau de secours"
+      ],
+      "traits": [
+        {
+          "name": "Arme trop grosse pour lui",
+          "effect": "Gagne +1 degat avec une arme de machine montee ou portee en harnais. Apres chaque tir lourd, choisir : -1 DEF jusqu'au prochain tour, ou -3 m de deplacement. Sur 1 naturel, l'arme s'enraye ou surchauffe."
+        },
+        {
+          "name": "Tir sans discernement",
+          "effect": "Rafales instables et tirs de suppression affectent toutes les creatures de la zone : ennemis, allies, prisonniers, machines, montures ou civils. Les Pillards touches font Reflexes DD15 comme tout le monde. Il n'hesite pas si un chef ou la cible principale le justifie."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Canon de machine arrache",
+          "effect": "+6 - 2d8 impact/perforant - portee 24 m - recharge 2 rounds. Detruit couvert leger ou impose -1 DEF contre la prochaine attaque si cible plaquee/armuree."
+        },
+        {
+          "name": "Rafale instable",
+          "effect": "Ligne 12 m ou cone 6 m - Reflexes DD15. Echec : 2d6 impact/perforant. Reussite : 1d6. Surchauffe : pas de tir au prochain round. Recharge 3 rounds."
+        },
+        {
+          "name": "Tir de suppression",
+          "effect": "Zone 3 m a portee 24 m. Traverser la zone : Reflexes DD15 ou 1d6 degats et perte de reaction. Recharge 2 rounds."
+        },
+        {
+          "name": "Tir anti-plaque",
+          "effect": "+6 - 1d10+2. Contre machine, armure, bouclier, porte, roue ou vehicule : ignore 1 protection. Reussite de 5+ : protection fissuree. Recharge 2 rounds."
+        },
+        {
+          "name": "Deblocage brutal",
+          "effect": "Arme enraye/surchauffee : Technique ou Force DD15. Echec critique : 1d6 degats ou perd prochaine action."
+        },
+        {
+          "name": "Couteau de secours",
+          "effect": "+6 - 1d4+1 perforant."
+        }
+      ],
+      "note_mj": "Alter ego du Briseur : il casse a distance avec une arme de machine instable.",
+      "pages_pdf": [
+        9
+      ]
+    },
+    {
+      "id": "dompteur-rouge",
+      "nom": "Dompteur Rouge",
+      "menace": 4,
+      "role": "Contrôle électrique / pièges",
+      "fonction": "Le plus intelligent des Pillards : maitre d'arene, piegeur et controleur brutal de machines preparees par la douleur.",
+      "stats": {
+        "pv": 26,
+        "def": 12,
+        "attaque": 5,
+        "initiative": 4,
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd": 15,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        8,
+        14,
+        12,
+        15,
+        13,
+        10
+      ],
+      "augmentation_carac_niv4": "INT",
+      "type": "ordinaire",
+      "equipement": [
+        "Fouet conducteur",
+        "Perche de choc",
+        "Boitier de commande electrique",
+        "Balises de douleur",
+        "Colliers / crochets de controle machine",
+        "Gants isoles",
+        "Bobine de choc portative",
+        "Cle de cage / commande d'arene",
+        "Armure legere isolee",
+        "Pieges electriques transportables"
+      ],
+      "traits": [
+        {
+          "name": "Controle par la douleur",
+          "effect": "Ne pirate pas proprement. Utilise colliers, crochets, decharges conditionnees, cables de contrainte, balises de douleur et signaux simples. Il pousse, retient, choque ou lache une machine."
+        },
+        {
+          "name": "Piegeur de terrain",
+          "effect": "Hors arene, il utilise cables de traction, colliers electriques, plaques de choc, cages, herses, crochets, treuils et appats pour ralentir, separer ou immobiliser tant qu'il n'a pas de machine sous controle."
+        },
+        {
+          "name": "Maitre de fosse",
+          "effect": "Dans arene, camp prepare, pres d'une cage ou d'un dispositif piege : +1 DD aux capacites electriques/mecaniques et +1 tests pour activer piege, controler machine preparee, refermer cage, separer ou forcer une cible a rester."
+        },
+        {
+          "name": "Controle instable",
+          "effect": "Si critique, 0 PV ou boitier detruit : toutes les machines controlees testent Systeme DD15. Echec : incontrôlables 1 round. Echec critique : attaque cible la plus proche, Pillards compris."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Fouet conducteur",
+          "effect": "+5 - 1d6 choc - portee 3 m. Vigueur DD15 ou perd reaction ou -3 m vitesse jusqu'au prochain tour."
+        },
+        {
+          "name": "Perche de choc",
+          "effect": "+5 - 1d6+1 choc. +1 degat contre cible entravee, au sol ou en cage."
+        },
+        {
+          "name": "Ordre electrique",
+          "effect": "Machine preparee a 18 m. Technique/Volonte DD15. Action simple : avancer, reculer, attaquer proche, charger direction, garder zone, rester dans arene. Echec critique : attaque proche ou fuit le controle."
+        },
+        {
+          "name": "Decharge de soumission",
+          "effect": "Machine preparee, prisonnier entrave, animal ou humanoide au contact cable/collier. Vigueur DD15. Echec : 1d6 choc et perd reaction. Echec critique : chute aussi. Recharge 2 rounds."
+        },
+        {
+          "name": "Balise de douleur",
+          "effect": "Machine preparee a 18 m. +1 ATQ et +3 m vitesse pendant 1 round, puis 1d4 degats internes. Si machine passe sous moitie PV : Systeme DD15 ou incontrôlable 1 round."
+        },
+        {
+          "name": "Declencher mecanisme d'arene",
+          "effect": "Active grille, plaque electrifiee, cable, cage, crochet, fumee, sol piege. Reflexes DD15 ou entrave, repousse, ralenti, separe ou choque. Souvent 1/scene par mecanisme."
+        },
+        {
+          "name": "Lacher la bete",
+          "effect": "Libere une machine preparee retenue. 1 round : attaque cible designee ou plus proche. Ensuite Ordre electrique requis pour maintenir controle."
+        }
+      ],
+      "note_mj": "Contrôle fiable : Menace 1-2 preparees. Risque : Menace 3 blessee/entravee/conditionnee. Exceptionnel : Menace 4 jeune/blessee/scenarisee avec installation d'arene.",
+      "pages_pdf": [
+        10
+      ]
+    },
+    {
+      "id": "chef-bande-rouge",
+      "nom": "Chef de bande Rouge / Écorcheur",
+      "menace": 4,
+      "role": "Chef local / tortionnaire",
+      "fonction": "Chef local, tortionnaire, combattant sadique et maitre des prisonniers. Il aime combattre, mais prefere faire durer.",
+      "stats": {
+        "pv": 36,
+        "def": 13,
+        "attaque": 6,
+        "initiative": 3,
+        "vigueur": 5,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd": 15,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        14,
+        12,
+        13,
+        8,
+        10,
+        15
+      ],
+      "augmentation_carac_niv4": "CHA",
+      "type": "ordinaire",
+      "equipement": [
+        "Corne ou sifflet de bande",
+        "Trophées de prisonniers"
+      ],
+      "traits": [
+        {
+          "name": "Cruaute demonstrative",
+          "effect": "Quand il blesse, torture, traine, ralentit ou humilie une cible visible, les Pillards Rouges allies a 9 m ignorent leur prochain test de moral. Une fois par round, un Pillard allie qui attaque cette meme cible gagne +1 ATQ."
+        },
+        {
+          "name": "Il aime quand ca dure",
+          "effect": "Gagne +1 degat contre cible au sol, entravee, blessee, prisonniere, isolee ou deja marquee par ses ordres. Prefere capturer, mutiler ou humilier une cible importante plutot que l'achever rapidement."
+        },
+        {
+          "name": "Sadique, pas prudent",
+          "effect": "Apres avoir mis une cible importante au sol, ralentie ou a 0 PV, Volonte DD15 pour choisir l'option tactiquement optimale. Echec : il torture, traine, marque ou ordonne la capture."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Lame d'ecorcheur",
+          "effect": "+6 - 1d8+2 tranchant."
+        },
+        {
+          "name": "Crochet barbele",
+          "effect": "+6 - 1d6+1 perforant/tranchant - portee 3 m. Vigueur DD15 ou cible tiree de 1,5 m. +1 degat si entravee ou au sol."
+        },
+        {
+          "name": "Marteau de chef - variante",
+          "effect": "+6 - 1d8+2 contondant."
+        },
+        {
+          "name": "Frappe dans les rotules - variante",
+          "effect": "+6 - 1d6+2 contondant. Vigueur DD15 : echec = vitesse -3 m jusqu'a fin du prochain tour ; echec critique = chute et pas de charge 1 round. Recharge 2 rounds."
+        },
+        {
+          "name": "Ordre de bande",
+          "effect": "Un Pillard a 18 m peut se deplacer de 4,5 m, attaquer cible designee, trainer prisonnier, refermer cage ou activer mecanisme simple. Recharge 2 rounds."
+        },
+        {
+          "name": "Exemple sanglant",
+          "effect": "S'il blesse une cible deja au sol, entravee, capturee ou isolee : Pillards a 9 m gagnent +1 ATQ contre cette cible jusqu'au prochain tour. 1/round."
+        },
+        {
+          "name": "Tu vas parler",
+          "effect": "Cible au sol, entravee, prisonniere ou a 0 PV stabilisee. Volonte DD15. Echec : panique, cri, aveu mineur ou -2 prochaine resistance sociale/mentale."
+        },
+        {
+          "name": "Rire de l'ecorcheur",
+          "effect": "Ennemis a 9 m voyant la scene : Volonte DD15. Echec : -1 prochaine action contre le Chef ou tentative de liberation. Echec critique : perd reaction. 1/scene."
+        }
+      ],
+      "note_mj": "Le profil absorbe le role de Tortionnaire Rouge. Pas besoin d'un archetype separe.",
+      "pages_pdf": [
+        11
+      ],
+      "variantes": [
+        {
+          "id": "ecorcheur",
+          "nom": "Écorcheur",
+          "equipement": [
+            "Lame d'écorcheur",
+            "Crochet barbelé",
+            "Couteaux de torture",
+            "Clés de cage",
+            "Trousse d'interrogatoire"
+          ],
+          "actions": [
+            "Lame d'ecorcheur",
+            "Crochet barbele"
+          ]
+        },
+        {
+          "id": "casseur",
+          "nom": "Casseur de rotules",
+          "equipement": [
+            "Marteau court de chef",
+            "Masse de rotule",
+            "Crochets",
+            "Colliers rouges",
+            "Armure de chef"
+          ],
+          "actions": [
+            "Marteau de chef - variante",
+            "Frappe dans les rotules - variante"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conducteur-ferraille",
+      "nom": "Conducteur de ferraille",
+      "menace": 4,
+      "role": "Chariot-bélier / poursuite",
+      "fonction": "Anti-conducteur des Caravanes. Il ne protege pas un convoi : il transforme son chariot en belier, crache-flammes et danger mobile.",
+      "stats": {
+        "pv": 30,
+        "def": 12,
+        "attaque": 5,
+        "initiative": 4,
+        "vigueur": 4,
+        "reflexes": 5,
+        "volonte": 3,
+        "dd": 15,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        10,
+        15,
+        13,
+        14,
+        12,
+        8
+      ],
+      "augmentation_carac_niv4": "DEX",
+      "type": "ordinaire",
+      "equipement": [
+        "Chariot de ferraille",
+        "Crache-flammes de chariot",
+        "Pare-chocs de machine",
+        "Chaines laterales",
+        "Machette courte",
+        "Arbalete de poing",
+        "Harnais de conduite cloute",
+        "Gants renforces"
+      ],
+      "traits": [
+        {
+          "name": "Chariot de ferraille",
+          "effect": "Element de scene : DEF 11, PV 35, vitesse 15 m en ligne / 9 m terrain complique. Faiblesses : reservoir de Blaze, roues, essieu, harnais de direction."
+        },
+        {
+          "name": "Belier rouge",
+          "effect": "Quand le chariot percute, repousse, ecrase ou traverse une ligne apres au moins 9 m de deplacement : +1 degat. Ne s'applique pas aux attaques a pied."
+        },
+        {
+          "name": "Conduite de tare",
+          "effect": "Apres percussion, derapage, virage brutal, obstacle ou demi-tour, tous les passagers testent Reflexes DD15. Echec : tombe dans le chariot, perd reaction, -1 prochaine action. Echec critique : ejecte, au sol, 1d6 contondant. Les Pillards ne sont pas proteges."
+        },
+        {
+          "name": "Il ne s'arrete pas",
+          "effect": "Si allie, prisonnier ou passager tombe, il ne ralentit pas et ne teste pas le moral. Il choisit la trajectoire la plus destructrice."
+        },
+        {
+          "name": "Reservoir de Blaze apparent",
+          "effect": "Reservoir ciblable : DEF 11, PV 6. Detruit par feu/choc/tir precis : explosion rayon 3 m, Reflexes DD15, echec 2d6 feu, reussite 1d6. Perd le crache-flammes."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Percussion de ferraille",
+          "effect": "Si chariot a parcouru 9 m en ligne : Reflexes DD15. Echec : 2d6+3 contondant, repousse 3 m ou au sol. Reussite : 1d6+1 et repousse 1,5 m. Echec critique : au sol et peut etre traine/coince."
+        },
+        {
+          "name": "Raser le flanc",
+          "effect": "Chariot passe adjacent. Reflexes DD15. Echec : 1d6+2 tranchant/contondant et perte de reaction. Reussite : perd 1,5 m de deplacement prochain tour."
+        },
+        {
+          "name": "Crache-flammes de chariot",
+          "effect": "Cone 4,5 m - Reflexes DD15. Echec : 1d6 feu. Echec critique : en feu leger. Recharge 3 rounds ou 1/scene."
+        },
+        {
+          "name": "Derapage volontaire",
+          "effect": "Arc/ligne courte autour du chariot. Reflexes DD15. Echec : chute ou repousse 1,5 m. Contrecoup : chariot subit 1d4 degats."
+        },
+        {
+          "name": "Accroche-chaine",
+          "effect": "Portee 6 m - Reflexes DD15. Echec : accroche et tire 3 m. Echec critique : tombe et traine. 1/scene."
+        },
+        {
+          "name": "Machette courte",
+          "effect": "+5 - 1d6+1 tranchant, seulement s'il est force de descendre."
+        }
+      ],
+      "note_mj": "Le Conducteur de caravane sauve ses passagers. Celui-ci les depense.",
+      "pages_pdf": [
+        12
+      ]
+    },
+    {
+      "id": "roi-rouge",
+      "nom": "Seigneur de raid — Roi Rouge",
+      "menace": 5,
+      "role": "Tyran augmenté / boss",
+      "fonction": "Plus haut grade local des Pillards Rouges. Violent, manipulateur, tas de muscles, chef facon seigneur orc qui regne par la terreur.",
+      "stats": {
+        "pv": 58,
+        "def": 14,
+        "attaque": 7,
+        "initiative": 3,
+        "vigueur": 8,
+        "reflexes": 3,
+        "volonte": 7,
+        "dd": 16,
+        "vitesse_m": 9
+      },
+      "score_base": [
+        15,
+        13,
+        14,
+        8,
+        10,
+        12
+      ],
+      "augmentation_carac_niv4": "FOR",
+      "type": "héroïque",
+      "equipement": [
+        "Grande arme du Roi Rouge : hache-marteau de machine ou arme massive a deux mains",
+        "Armure de tyran rouge avec plaques de machines",
+        "Corne de raid",
+        "Chaine de commandement",
+        "Trophees de soumission",
+        "Noyau ou harnais d'augmentation instable"
+      ],
+      "traits": [
+        {
+          "name": "Regne par la terreur",
+          "effect": "Tant qu'il est debout, Pillards allies a 12 m ignorent leur premier test de moral, gagnent +1 Volonte et +1 degat contre cible au sol, entravee, prisonniere ou designee. Ces bonus cessent s'il tombe, fuit ou est publiquement humilie."
+        },
+        {
+          "name": "Brute manipulatrice",
+          "effect": "Gagne +1 a ses tests ou DD lorsqu'il exploite prisonnier, peur connue, rivalite, promesse de survie, menace contre allie ou faiblesse morale visible."
+        },
+        {
+          "name": "Augmente rouge",
+          "effect": "Rare Pillard Rouge augmente : plaques sous-cutanees, verins primitifs, cables nerveux grossiers, injecteurs, armature dorsale, bobine/harnais. Mutilation fonctionnelle devenue symbole de pouvoir."
+        },
+        {
+          "name": "Chair renforcee",
+          "effect": "Reduit de 1 les degats subis par attaques non critiques de melee ou projectiles simples. Ne s'applique pas au feu, choc, critiques, attaques ciblant implants ou armes lourdes de machines."
+        },
+        {
+          "name": "Injecteurs de rage",
+          "effect": "A 29 PV ou moins, 3 rounds : +1 ATQ, +1 degat, ignore le premier effet de ralentissement/repoussement/chute. Fin de chaque round : 1d4 degats internes."
+        },
+        {
+          "name": "Noyau d'augmentation instable",
+          "effect": "Objet ciblable : DEF 13, PV 8. Detruit : perd Chair renforcee et Injecteurs si non actifs, subit 1d6 interne, Vigueur DD16 ou perd reaction. Si detruit pendant Injecteurs : surtension rayon 1,5 m, Reflexes DD16, echec 2d6 choc, reussite moitie."
+        },
+        {
+          "name": "Symbole augmente",
+          "effect": "Tant que les augmentations fonctionnent, Pillards allies a 12 m gagnent +1 Volonte. Si noyau detruit publiquement : Pillards Menace 2-3 qui voient testent Volonte DD16 ou hesitent/reculent/perdent reaction ; echec critique = fuite/panique."
+        }
+      ],
+      "actions": [
+        {
+          "name": "Grande arme du Roi Rouge",
+          "effect": "+7 - 1d12+4 contondant/tranchant."
+        },
+        {
+          "name": "Frappe de tyran",
+          "effect": "+7 - 1d10+4. Vigueur DD16. Echec : repousse 3 m ou chute. Echec critique : chute et perd reaction. Recharge 2 rounds."
+        },
+        {
+          "name": "Briser l'exemple",
+          "effect": "Cible au sol, entravee, isolee, blessee ou designee. +7 - 2d8+4. Si touche, Pillards a 12 m ignorent leur prochain test de moral. Recharge 3 rounds."
+        },
+        {
+          "name": "Ordre de raid",
+          "effect": "Jusqu'a deux Pillards a 18 m peuvent chacun se deplacer 4,5 m, attaquer, trainer prisonnier, activer mecanisme, refermer cage ou se replacer. Recharge 2 rounds."
+        },
+        {
+          "name": "Tu vas mourir utile",
+          "effect": "Un Pillard allie a 12 m gagne +1 ATQ et +1 degat a sa prochaine attaque. Ensuite il subit 1d4 degats ou perd reaction. 1/round."
+        },
+        {
+          "name": "Silence de la meute",
+          "effect": "Pillards allies a 12 m ignorent peur, panique et premier test de moral jusqu'au prochain tour. 1/scene."
+        },
+        {
+          "name": "Parole de tyran",
+          "effect": "Une creature ennemie a 12 m capable d'entendre. Volonte DD16. Echec : -1 prochaine action contre le Roi ou son ordre. Echec critique : perd reaction ou donne +1 ATQ a un Pillard contre elle. 1/scene."
+        }
+      ],
+      "note_mj": "Le Chef de bande est un tortionnaire local. Le Roi Rouge est celui qui fait peur aux tortionnaires.",
+      "pages_pdf": [
+        13
+      ]
+    }
+  ],
+  "rencontres": [
+    {
+      "id": "route-capture",
+      "nom": "Route — capture simple",
+      "composition": [
+        {
+          "id": "myrmidon-rouge",
+          "qte": 1
+        },
+        {
+          "id": "maraudeur-rouge",
+          "qte": 2
+        }
+      ],
+      "effet": "Le Myrmidon bloque, les Maraudeurs font tomber et traînent."
+    },
+    {
+      "id": "route-intimidation",
+      "nom": "Route — intimidation de masse",
+      "composition": [
+        {
+          "id": "sang-neuf-rouge",
+          "qte": 2
+        },
+        {
+          "id": "maraudeur-rouge",
+          "qte": 2
+        }
+      ],
+      "effet": "Les Sang-neuf chargent pour être vus, les Maraudeurs exploitent la Meute Rouge."
+    },
+    {
+      "id": "attaque-caravane",
+      "nom": "Attaque de caravane",
+      "composition": [
+        {
+          "id": "conducteur-ferraille",
+          "qte": 1
+        },
+        {
+          "id": "bruleur-rouge",
+          "qte": 1
+        },
+        {
+          "id": "maraudeur-rouge",
+          "qte": 2,
+          "qte_max": 3
+        }
+      ],
+      "effet": "Le chariot disperse, le feu coupe les lignes, les Maraudeurs capturent."
+    },
+    {
+      "id": "avant-poste",
+      "nom": "Avant-poste rouge",
+      "composition": [
+        {
+          "id": "chef-bande-rouge",
+          "qte": 1
+        },
+        {
+          "id": "myrmidon-rouge",
+          "qte": 1
+        },
+        {
+          "id": "maraudeur-rouge",
+          "qte": 2
+        },
+        {
+          "id": "bruleur-rouge",
+          "qte": 1,
+          "alternative": "artilleur-rouge"
+        }
+      ],
+      "effet": "Le Chef donne le ton : prisonniers et cruauté."
+    },
+    {
+      "id": "arene",
+      "nom": "Arène préparée",
+      "composition": [
+        {
+          "id": "dompteur-rouge",
+          "qte": 1
+        },
+        {
+          "id": "myrmidon-rouge",
+          "qte": 1
+        },
+        {
+          "id": "sang-neuf-rouge",
+          "qte": null
+        },
+        {
+          "externe": "Machine préparée Menace 1-2",
+          "qte": 1
+        }
+      ],
+      "effet": "Le Dompteur est la priorité tactique. Nombre de Sang-neuf non précisé dans la source."
+    },
+    {
+      "id": "defense-lourde",
+      "nom": "Ligne de défense lourde",
+      "composition": [
+        {
+          "id": "briseur-rouge",
+          "qte": 1
+        },
+        {
+          "id": "artilleur-rouge",
+          "qte": 1
+        },
+        {
+          "id": "maraudeur-rouge",
+          "qte": 2
+        }
+      ],
+      "effet": "Le Briseur casse au contact, l'Artilleur arrose sans discernement."
+    },
+    {
+      "id": "boss-avant-poste",
+      "nom": "Boss d'avant-poste",
+      "composition": [
+        {
+          "id": "roi-rouge",
+          "qte": 1
+        },
+        {
+          "id": "chef-bande-rouge",
+          "qte": 1
+        },
+        {
+          "id": "maraudeur-rouge",
+          "qte": 2
+        },
+        {
+          "externe": "Un spécialiste Menace 4",
+          "qte": 1
+        }
+      ],
+      "effet": "Les Pillards tiennent tant que le Roi Rouge reste debout."
+    }
+  ]
+}

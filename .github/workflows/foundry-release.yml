@@ -24,6 +24,10 @@ jobs:
           node tests/conseil-unique.mjs
           node --check scripts/h0d-faction-menu.js
           node tests/contextual-menu.mjs
+          node --check scripts/h0d-pillards-rouges.js
+          node tests/pillards-rouges.mjs
+          node tests/pillards-menu.mjs
+          python3 -m json.tool data/pillards-rouges.json > /dev/null
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null
           python3 -m json.tool data/conseil-dent-ambre.json > /dev/null
@@ -36,4 +40,4 @@ jobs:
           TAG="$VERSION"
           if gh release view "$TAG" >/dev/null 2>&1; then echo "Version $TAG déjà publiée"; exit 0; fi
           zip -q -r h0d-faction-builder.zip module.json scripts data assets README.md CHANGELOG.md INSTALL-FORGE.txt
-          gh release create "$TAG" h0d-faction-builder.zip module.json data/caravanes-libres.json --target "$GITHUB_SHA" --title "H0D Faction Builder v$TAG" --notes-file CHANGELOG.md
+          gh release create "$TAG" h0d-faction-builder.zip module.json data/caravanes-libres.json data/pillards-rouges.json --target "$GITHUB_SHA" --title "H0D Faction Builder v$TAG" --notes-file CHANGELOG.md

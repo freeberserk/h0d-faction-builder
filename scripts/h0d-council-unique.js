@@ -15,8 +15,11 @@ export const LEGACY_COUNCIL_NAMES = Object.freeze({
   isha: ["Isha - Maitresse des Recits"]
 });
 export function isLegacyCouncilActor(actor,entry) {
-  if(!actor || !entry?.key || typeof actor.getFlag!=="function")return false;
-  if(!actor.getFlag("h0d-conseil","packVersion"))return false;
+  if(!actor || !entry?.key)return false;
+  // Foundry v14 valide le scope de getFlag() contre les modules actifs.
+  // Les données historiques subsistent sous actor.flags même si h0d-conseil
+  // n'est plus installé. Lire directement la valeur sans appeler getFlag().
+  if(!actor.flags?.["h0d-conseil"]?.packVersion)return false;
   const normalized=value=>String(value??"")
     .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
     .replace(/\s+/g," ").trim().toLowerCase();

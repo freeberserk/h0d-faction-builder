@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.1 — Hotfix Foundry v14 : scope inactif de l'ancien Conseil
+
+- Suppression de `getFlag("h0d-conseil", "packVersion")` : les anciennes données sont consultées directement dans `actor.flags`, même si le module historique est désactivé.
+- Création de Maela et des autres conseillers débloquée lorsqu'un ancien PNJ Brok, Eron ou Isha est présent.
+- Protection anti-doublons conservée pour les fiches héritées, sans migration destructrice.
+- Test de régression reproduisant l'exception Foundry et vérifiant la création effective de Maela.
+
 ## 0.5.0 — Navigation contextuelle et création en série
 
 - Interface Faction → Groupe → Profil/Conseiller → Action, sous-menus dynamiques. L'action Exécuter garde la fenêtre ouverte et conserve les choix pour enchaîner plusieurs PNJ. Par défaut, aucun Actor existant n'est réinitialisé ; les actions destructives demandent confirmation. Conseil héroïque et outils MJ séparés.

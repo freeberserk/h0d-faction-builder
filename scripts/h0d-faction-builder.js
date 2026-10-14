@@ -3,7 +3,7 @@ import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-men
 import {installCouncilUnique} from "./h0d-council-unique.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.5.0";
+const MODULE_VERSION = "0.5.1";
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 

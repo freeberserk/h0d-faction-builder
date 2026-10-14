@@ -18,8 +18,8 @@ export function isLegacyCouncilActor(actor,entry) {
   if(!actor || !entry?.key || typeof actor.getFlag!=="function")return false;
   if(!actor.getFlag("h0d-conseil","packVersion"))return false;
   const normalized=value=>String(value??"")
-    .normalize("NFD").replace(/[\\u0300-\\u036f]/g,"")
-    .replace(/\\s+/g," ").trim().toLowerCase();
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/\s+/g," ").trim().toLowerCase();
   const actual=normalized(actor.name);
   return (LEGACY_COUNCIL_NAMES[entry.key]??[]).some(name=>normalized(name)===actual);
 }

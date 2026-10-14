@@ -1,9 +1,11 @@
 import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
 import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-menu.js";
 import {installCouncilUnique} from "./h0d-council-unique.js";
+import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.5.1";
+const MODULE_VERSION = "0.6.0";
+let PILLARDS=null;
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 
@@ -1906,8 +1908,10 @@ async function loadCaravanesProfils(){
 
 function seedMenace1Data(){
   registerFactions(MENACE_1_FACTIONS);
-  registerArchetypes(MENACE_1_ARCHETYPES);
-  registerLoadouts(MENACE_1_LOADOUTS);
+  // Le PDF Pillards Rouges validé exclut tout véritable Pillard de Menace 1.
+  // Les Actors déjà existants ne sont pas supprimés.
+  registerArchetypes(MENACE_1_ARCHETYPES.filter(a=>a.key!=="pillard-recrue"));
+  registerLoadouts(MENACE_1_LOADOUTS.filter(l=>l.archetypeKey!=="pillard-recrue"));
 }
 seedMenace1Data();
 
@@ -1979,7 +1983,7 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
     if(generated.length) await actor.deleteEmbeddedDocuments("Item",generated.map(i=>i.id));
   }
 
-  const displayName=arch.label;
+  const displayName=(arch.allLoadouts?.length>1 && chosenLoadout)?arch.label+" — "+chosenLoadout.label:arch.label;
   if(!actor){
     const [created]=await Actor.implementation.createDocuments([{
       name:displayName,type:"character",img:arch.img||actorTemplate.img||"systems/custom-system-builder/img/template-logo.svg",
@@ -2308,8 +2312,11 @@ async function openBuilder(){
   if(!state.ok)return notify("error","H0D Faction Builder : "+state.message);
 
   const archetypes=Array.from(ARCHETYPES.values());
+  const loadouts=Array.from(LOADOUTS.values());
+  const encounters=PILLARDS?.encounters??[];
   const factions=Array.from(FACTIONS.values()).map(f=>({
-    key:f.key,label:f.label,hasProfiles:archetypes.some(a=>a.factionKey===f.key)
+    key:f.key,label:f.label,hasProfiles:archetypes.some(a=>a.factionKey===f.key),
+    hasEncounters:f.key==="pillards-rouges"&&encounters.length>0
   })).filter(f=>f.hasProfiles||(f.key==="dent-ambre"&&!!COUNCIL));
   const councilEntries=COUNCIL?Array.from(COUNCIL.entries.values()):null;
 
@@ -2322,7 +2329,7 @@ async function openBuilder(){
     rejectClose:false,
     render:(_event,dialog)=>{
       attachFactionMenu(dialog,{
-        factions,archetypes,councilEntries,esc,
+        factions,archetypes,councilEntries,encounters,loadouts,esc,
         suggestCouncilAction:key=>COUNCIL?.suggestedAction?.(key)
       });
       const root=dialog.element?.querySelector(".h0d-faction-menu");
@@ -2336,7 +2343,7 @@ async function openBuilder(){
         const form=dialog.element?.querySelector("form");
         if(!form)return;
         const data=Object.fromEntries(new FormData(form).entries());
-        const choice=resolveMenuSelection(data,factions,archetypes,councilEntries);
+        const choice=resolveMenuSelection(data,factions,archetypes,councilEntries,encounters,loadouts);
         if(!choice.ok){
           status.textContent=choice.message;
           notify("warn",choice.message);
@@ -2370,6 +2377,26 @@ async function openBuilder(){
             }
             return;
           }
+          if(choice.kind==="encounter"){
+            const recipe=encounters.find(x=>x.id===choice.target);
+            if(!recipe)throw new Error("Groupe de rencontre Pillards inconnu.");
+            const created=[];
+            for(const member of recipe.composition){
+              // Les machines de l'arène et les rôles sans identité précise
+              // sont des références scénaristiques, jamais inventées ici.
+              if(!member.id)continue;
+              const arch=ARCHETYPES.get(member.id);
+              if(!arch)throw new Error("Profil Pillard absent : "+member.id);
+              const actor=await buildFactionActor(member.id,{
+                loadoutKey:arch.defaultLoadout??null,mode:"skip"
+              });
+              created.push(actor.name);
+            }
+            status.textContent=recipe.nom+" : "+created.length+
+              " fiches modèles prêtes, sans doublons. "+recipe.effet;
+            notify("info","Groupe préparé : "+recipe.nom+" (modèles uniquement)");
+            return;
+          }
           if(choice.kind!=="profile")throw new Error("Choix de PNJ non reconnu.");
           if(choice.action==="update"||choice.action==="replace"){
             const label=choice.action==="replace"?"SUPPRIMER puis recréer":"METTRE À JOUR";
@@ -2386,7 +2413,7 @@ async function openBuilder(){
           }
           const arch=ARCHETYPES.get(choice.target);
           const actor=await buildFactionActor(choice.target,{
-            loadoutKey:arch?.defaultLoadout??null,mode:choice.action
+            loadoutKey:choice.loadout||arch?.defaultLoadout??null,mode:choice.action
           });
           actor?.sheet?.render(true);
           if(actor){
@@ -2435,6 +2462,14 @@ Hooks.once("ready", async () => {
   try { await loadCaravanesProfils(); }
   catch (err) { console.error(`${MODULE_ID} | chargement Caravanes Libres`,err); notify("error",`Caravanes Libres : ${err?.message||err}`); }
   try{
+    PILLARDS=await loadPillardsRouges({
+      moduleId:MODULE_ID,registerFaction,registerArchetype,registerLoadout
+    });
+  }catch(err){
+    console.error(MODULE_ID+" | Pillards Rouges",err);
+    notify("error","Pillards Rouges : "+(err?.message??err));
+  }
+  try{
     COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
       templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
       clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify});
@@ -2445,6 +2480,7 @@ Hooks.once("ready", async () => {
     repairGeneratedFactionCapabilityTables,
     upgradeCaravanesProfilesSafely,
     council:COUNCIL,
+    encounters:PILLARDS?.encounters??[],
     registerFaction,
     registerFactions,
     registerArchetype,

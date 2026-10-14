@@ -2,7 +2,7 @@ import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMo
 import {installCouncilUnique} from "./h0d-council-unique.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.4.0";
+const MODULE_VERSION = "0.4.1";
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 

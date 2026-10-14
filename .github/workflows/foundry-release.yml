@@ -40,4 +40,4 @@ jobs:
           TAG="$VERSION"
           if gh release view "$TAG" >/dev/null 2>&1; then echo "Version $TAG déjà publiée"; exit 0; fi
           zip -q -r h0d-faction-builder.zip module.json scripts data assets README.md CHANGELOG.md INSTALL-FORGE.txt
-          gh release create "$TAG" h0d-faction-builder.zip module.json data/caravanes-libres.json --target "$GITHUB_SHA" --title "H0D Faction Builder v$TAG" --notes-file CHANGELOG.md
+          gh release create "$TAG" h0d-faction-builder.zip module.json data/caravanes-libres.json data/pillards-rouges.json --target "$GITHUB_SHA" --title "H0D Faction Builder v$TAG" --notes-file CHANGELOG.md

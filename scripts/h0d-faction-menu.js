@@ -54,9 +54,9 @@ export function menuHTML({factions,esc}) {
       '<option value="">— Choisir une faction —</option>'+options+
       '<option value="'+MAINTENANCE_KEY+'">⚙ Outils MJ / maintenance</option></select></div>'+
     '<div class="form-group"><label>2 · Groupe</label><select name="group"><option value="">— Choisir un groupe —</option></select></div>'+
-    '<div class="form-group" data-role="target" hidden><label>3 · Personnage / profil</label>'+
+    '<div class="form-group" data-role="target" style="display:none"><label>3 · Personnage / profil</label>'+
       '<select name="target"><option value="">— Choisir un personnage —</option></select></div>'+
-    '<div class="form-group" data-role="action" hidden><label>4 · Action</label>'+
+    '<div class="form-group" data-role="action" style="display:none"><label>4 · Action</label>'+
       '<select name="action"><option value="">— Choisir une action —</option></select></div>'+
     '<p data-role="hint" style="opacity:.75;margin:0">Choisis une faction pour afficher ses groupes.</p>'+
     '<button type="button" data-h0d-run><i class="fa-solid fa-play"></i> Exécuter</button>'+
@@ -97,13 +97,13 @@ export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,esc
       suggestCouncilAction(target.value):null;
     action.value=options.some(x=>x.key===suggested)?suggested:
       group.value==="profiles"?"skip":group.value==="council"?"open":"";
-    actionRow.hidden=faction.value===MAINTENANCE_KEY||!target.value;
+    actionRow.style.display=faction.value===MAINTENANCE_KEY||!target.value?"none":"";
     refreshHint();
   }
   function refreshTarget(){
     const targets=targetsForGroup(faction.value,group.value,archetypes,councilEntries??[]);
     fill(target,targets,"— Choisir un personnage —");
-    targetRow.hidden=faction.value===MAINTENANCE_KEY||!targets.length;
+    targetRow.style.display=faction.value===MAINTENANCE_KEY||!targets.length?"none":"";
     refreshAction();
   }
   function refreshGroup(){

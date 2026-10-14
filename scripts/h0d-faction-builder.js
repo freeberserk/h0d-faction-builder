@@ -2310,7 +2310,7 @@ async function openBuilder(){
   const archetypes=Array.from(ARCHETYPES.values());
   const factions=Array.from(FACTIONS.values()).map(f=>({
     key:f.key,label:f.label,hasProfiles:archetypes.some(a=>a.factionKey===f.key)
-  }));
+  })).filter(f=>f.hasProfiles||(f.key==="dent-ambre"&&!!COUNCIL));
   const councilEntries=COUNCIL?Array.from(COUNCIL.entries.values()):null;
 
   // DialogV2.wait reste affiché pendant l'exécution ; seul « Fermer »

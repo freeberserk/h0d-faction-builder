@@ -1,0 +1,11 @@
+import assert from "node:assert/strict";
+import {readFile} from "node:fs/promises";
+const js=await readFile(new URL("../scripts/h0d-faction-builder.js",import.meta.url),"utf8");
+assert.ok(js.includes("DialogV2.wait({")||js.includes("Dialog.wait({"),"Persistent Foundry dialog required");
+assert.ok(js.includes('action:"close"'),"Explicit close control required");
+assert.ok(js.includes("busy=true"),"Double-click lock required");
+assert.ok(js.includes("button.disabled=true"),"Disable active action while busy");
+assert.ok(js.includes("attachFactionMenu(dialog"),"Dynamic menu attachment required");
+assert.ok(js.includes("resolveMenuSelection("),"Validate selected faction and group");
+assert.ok(js.includes("async()=>"),"Repeatable action handler");
+console.log("OK: h0d-faction-builder persistent multi-generation window controls");

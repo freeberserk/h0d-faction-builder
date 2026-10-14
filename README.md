@@ -1,4 +1,11 @@
-# H0D Faction Builder — v0.4.1
+# H0D Faction Builder — v0.5.0
+
+## v0.5.0 — Navigation contextuelle et création en série
+
+Interface Faction → Groupe → Profil/Conseiller → Action, sous-menus dynamiques. L'action Exécuter garde la fenêtre ouverte et conserve les choix pour enchaîner plusieurs PNJ. Par défaut, aucun Actor existant n'est réinitialisé ; les actions destructives demandent confirmation. Conseil héroïque et outils MJ séparés.
+
+**Mode d'emploi :** lancer la macro habituelle, choisir les données et cliquer sur **Générer / Exécuter**. La fenêtre demeure ouverte. Modifier la sélection et recommencer, puis cliquer sur **Fermer**. La création d'un Actor/item existant respecte le mode conservateur par défaut. Pour les actions modifiant des entrées existantes, une confirmation supplémentaire protège les personnalisations.
+
 
 ## v0.4.1 — Reconnaissance des conseillers déjà présents dans le BAC
 

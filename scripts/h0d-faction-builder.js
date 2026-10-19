@@ -4,7 +4,7 @@ import {installCouncilUnique} from "./h0d-council-unique.js";
 import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.0";
+const MODULE_VERSION = "0.6.1";
 let PILLARDS=null;
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
@@ -31,6 +31,40 @@ const ROOT_FOLDER = "H0D — Factions générées";
 const FACTIONS = new Map();
 const ARCHETYPES = new Map();
 const LOADOUTS = new Map();
+
+function normalizedText(value){
+  return String(value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+}
+
+function factionPerceptionProps(key, props={}, {unique=false,name=""}={}){
+  const text=normalizedText([
+    key,name,props.H0D_Creature_Profil,props.H0D_Creature_Role,
+    props.H0D_Creature_Faction,props.H0D_Creature_Faction_Autre
+  ].filter(Boolean).join(" "));
+
+  let per=unique?4:2, range=30, sense="", senseRange=0;
+
+  if(/drone|elys|agent blanc|pacificateur|heliosium|automate/.test(text)){
+    per=5; range=45; sense="Capteurs techniques"; senseRange=60;
+  }else if(/maela|maitre chasseur/.test(text)){
+    per=5;
+  }else if(/guetteur|pisteur|eclaireur|chasseur|sentinelle|surveillance/.test(text)){
+    per=4;
+  }else if(/capitaine|veteran|chef|oracle|dompteur/.test(text)){
+    per=4;
+  }else if(/garde|soldat|maraudeur|briseur|recuperateur|medecin|ingenieur|tireur|conducteur|artilleur/.test(text)){
+    per=3;
+  }else if(/messager|caravanier/.test(text)){
+    per=3;
+  }
+
+  return {
+    H0D_Creature_Perception:String(per),
+    H0D_Creature_Perception_Portee:String(range),
+    H0D_Creature_Sens_Speciaux:sense,
+    H0D_Creature_Sens_Portee:String(senseRange)
+  };
+}
 
 const TEMPLATE_KEYS = {
   actor:"actor-creature",
@@ -74,6 +108,7 @@ function normalizeFaction(f){
 function normalizeArchetype(a){
   if(!a?.key || !a?.label || !a?.factionKey) throw new Error("Archétype invalide : key, label et factionKey requis.");
   const out=clone(a); out.actor??={}; out.actor.props??={};
+  out.actor.props={...factionPerceptionProps(out.key,out.actor.props),...out.actor.props};
   for(const field of ["weapons","armor","objects","resources","modifiers"]) out[field]=(out[field]??[]).map(normalizeEntry);
   return out;
 }
@@ -2057,6 +2092,50 @@ function normalizeCapabilityRows(table) {
   return Object.fromEntries(entries.map(([,row],i) => [String(i),clone(row)]));
 }
 
+
+const FACTION_PERCEPTION_FIELDS=Object.freeze([
+  "H0D_Creature_Perception",
+  "H0D_Creature_Perception_Portee",
+  "H0D_Creature_Sens_Speciaux",
+  "H0D_Creature_Sens_Portee"
+]);
+
+async function syncFactionPerception(){
+  if(!game.user?.isGM)throw new Error("Synchronisation PER/DET réservée au MJ.");
+  let actors=0,props=0,skipped=0;
+
+  for(const actor of game.actors??[]){
+    let expected=null;
+
+    if(actor.getFlag(MODULE_ID,"generated")===true){
+      const key=actor.getFlag(MODULE_ID,"archetypeKey");
+      const arch=ARCHETYPES.get(key);
+      if(arch) expected=arch.actor?.props??null;
+    }else if(actor.getFlag(MODULE_ID,"councilUnique")===true){
+      const key=actor.getFlag(MODULE_ID,"councilKey");
+      const entry=COUNCIL?.entries?.get?.(key);
+      expected=factionPerceptionProps(key,entry?.actor?.props??actor.system?.props??{},{
+        unique:true,name:entry?.name??actor.name
+      });
+    }
+
+    if(!expected){continue;}
+    const update={};
+    for(const field of FACTION_PERCEPTION_FIELDS){
+      const value=expected[field] ?? factionPerceptionProps("",actor.system?.props??{},{
+        unique:actor.getFlag(MODULE_ID,"councilUnique")===true,name:actor.name
+      })[field];
+      update[`system.props.${field}`]=clone(value);
+    }
+    await actor.update(update);
+    actors++;
+    props+=Object.keys(update).length;
+  }
+
+  notify("info",`H0D Factions : PER/DET synchronisées — ${actors} Actor(s), ${props} champ(s), ${skipped} ignoré(s).`);
+  return {actors,props,skipped};
+}
+
 async function repairGeneratedFactionCapabilityTables() {
   if (!game.user?.isGM) throw new Error("Réparation réservée au MJ.");
   const candidates = Array.from(game.actors ?? []).filter(actor =>
@@ -2370,6 +2449,7 @@ async function openBuilder(){
           if(choice.kind==="maintenance"){
             if(choice.action==="repair-capabilities")await repairGeneratedFactionCapabilityTables();
             else if(choice.action==="upgrade-caravanes")await upgradeCaravanesProfilesSafely();
+            else if(choice.action==="sync-perception")await syncFactionPerception();
             status.textContent="Maintenance terminée. Tu peux continuer ou fermer.";
             return;
           }
@@ -2485,13 +2565,15 @@ Hooks.once("ready", async () => {
   try{
     COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
       templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
-      clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify});
+      clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
+      perceptionPropsForActor:factionPerceptionProps});
   }catch(err){console.error(MODULE_ID+" | Conseil",err);notify("error","Conseil : "+(err?.message??err));}
   const api = {
     open: openBuilder,
     buildFactionActor,
     repairGeneratedFactionCapabilityTables,
     upgradeCaravanesProfilesSafely,
+    syncPerception: syncFactionPerception,
     council:COUNCIL,
     encounters:PILLARDS?.encounters??[],
     registerFaction,

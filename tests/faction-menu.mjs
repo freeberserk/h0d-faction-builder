@@ -15,7 +15,7 @@ const archetypes=[
 const members=[{key:"kael",name:"Kael",role:"Guide"},{key:"brok",name:"Brok",role:"Forge"}];
 assert.deepEqual(groupsForFaction("dent-ambre",factions,true).map(x=>x.key),["council","profiles"]);
 assert.deepEqual(groupsForFaction("caravanes-libres",factions,true).map(x=>x.key),["profiles"]);
-assert.deepEqual(groupsForFaction("__maintenance__",factions,true).map(x=>x.key),["repair-capabilities","upgrade-caravanes"]);
+assert.deepEqual(groupsForFaction("__maintenance__",factions,true).map(x=>x.key),["repair-capabilities","upgrade-caravanes","sync-perception"]);
 assert.deepEqual(targetsForGroup("dent-ambre","council",archetypes,members).map(x=>x.key),["kael","brok"]);
 assert.deepEqual(targetsForGroup("caravanes-libres","profiles",archetypes,members).map(x=>x.key),["caravanier"]);
 assert.equal(actionsForGroup("council").length,3);
@@ -25,5 +25,6 @@ assert.deepEqual(resolveMenuSelection({faction:"dent-ambre",group:"council",targ
 assert.equal(resolveMenuSelection({faction:"caravanes-libres",group:"council",target:"kael",action:"create"},factions,archetypes,members).ok,false);
 assert.equal(resolveMenuSelection({faction:"dent-ambre",group:"council",target:"kael",action:"replace"},factions,archetypes,members).ok,false);
 assert.equal(resolveMenuSelection({faction:"__maintenance__",group:"repair-capabilities"},factions,archetypes,members).kind,"maintenance");
+assert.equal(resolveMenuSelection({faction:"__maintenance__",group:"sync-perception"},factions,archetypes,members).action,"sync-perception");
 assert.ok(menuHTML({factions,esc:x=>x}).includes('data-h0d-run'));
 console.log("OK: dynamic faction/Conseil subgroup, target/action validation and safe defaults");

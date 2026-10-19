@@ -3,7 +3,8 @@ export const MAINTENANCE_KEY = "__maintenance__";
 export function groupsForFaction(key,factions,councilReady=false) {
   if(key===MAINTENANCE_KEY)return [
     {key:"repair-capabilities",label:"Réparer les tables de capacités"},
-    {key:"upgrade-caravanes",label:"Harmoniser les Caravanes Libres (SRD)"}
+    {key:"upgrade-caravanes",label:"Harmoniser les Caravanes Libres (SRD)"},
+    {key:"sync-perception",label:"Synchroniser PER / DET des PNJ"}
   ];
   const faction=factions.find(x=>x.key===key);
   if(!faction)return [];

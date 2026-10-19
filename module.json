@@ -1,8 +1,8 @@
 {
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
-  "description": "H0D Faction Builder : 10 Pillards Rouges validés (Menaces 2–5), 7 rencontres, 14 Caravanes ordinaires, 9 conseillers héroïques, profils et variantes, génération protégée.",
-  "version": "0.6.0",
+  "description": "Générateur de factions H0D — PNJ, Caravanes, Pillards, Conseil, PER/DET et maintenance ciblée.",
+  "version": "0.6.1",
   "authors": [
     {
       "name": "JDR Zero Dawn"

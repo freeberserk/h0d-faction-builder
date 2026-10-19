@@ -1,3 +1,12 @@
+## 0.6.1 — Perception et DET des PNJ
+
+- Les archétypes de faction reçoivent désormais une Perception et une portée de perception.
+- Les humains gardent une portée normale de **30 m** ; guetteurs, pisteurs, chasseurs et vétérans ont des valeurs de PER adaptées à leur rôle.
+- Les profils techniques non humains (drones, agents ELYS/HelioSium) utilisent des capteurs techniques et une portée supérieure.
+- Les nouveaux membres du Conseil reçoivent aussi leurs champs PER/DET lors de la création.
+- Ajout de l’outil MJ **Synchroniser PER / DET des PNJ** : il ne modifie que les quatre champs perception/sens.
+- Aucun PV, équipement, table de capacités ou personnalisation de séance n’est réinitialisé.
+
 # Changelog
 
 ## 0.6.0 — Les Pillards Rouges, Menaces 2 à 5

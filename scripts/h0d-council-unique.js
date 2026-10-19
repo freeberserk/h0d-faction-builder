@@ -29,7 +29,8 @@ export function isLegacyCouncilActor(actor,entry) {
 
 export async function installCouncilUnique({
   moduleId,rootFolder,templateState,template,actorTemplateKey,
-  clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify
+  clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
+  perceptionPropsForActor
 }) {
   const path="modules/"+moduleId+"/data/conseil-dent-ambre.json";
   const route=foundry.utils.getRoute ? foundry.utils.getRoute(path) : path;
@@ -88,7 +89,10 @@ export async function installCouncilUnique({
           generated:false,referenceVersion:"1"}}
       }]);
       actor=created;
-      await forceTemplateAndProps(actor,t,e.actor.props);
+      const perceptionProps=perceptionPropsForActor
+        ? perceptionPropsForActor(key,e.actor.props,{unique:true,name:e.name})
+        : {};
+      await forceTemplateAndProps(actor,t,{...perceptionProps,...e.actor.props});
       // Construction des 49 équipements à partir des templates courants.
       // Aucun cache CSB issu de l'ancien export n'est réutilisé.
       const payload=e.items.map(item=>itemData(item,item.kind));

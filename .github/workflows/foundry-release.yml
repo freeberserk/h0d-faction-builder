@@ -24,6 +24,7 @@ jobs:
           node tests/conseil-unique.mjs
           node --check scripts/h0d-faction-menu.js
           node tests/contextual-menu.mjs
+          node tests/perception-sync.mjs
           node --check scripts/h0d-pillards-rouges.js
           node tests/pillards-rouges.mjs
           node tests/pillards-menu.mjs

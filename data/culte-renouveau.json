@@ -1,0 +1,1288 @@
+{
+  "schema": "h0d-pnj-faction-pdf-v1",
+  "faction": {
+    "key": "culte-renouveau",
+    "label": "Culte du Renouveau",
+    "factionValue": "Renouveau",
+    "folder": "Culte du Renouveau"
+  },
+  "source": {
+    "fichier": "Culte_du_Renouveau_PNJ_Builder(1).pdf",
+    "pages": 16,
+    "notes": "Statistiques, actions et traits extraits du PDF fourni. Scores de caractéristiques, niveaux et XP individuels non précisés par la source."
+  },
+  "doctrine": [
+    "Les machines sont appelées Envoyés ; les ruines sont interprétées comme des temples et les Femmes en Blanc comme des messagères possibles.",
+    "Les Focus fonctionnels sont très rares : l'Oracle en porte un, l'Élu possède une liaison IA.",
+    "Les Intercesseurs n'utilisent pas de piratage réel : observation, routines et signaux appris.",
+    "Greffe : machine soudée à l'humain ; Inquisiteur : exosquelette commandé ; Élu : lien IA.",
+    "Les V2 de Prêcheur, Intercesseur et Traqueur apparaissent avec la radicalisation."
+  ],
+  "regles_communes": [
+    {
+      "nom": "Marque du Renouveau",
+      "effet": "Chaque membre reconnu possède au moins une augmentation visible ou fonctionnelle, culturelle avant d'être mécaniquement déterminante."
+    }
+  ],
+  "profils": [
+    {
+      "id": "pelerin-du-signe",
+      "nom": "Pelerin du Signe",
+      "menace": 1,
+      "branche": "Religieux",
+      "role": "Initiation / pelerinage / assistance / propagation",
+      "phrase": "Il ne cherche pas encore a comprendre le signe. Il apprend a le reconnaitre.",
+      "stats": {
+        "pv": 10,
+        "def": 11,
+        "attaque": 2,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 1,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd": 12
+      },
+      "equipement": [
+        "Baton de marche",
+        "Couteau rituel",
+        "Robe renforcee",
+        "Fragments de machines en reliquaires",
+        "Lanternes / balises",
+        "Necessaire de pelerin"
+      ],
+      "actions": [
+        {
+          "nom": "Baton de pelerin",
+          "type": "CAC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Arme de voyage."
+        },
+        {
+          "nom": "Couteau rituel",
+          "type": "CAC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d4",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Dernier recours."
+        },
+        {
+          "nom": "Assister le fidele",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+1 prochain test",
+          "portee": "Adjacent",
+          "recharge": "1/round",
+          "notes": "Aide simple et immediate."
+        },
+        {
+          "nom": "Reciter les signes",
+          "type": "Moral",
+          "attaque_dd": "DD12",
+          "degats_effet": "Calme peur / hesitation",
+          "portee": "6m",
+          "recharge": "Recharge 2",
+          "notes": "Cible un cultiste."
+        },
+        {
+          "nom": "Porter temoignage",
+          "type": "Social",
+          "attaque_dd": "DD12",
+          "degats_effet": "Convainc / rassure",
+          "portee": "Social",
+          "recharge": "-",
+          "notes": "Raconte un miracle ou un signe."
+        }
+      ],
+      "traits": [
+        "Foi simple: +2 Volonte contre peur pres d une machine consideree sacree.",
+        "Voyageur religieux: connait sanctuaires, routes de pelerinage et symboles du Culte.",
+        "Marque du Renouveau: possede au moins une petite augmentation visible ou fonctionnelle."
+      ],
+      "pages_pdf": [
+        2
+      ]
+    },
+    {
+      "id": "gardien-du-sanctuaire",
+      "nom": "Gardien du Sanctuaire",
+      "menace": 2,
+      "branche": "Religieux",
+      "role": "Protection / lieux sacres / fideles / reliques",
+      "phrase": "Il ne poursuit pas les profanateurs. Il les empeche d entrer.",
+      "stats": {
+        "pv": 24,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 4,
+        "reflexes": 2,
+        "volonte": 4,
+        "dd": 13
+      },
+      "equipement": [
+        "Lance rituelle",
+        "Bouclier de plaques anciennes",
+        "Robe-armure",
+        "Liens sacres",
+        "Lampe de sanctuaire"
+      ],
+      "actions": [
+        {
+          "nom": "Lance rituelle",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Tenue de seuil."
+        },
+        {
+          "nom": "Coup de bouclier",
+          "type": "Controle",
+          "attaque_dd": "+4",
+          "degats_effet": "1d4+2 + recul 1,5 m",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "DD13 annule le recul."
+        },
+        {
+          "nom": "Interposition sacree",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF allie / relique",
+          "portee": "Adjacent",
+          "recharge": "1/round",
+          "notes": "Se place entre menace et cible."
+        },
+        {
+          "nom": "Tu ne passeras pas",
+          "type": "Defense",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF, bloque passage",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Tant qu il ne se deplace pas."
+        }
+      ],
+      "traits": [
+        "Protecteur, pas chasseur: ne poursuit normalement pas une cible qui abandonne le sanctuaire.",
+        "Garde des reliques: +2 Volonte lorsqu il defend personne, objet ou lieu sacre.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        3
+      ]
+    },
+    {
+      "id": "precheur-du-renouveau",
+      "nom": "Precheur du Renouveau",
+      "menace": 3,
+      "branche": "Religieux",
+      "role": "Ceremonies / soutien / conversion / commandement",
+      "phrase": "Il donne aux signes une histoire, puis aux croyants une raison d agir.",
+      "stats": {
+        "pv": 28,
+        "def": 13,
+        "attaque": 4,
+        "initiative": 3,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 2,
+        "volonte": 5,
+        "dd": 14
+      },
+      "equipement": [
+        "Baton sacre",
+        "Robe ceremonielle renforcee",
+        "Reliquaire mecanique",
+        "Amplificateur vocal rudimentaire",
+        "Encens / fumigenes rituels"
+      ],
+      "actions": [
+        {
+          "nom": "Baton sacre",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Defense personnelle."
+        },
+        {
+          "nom": "Parole du Renouveau",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+2 prochain jet important",
+          "portee": "12 m",
+          "recharge": "1/round",
+          "notes": "Un cultiste qui entend."
+        },
+        {
+          "nom": "Litanie de courage",
+          "type": "Moral",
+          "attaque_dd": "DD14",
+          "degats_effet": "Ignore peur / panique 1 round",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Jusqu a 3 cultistes."
+        },
+        {
+          "nom": "Designer le profanateur",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "+1 ATQ contre cible",
+          "portee": "12 m",
+          "recharge": "1/scene",
+          "notes": "Jusqu au prochain tour du Precheur."
+        },
+        {
+          "nom": "Apaiser les fideles",
+          "type": "Social",
+          "attaque_dd": "DD14",
+          "degats_effet": "Stoppe panique mineure",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Foule ou groupe de croyants."
+        }
+      ],
+      "traits": [
+        "Autorite religieuse: +2 conversion, sermon et arbitrage interne.",
+        "Interpretation doctrinale: transforme une decouverte incomprise en explication religieuse credible.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        4
+      ]
+    },
+    {
+      "id": "intercesseur-des-machines",
+      "nom": "Intercesseur des Machines",
+      "menace": 3,
+      "branche": "Religieux",
+      "role": "Observation machine / comportement / defense",
+      "phrase": "Il ne commande pas les Envoyes. Il connait les signes qui les poussent a proteger.",
+      "stats": {
+        "pv": 24,
+        "def": 13,
+        "attaque": 3,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd": 14
+      },
+      "equipement": [
+        "Baton sonore",
+        "Dispositifs acoustiques",
+        "Lentilles d observation",
+        "Carnet de migrations",
+        "Offrandes mecaniques",
+        "Protections auditives"
+      ],
+      "actions": [
+        {
+          "nom": "Baton sonore",
+          "type": "CAC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Arme de defense."
+        },
+        {
+          "nom": "Lire l Envoye",
+          "type": "Observation",
+          "attaque_dd": "DD14",
+          "degats_effet": "Identifie intention / etat",
+          "portee": "30 m",
+          "recharge": "-",
+          "notes": "Agitation, chasse, fuite, territoire, anomalie."
+        },
+        {
+          "nom": "Prevoir le mouvement",
+          "type": "Reaction",
+          "attaque_dd": "DD14",
+          "degats_effet": "+2 DEF a un allie",
+          "portee": "12 m",
+          "recharge": "1/round",
+          "notes": "Contre attaque d une machine observee."
+        },
+        {
+          "nom": "Appel de l Envoye",
+          "type": "Machine",
+          "attaque_dd": "DD14",
+          "degats_effet": "Posture defensive 1-3 rounds",
+          "portee": "30 m",
+          "recharge": "1/scene",
+          "notes": "Machine neutre / tolerante; protege, repousse, bloque ou couvre."
+        },
+        {
+          "nom": "Signal familier",
+          "type": "Machine",
+          "attaque_dd": "DD14",
+          "degats_effet": "Hesite / detourne attention",
+          "portee": "30 m",
+          "recharge": "Recharge 2",
+          "notes": "Seulement comportement plausible."
+        }
+      ],
+      "traits": [
+        "Aucun piratage: repose sur observation, routines, gestes et sons appris.",
+        "Appel de l Envoye ne peut pas imposer suicide, poursuite lointaine ou comportement contraire a la machine.",
+        "Memoire des Envoyes: +2 especes, territoires et habitudes de machines.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        5
+      ]
+    },
+    {
+      "id": "oracle-du-renouveau",
+      "nom": "Oracle du Renouveau",
+      "menace": 5,
+      "branche": "Religieux",
+      "role": "Prophetie / Focus / interpretation des voix",
+      "phrase": "Il recoit parfois une verite. Le danger commence lorsqu il lui donne un sens.",
+      "stats": {
+        "pv": 45,
+        "def": 14,
+        "attaque": 5,
+        "initiative": 5,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 7,
+        "dd": 16
+      },
+      "equipement": [
+        "Focus fonctionnel ancien",
+        "Couronne de lentilles",
+        "Baton-relais",
+        "Robe blanche ceremonielle",
+        "Focus morts en reliquaires"
+      ],
+      "actions": [
+        {
+          "nom": "Baton-relais",
+          "type": "CAC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Arme-relique."
+        },
+        {
+          "nom": "Onde Focus instable",
+          "type": "Onde",
+          "attaque_dd": "+5",
+          "degats_effet": "2d8 + confusion",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Volonte DD16 ou confusion 1 round."
+        },
+        {
+          "nom": "Vision fragmentaire",
+          "type": "Focus",
+          "attaque_dd": "DD16",
+          "degats_effet": "1 information reelle mais incomplete",
+          "portee": "Systeme",
+          "recharge": "Recharge 2",
+          "notes": "Depuis un systeme accessible."
+        },
+        {
+          "nom": "Parole revelee",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+2 Vol, +1 ATQ",
+          "portee": "12 m",
+          "recharge": "1/scene",
+          "notes": "Jusqu a 3 cultistes, 1 round."
+        },
+        {
+          "nom": "Resonance des ruines",
+          "type": "Detection",
+          "attaque_dd": "DD16",
+          "degats_effet": "Detecte signal / archive / veille",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Presence, pas contenu complet."
+        }
+      ],
+      "traits": [
+        "Focus rare.",
+        "Verite mal interpretee: donnees justes possibles, lecture religieuse pas forcement juste.",
+        "Cible privilegiee d ELYSIUM: facilement manipulable par informations selectionnees.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        6
+      ]
+    },
+    {
+      "id": "debusqueur-de-reliques",
+      "nom": "Debusqueur de Reliques",
+      "menace": 2,
+      "branche": "Chercheurs",
+      "role": "Reperage / extraction / recuperation",
+      "phrase": "Il trouve ce que les ruines ont essaye d enterrer.",
+      "stats": {
+        "pv": 18,
+        "def": 12,
+        "attaque": 3,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 3,
+        "dd": 13
+      },
+      "equipement": [
+        "Pioche fine",
+        "Couteau-outil",
+        "Pinces et sondes",
+        "Cordes",
+        "Detecteurs artisanaux",
+        "Boites de transport",
+        "Craie rituelle"
+      ],
+      "actions": [
+        {
+          "nom": "Pioche courte",
+          "type": "CAC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Outil robuste."
+        },
+        {
+          "nom": "Reperer une relique",
+          "type": "Exploration",
+          "attaque_dd": "DD13",
+          "degats_effet": "Localise anomalie / cache",
+          "portee": "Zone proche",
+          "recharge": "-",
+          "notes": "Metal, cable, compartiment, objet deplace."
+        },
+        {
+          "nom": "Extraction prudente",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Retire sans dommage",
+          "portee": "Contact",
+          "recharge": "Recharge 2",
+          "notes": "Evite reactions evidentes."
+        },
+        {
+          "nom": "Stabilisation de fortune",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Evite degradation temporaire",
+          "portee": "Contact",
+          "recharge": "1/scene",
+          "notes": "Objet instable."
+        },
+        {
+          "nom": "Marquer le site",
+          "type": "Exploration",
+          "attaque_dd": "-",
+          "degats_effet": "Retour facilite",
+          "portee": "Zone",
+          "recharge": "-",
+          "notes": "Balisage discret et rituel."
+        }
+      ],
+      "traits": [
+        "Pas un Analyste: sait sortir l objet, pas forcement expliquer sa fonction.",
+        "Doigts de fouille: +2 extraction, recuperation et demontage precis.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        7
+      ]
+    },
+    {
+      "id": "eclaireur-des-ruines",
+      "nom": "Eclaireur des Ruines",
+      "menace": 2,
+      "branche": "Chercheurs",
+      "role": "Reconnaissance / dangers / acces anciens",
+      "phrase": "Avant que les fideles entrent dans le temple, quelqu un verifie que le plafond tient.",
+      "stats": {
+        "pv": 18,
+        "def": 13,
+        "attaque": 3,
+        "initiative": 5,
+        "vitesse": "12 m",
+        "vigueur": 2,
+        "reflexes": 5,
+        "volonte": 3,
+        "dd": 13
+      },
+      "equipement": [
+        "Arc court",
+        "Couteau",
+        "Corde et pitons",
+        "Masque filtrant",
+        "Lampe",
+        "Peinture de balisage"
+      ],
+      "actions": [
+        {
+          "nom": "Arc court",
+          "type": "Distance",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6+1",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Tir simple."
+        },
+        {
+          "nom": "Couteau",
+          "type": "CAC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Dernier recours."
+        },
+        {
+          "nom": "Reconnaissance des ruines",
+          "type": "Exploration",
+          "attaque_dd": "DD13",
+          "degats_effet": "Detecte dangers evidents",
+          "portee": "Zone proche",
+          "recharge": "-",
+          "notes": "Effondrement, gaz, chaleur, mecanisme."
+        },
+        {
+          "nom": "Trouver un acces",
+          "type": "Exploration",
+          "attaque_dd": "DD13",
+          "degats_effet": "Acces secondaire plausible",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Conduit, escalier, ouverture technique."
+        },
+        {
+          "nom": "Repli balise",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+2 test collectif de sortie",
+          "portee": "Groupe",
+          "recharge": "1/scene",
+          "notes": "Zone deja reconnue."
+        }
+      ],
+      "traits": [
+        "Premier entre, premier sorti.",
+        "Memoire spatiale: retrouve normalement un chemin deja cartographie.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        8
+      ]
+    },
+    {
+      "id": "analyste-des-vestiges",
+      "nom": "Analyste des Vestiges",
+      "menace": 3,
+      "branche": "Chercheurs",
+      "role": "Etude technique / archives / interpretation",
+      "phrase": "Il cherche ce que l objet fait. Le Precheur decide ensuite de ce que cela signifie.",
+      "stats": {
+        "pv": 20,
+        "def": 12,
+        "attaque": 2,
+        "initiative": 3,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd": 14
+      },
+      "equipement": [
+        "Instruments de mesure",
+        "Sondes filaires",
+        "Tablette de notes",
+        "Lentilles grossissantes",
+        "Cellules-test",
+        "Baton court"
+      ],
+      "actions": [
+        {
+          "nom": "Baton court",
+          "type": "CAC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d4+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Defense personnelle."
+        },
+        {
+          "nom": "Analyse fonctionnelle",
+          "type": "Technique",
+          "attaque_dd": "DD14",
+          "degats_effet": "Fonction / panne probable",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Alimentation, entree/sortie, etat."
+        },
+        {
+          "nom": "Lecture d archive",
+          "type": "Technique",
+          "attaque_dd": "DD14",
+          "degats_effet": "Extrait donnees lisibles",
+          "portee": "Support",
+          "recharge": "Recharge 2",
+          "notes": "Sans Focus si interface accessible."
+        },
+        {
+          "nom": "Comparer les fragments",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+2 autre test technique",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Si technologie similaire deja etudiee."
+        },
+        {
+          "nom": "Hypothese controlee",
+          "type": "Analyse",
+          "attaque_dd": "DD14",
+          "degats_effet": "Indice confirmant / infirmant",
+          "portee": "Scene",
+          "recharge": "1/scene",
+          "notes": "Pose une hypothese technique claire."
+        }
+      ],
+      "traits": [
+        "Normalement sans Focus.",
+        "Separe fonction et foi: souvent rationnel meme s il reste croyant.",
+        "Archiviste empirique: +2 technologies deja cataloguees par le Culte.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        9
+      ]
+    },
+    {
+      "id": "traqueur",
+      "nom": "Traqueur",
+      "menace": 3,
+      "branche": "Chercheurs",
+      "role": "Pistage machines / migrations / apparitions",
+      "phrase": "Il suit les traces jusqu a l endroit ou l histoire devient une legende.",
+      "stats": {
+        "pv": 24,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 5,
+        "vitesse": "12 m",
+        "vigueur": 3,
+        "reflexes": 5,
+        "volonte": 4,
+        "dd": 14
+      },
+      "equipement": [
+        "Arc long leger",
+        "Lance courte",
+        "Cape de terrain",
+        "Longue-vue",
+        "Carnet de temoignages",
+        "Cartes de migrations",
+        "Necessaire de bivouac"
+      ],
+      "actions": [
+        {
+          "nom": "Arc de traque",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8+1",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": "Tir de pisteur."
+        },
+        {
+          "nom": "Lance courte",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Defense rapprochee."
+        },
+        {
+          "nom": "Suivre l Envoye",
+          "type": "Pistage",
+          "attaque_dd": "DD14",
+          "degats_effet": "Suit machine / groupe",
+          "portee": "Piste",
+          "recharge": "-",
+          "notes": "Meme longtemps apres passage si traces."
+        },
+        {
+          "nom": "Recouper les signes",
+          "type": "Analyse",
+          "attaque_dd": "DD14",
+          "degats_effet": "Relie traces / temoignages",
+          "portee": "Zone",
+          "recharge": "Recharge 2",
+          "notes": "Machines, lumiere, rumeur, apparition."
+        },
+        {
+          "nom": "Predire la route",
+          "type": "Pistage",
+          "attaque_dd": "DD14",
+          "degats_effet": "Itineraire probable",
+          "portee": "Zone",
+          "recharge": "1/scene",
+          "notes": "Machine ou groupe suivi."
+        },
+        {
+          "nom": "Marquer la proie",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+1 tests de poursuite du groupe",
+          "portee": "Cible",
+          "recharge": "1/scene",
+          "notes": "Cible deja observee."
+        }
+      ],
+      "traits": [
+        "Traqueur de legendes: +2 temoignages lies aux Femmes en Blanc.",
+        "Patience absolue: suit une piste plusieurs jours sans penalite narrative normale.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        10
+      ]
+    },
+    {
+      "id": "greffe",
+      "nom": "Greffe",
+      "menace": 3,
+      "branche": "Transfigurés",
+      "role": "Transfigure I / force physique / corps-machine",
+      "phrase": "Ils ont appris a souder avant d apprendre a comprendre.",
+      "stats": {
+        "pv": 38,
+        "def": 14,
+        "attaque": 5,
+        "initiative": 1,
+        "vitesse": "9 m",
+        "vigueur": 6,
+        "reflexes": 1,
+        "volonte": 3,
+        "dd": 14
+      },
+      "equipement": [
+        "Chassis de jambes ou membre mecanique",
+        "Plaques soudees",
+        "Respirateur lourd",
+        "Systemes recuperes sur machines"
+      ],
+      "actions": [
+        {
+          "nom": "Membre mecanique",
+          "type": "CAC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d10+3",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Bras, jambe ou outil greffe."
+        },
+        {
+          "nom": "Charge de chassis",
+          "type": "CAC/charge",
+          "attaque_dd": "+5",
+          "degats_effet": "2d6+3 + renverse",
+          "portee": "6m",
+          "recharge": "Recharge 2",
+          "notes": "DD14 evite renversement."
+        },
+        {
+          "nom": "Prise hydraulique",
+          "type": "Controle",
+          "attaque_dd": "DD14",
+          "degats_effet": "Agrippe / pousse / souleve",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Force mecanique."
+        },
+        {
+          "nom": "Encaisser",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "Reduit 3 degats physiques",
+          "portee": "Soi",
+          "recharge": "1/round",
+          "notes": "Plaques et chassis absorbent."
+        },
+        {
+          "nom": "Forcer l obstacle",
+          "type": "Force",
+          "attaque_dd": "DD14",
+          "degats_effet": "Arrache / tient structure",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Usage physique lourd."
+        }
+      ],
+      "traits": [
+        "Augmentation primitive: sensible mauvais entretien et surcharge.",
+        "Corps sacrifie: resistance accrue douleur et fatigue.",
+        "Regret possible: douleurs chroniques, limitations et transformations non desirees a posteriori."
+      ],
+      "pages_pdf": [
+        11
+      ]
+    },
+    {
+      "id": "inquisiteur",
+      "nom": "Inquisiteur",
+      "menace": 5,
+      "branche": "Transfigurés",
+      "role": "Transfigure II / exosquelette / croisade",
+      "phrase": "Le Greffe porte la machine dans sa chair. L Inquisiteur la porte comme une volonte.",
+      "stats": {
+        "pv": 58,
+        "def": 18,
+        "attaque": 7,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 6,
+        "reflexes": 4,
+        "volonte": 6,
+        "dd": 16
+      },
+      "equipement": [
+        "Exosquelette assiste",
+        "Armure blanche / grise",
+        "Lame ou hallebarde d Inquisition",
+        "Bouclier assiste",
+        "Cellules dorsales",
+        "Masque rituel"
+      ],
+      "actions": [
+        {
+          "nom": "Lame d Inquisition",
+          "type": "CAC",
+          "attaque_dd": "+7",
+          "degats_effet": "2d8+3",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Arme de croisade."
+        },
+        {
+          "nom": "Charge assistee",
+          "type": "CAC/charge",
+          "attaque_dd": "+7",
+          "degats_effet": "2d10+3",
+          "portee": "6m",
+          "recharge": "Recharge 2",
+          "notes": "Propulsion de l exosquelette."
+        },
+        {
+          "nom": "Saisie exosquelettique",
+          "type": "Controle",
+          "attaque_dd": "DD16",
+          "degats_effet": "Repousse / immobilise / renverse",
+          "portee": "CAC",
+          "recharge": "Recharge 2",
+          "notes": "Choisir un effet plausible."
+        },
+        {
+          "nom": "Bouclier assiste",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF",
+          "portee": "Soi",
+          "recharge": "1/round",
+          "notes": "Correction motorisee."
+        },
+        {
+          "nom": "Sentence du Renouveau",
+          "type": "Marquage",
+          "attaque_dd": "-",
+          "degats_effet": "+1 ATQ et degats contre cible",
+          "portee": "18 m",
+          "recharge": "1/scene",
+          "notes": "Designe un profanateur."
+        }
+      ],
+      "traits": [
+        "Exosquelette maitrise: propre, fiable et controle par l humain.",
+        "Croise: +2 Volonte lorsqu il execute une mission officiellement proclamee.",
+        "Poids des actes: certains Inquisiteurs quittent le Culte apres une croisade injustifiable.",
+        "Dependance logistique: entretien et cellules specifiques."
+      ],
+      "pages_pdf": [
+        12
+      ]
+    },
+    {
+      "id": "elu",
+      "nom": "Elu",
+      "menace": 6,
+      "branche": "Transfigurés",
+      "role": "Transfigure III / interface IA / conscience partagee",
+      "phrase": "Il ne prie plus pour entendre la voix. Elle repond avant la fin de la question.",
+      "stats": {
+        "pv": 65,
+        "def": 19,
+        "attaque": 7,
+        "initiative": 7,
+        "vitesse": "9 m",
+        "vigueur": 5,
+        "reflexes": 6,
+        "volonte": 8,
+        "dd": 17
+      },
+      "equipement": [
+        "Interface neurale",
+        "Relais cranien",
+        "Colonne de connexion",
+        "Plaques blanches epurees",
+        "Arme ceremonielle legere"
+      ],
+      "actions": [
+        {
+          "nom": "Impulsion neurale",
+          "type": "Distance",
+          "attaque_dd": "+7",
+          "degats_effet": "2d8 energie / electrique",
+          "portee": "18 m",
+          "recharge": "Recharge 2",
+          "notes": "Projection via interface."
+        },
+        {
+          "nom": "Lecture instantanee",
+          "type": "IA",
+          "attaque_dd": "DD17",
+          "degats_effet": "Fonction / etat immediat",
+          "portee": "Systeme",
+          "recharge": "-",
+          "notes": "Seulement systeme accessible."
+        },
+        {
+          "nom": "Synchronisation machine",
+          "type": "IA",
+          "attaque_dd": "DD17",
+          "degats_effet": "Influence temporaire",
+          "portee": "30 m",
+          "recharge": "Recharge 2",
+          "notes": "Machine deja connectee a reseau compatible."
+        },
+        {
+          "nom": "Prediction assistee",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "+3 DEF ou deplacement 3 m",
+          "portee": "12 m",
+          "recharge": "1/round",
+          "notes": "Anticipation de donnees."
+        },
+        {
+          "nom": "Voix multiple",
+          "type": "Mental",
+          "attaque_dd": "DD17",
+          "degats_effet": "Trouble / confusion 1 round",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Volonte DD17."
+        },
+        {
+          "nom": "Communion",
+          "type": "IA",
+          "attaque_dd": "-",
+          "degats_effet": "Avantage majeur pertinent",
+          "portee": "Soi",
+          "recharge": "1/scene",
+          "notes": "Influx de donnees de l IA liee."
+        }
+      ],
+      "traits": [
+        "Lien IA direct.",
+        "Conscience partagee: recoit certaines informations hors des sens humains ordinaires.",
+        "Acces limite: ne controle que ce que le reseau ou l IA autorise reellement.",
+        "Identite incertaine: difficile de separer conviction personnelle et influence de l IA.",
+        "Extremement rare."
+      ],
+      "pages_pdf": [
+        13
+      ]
+    },
+    {
+      "id": "precheur-de-croisade",
+      "nom": "Precheur de Croisade",
+      "menace": 4,
+      "branche": "V2",
+      "role": "V2 / mobilisation guerriere / fanatisme organise",
+      "phrase": "La foi ne suffit plus. Il faut marcher.",
+      "stats": {
+        "pv": 38,
+        "def": 15,
+        "attaque": 5,
+        "initiative": 3,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 2,
+        "volonte": 6,
+        "dd": 15
+      },
+      "equipement": [
+        "Baton-lame de croisade",
+        "Robe-armure",
+        "Amplificateur vocal",
+        "Reliquaire de campagne",
+        "Etendard du Renouveau"
+      ],
+      "actions": [
+        {
+          "nom": "Baton-lame",
+          "type": "CAC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d8+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Arme symbolique et martiale."
+        },
+        {
+          "nom": "Appel a la Croisade",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "+1 ATQ, +2 Vol",
+          "portee": "12 m",
+          "recharge": "1/scene",
+          "notes": "Jusqu a 4 cultistes, 2 rounds."
+        },
+        {
+          "nom": "Designer l impie",
+          "type": "Marquage",
+          "attaque_dd": "-",
+          "degats_effet": "+2 prochaine attaque contre cible",
+          "portee": "18 m",
+          "recharge": "Recharge 2",
+          "notes": "Un seul allie profite du bonus."
+        },
+        {
+          "nom": "Avance des fideles",
+          "type": "Commandement",
+          "attaque_dd": "DD15",
+          "degats_effet": "3 allies bougent 3 m",
+          "portee": "12 m",
+          "recharge": "Recharge 2",
+          "notes": "Sans provoquer de panique."
+        },
+        {
+          "nom": "Martyre exemplaire",
+          "type": "Reaction",
+          "attaque_dd": "-",
+          "degats_effet": "Allies ignorent peur 1 round",
+          "portee": "12 m",
+          "recharge": "1/scene",
+          "notes": "Quand un cultiste tombe a 0 PV."
+        }
+      ],
+      "traits": [
+        "V2 du Precheur du Renouveau: apparait avec la radicalisation.",
+        "La foi devient doctrine de guerre; il mobilise plus qu il ne combat.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        14
+      ]
+    },
+    {
+      "id": "intercesseur-de-machine-de-guerre",
+      "nom": "Intercesseur de Machine de Guerre",
+      "menace": 4,
+      "branche": "V2",
+      "role": "V2 / machine auxiliaire / defense offensive",
+      "phrase": "Il ne pirate toujours pas l Envoye. Il sait maintenant comment l amener a frapper au bon endroit.",
+      "stats": {
+        "pv": 34,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 5,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 6,
+        "dd": 15
+      },
+      "equipement": [
+        "Baton-relais acoustique",
+        "Balises comportementales",
+        "Lentilles de lecture",
+        "Emetteurs sonores",
+        "Cartes de routines de combat"
+      ],
+      "actions": [
+        {
+          "nom": "Baton-relais",
+          "type": "CAC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+1",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Defense personnelle."
+        },
+        {
+          "nom": "Lire la machine de guerre",
+          "type": "Observation",
+          "attaque_dd": "DD15",
+          "degats_effet": "Identifie pattern combat",
+          "portee": "30 m",
+          "recharge": "-",
+          "notes": "Charge, balayage, tir, territoire."
+        },
+        {
+          "nom": "Appel de guerre",
+          "type": "Machine",
+          "attaque_dd": "DD15",
+          "degats_effet": "Machine defend / attaque localement",
+          "portee": "30 m",
+          "recharge": "1/scene",
+          "notes": "Machine neutre/tolerante et comportement compatible."
+        },
+        {
+          "nom": "Orienter la charge",
+          "type": "Machine",
+          "attaque_dd": "DD15",
+          "degats_effet": "Deplace trajectoire / cible",
+          "portee": "30 m",
+          "recharge": "Recharge 2",
+          "notes": "N impose pas action impossible."
+        },
+        {
+          "nom": "Couverture mecanique",
+          "type": "Reaction",
+          "attaque_dd": "DD15",
+          "degats_effet": "Machine interpose / menace",
+          "portee": "30 m",
+          "recharge": "1/round",
+          "notes": "Si machine deja receptive."
+        },
+        {
+          "nom": "Rompre le lien",
+          "type": "Machine",
+          "attaque_dd": "-",
+          "degats_effet": "Met fin a ses propres signaux",
+          "portee": "30 m",
+          "recharge": "-",
+          "notes": "Evite escalation ou poursuite."
+        }
+      ],
+      "traits": [
+        "V2 de l Intercesseur: maitrise avancee des routines, toujours sans piratage reel.",
+        "Ne fonctionne pas sur toutes les machines ni contre un controle superieur du reseau.",
+        "Le Culte interprete cette cooperation comme reconnaissance divine.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        15
+      ]
+    },
+    {
+      "id": "traqueur-assassin",
+      "nom": "Traqueur-Assassin",
+      "menace": 4,
+      "branche": "V2",
+      "role": "V2 / chasse ciblee / elimination",
+      "phrase": "Il ne suit plus seulement la piste. Il decide ou elle s arrete.",
+      "stats": {
+        "pv": 36,
+        "def": 16,
+        "attaque": 6,
+        "initiative": 6,
+        "vitesse": "12 m",
+        "vigueur": 3,
+        "reflexes": 6,
+        "volonte": 4,
+        "dd": 15
+      },
+      "equipement": [
+        "Arc de traque renforce",
+        "Lame silencieuse",
+        "Cape de terrain",
+        "Masque blanc",
+        "Longue-vue",
+        "Kit de dissimulation"
+      ],
+      "actions": [
+        {
+          "nom": "Arc de traque renforce",
+          "type": "Distance",
+          "attaque_dd": "+6",
+          "degats_effet": "1d10+2",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": "Tir precis."
+        },
+        {
+          "nom": "Lame silencieuse",
+          "type": "CAC",
+          "attaque_dd": "+6",
+          "degats_effet": "1d8+2",
+          "portee": "CAC",
+          "recharge": "-",
+          "notes": "Arme courte."
+        },
+        {
+          "nom": "Marquer la cible",
+          "type": "Traque",
+          "attaque_dd": "DD15",
+          "degats_effet": "+2 suivi / observation",
+          "portee": "Cible",
+          "recharge": "1/scene",
+          "notes": "Cible observee 1 round."
+        },
+        {
+          "nom": "Frappe d embuscade",
+          "type": "Attaque",
+          "attaque_dd": "+6",
+          "degats_effet": "2d8+2",
+          "portee": "CAC / 18 m",
+          "recharge": "Recharge 2",
+          "notes": "Si cible surprise, isolee ou non consciente de lui."
+        },
+        {
+          "nom": "Disparaitre dans la trace",
+          "type": "Furtivite",
+          "attaque_dd": "DD15",
+          "degats_effet": "Se cache / rompt poursuite",
+          "portee": "Zone",
+          "recharge": "Recharge 2",
+          "notes": "Necessite couverture plausible."
+        },
+        {
+          "nom": "Achever la chasse",
+          "type": "Attaque",
+          "attaque_dd": "+6",
+          "degats_effet": "+1d8 contre cible marquee",
+          "portee": "Cible",
+          "recharge": "1/scene",
+          "notes": "Seulement cible marquee."
+        }
+      ],
+      "traits": [
+        "V2 du Traqueur: apparait quand le Culte commence a eliminer les obstacles au Renouveau.",
+        "Assassin rituel, pas ninja: methodes de pisteur, ruines, patience et terrain.",
+        "Preferer cible isolee, temoin, profanateur ou dissident a un combat frontal.",
+        "Marque du Renouveau."
+      ],
+      "pages_pdf": [
+        16
+      ]
+    }
+  ]
+}

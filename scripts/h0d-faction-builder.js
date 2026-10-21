@@ -2,10 +2,12 @@ import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMo
 import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-menu.js";
 import {installCouncilUnique} from "./h0d-council-unique.js";
 import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
+import {loadNewFactionPdf} from "./h0d-renouveau-soleil.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.1";
+const MODULE_VERSION = "0.6.2";
 let PILLARDS=null;
+let NEW_PDF_FACTIONS=[];
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 
@@ -2563,6 +2565,14 @@ Hooks.once("ready", async () => {
     notify("error","Pillards Rouges : "+(err?.message??err));
   }
   try{
+    NEW_PDF_FACTIONS=await loadNewFactionPdf({
+      moduleId:MODULE_ID,registerFaction,registerArchetype,registerLoadout
+    });
+  }catch(err){
+    console.error(MODULE_ID+" | Culte du Renouveau et Héritiers du Soleil",err);
+    notify("error","Nouveaux PNJ PDF : "+(err?.message??err));
+  }
+  try{
     COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
       templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
       clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
@@ -2576,6 +2586,7 @@ Hooks.once("ready", async () => {
     syncPerception: syncFactionPerception,
     council:COUNCIL,
     encounters:PILLARDS?.encounters??[],
+    pdfFactions:NEW_PDF_FACTIONS,
     registerFaction,
     registerFactions,
     registerArchetype,

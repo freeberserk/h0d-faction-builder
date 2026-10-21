@@ -1,0 +1,722 @@
+{
+  "schema": "h0d-pnj-faction-pdf-v1",
+  "faction": {
+    "key": "heritiers-soleil",
+    "label": "Héritiers du Soleil",
+    "factionValue": "HeritiersSoleil",
+    "folder": "Héritiers du Soleil"
+  },
+  "source": {
+    "fichier": "Heritiers_du_Soleil_PNJ_Builder(2).pdf",
+    "pages": 10,
+    "notes": "Statistiques, actions et traits extraits du PDF fourni. Scores de caractéristiques, niveaux et XP individuels non précisés par la source."
+  },
+  "doctrine": [
+    "Une société chevaleresque et militaire dont la priorité est la protection du Bastion et des installations d'HÉPHAÏSTOS, et non la conquête.",
+    "Déploiement en force hors du Bastion rare ; positions préparées, barrages visibles et peu de pièges dissimulés.",
+    "La défense collective et la technologie entretenue constituent le principal rempart régional contre les Pillards Rouges."
+  ],
+  "regles_communes": [
+    {
+      "nom": "Discipline solaire",
+      "effet": "À 3 m ou moins d'un autre Héritier conscient : +1 aux jets pour résister à la peur, au déplacement forcé ou à la rupture de formation."
+    }
+  ],
+  "profils": [
+    {
+      "id": "aspirant-solaire",
+      "nom": "ASPIRANT SOLAIRE",
+      "menace": 1,
+      "branche": "Militaire",
+      "role": "Recrue / garde secondaire / soutien de formation",
+      "phrase": "Il apprend d'abord à tenir sa place avant d'apprendre à vaincre.",
+      "stats": {
+        "pv": 12,
+        "def": 12,
+        "attaque": 2,
+        "initiative": 1,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 1,
+        "volonte": 2,
+        "dd": 12
+      },
+      "equipement": [
+        "Lance courte solaire",
+        "Petit bouclier-miroir",
+        "Armure légère claire",
+        "Javelots solaires",
+        "Gourde filtrante",
+        "Insigne d’aspirant"
+      ],
+      "actions": [
+        {
+          "nom": "Lance courte",
+          "type": "CàC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6+1",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Javelot solaire",
+          "type": "Distance",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6",
+          "portee": "12 m",
+          "recharge": "-"
+        },
+        {
+          "nom": "Tenir la ligne",
+          "type": "Défense",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF jusqu’au prochain tour",
+          "portee": "Personnel",
+          "recharge": "Reste près d’un allié"
+        },
+        {
+          "nom": "Couvrir un frère",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF à un Héritier adjacent",
+          "portee": "1,5 m",
+          "recharge": "1/round"
+        }
+      ],
+      "traits": [
+        "Discipline solaire: +1 contre peur, déplacement forcé ou rupture de formation si un Héritier conscient est à 3 m.",
+        "Encore en formation: isolé à plus de 6 m, il perd Discipline solaire.",
+        "Obéissance militaire: +2 pour exécuter un ordre simple sous pression."
+      ],
+      "pages_pdf": [
+        2
+      ]
+    },
+    {
+      "id": "eclaireur-solaire",
+      "nom": "ÉCLAIREUR SOLAIRE",
+      "menace": 2,
+      "branche": "Militaire",
+      "role": "Reconnaissance / surveillance du désert / liaison",
+      "phrase": "Il voit la menace avant qu’elle atteigne les murs.",
+      "stats": {
+        "pv": 20,
+        "def": 14,
+        "attaque": 3,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 2,
+        "dd": 13
+      },
+      "equipement": [
+        "Arc solaire",
+        "Lance légère",
+        "Visière filtrante",
+        "Cape désertique",
+        "Miroir de signalisation",
+        "Longue-vue solaire"
+      ],
+      "actions": [
+        {
+          "nom": "Arc solaire",
+          "type": "Distance",
+          "attaque_dd": "+3",
+          "degats_effet": "1d8+1",
+          "portee": "24 m",
+          "recharge": "-"
+        },
+        {
+          "nom": "Lance légère",
+          "type": "CàC",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6+1",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Repérer l’approche",
+          "type": "Observation",
+          "attaque_dd": "DD13",
+          "degats_effet": "Nombre, direction, nature générale",
+          "portee": "Longue",
+          "recharge": "-"
+        },
+        {
+          "nom": "Signal solaire",
+          "type": "Communication",
+          "attaque_dd": "DD13",
+          "degats_effet": "Alerte silencieuse à un poste visible",
+          "portee": "Vue",
+          "recharge": "1/scène"
+        },
+        {
+          "nom": "Choisir le terrain",
+          "type": "Tactique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Jusqu’à 3 alliés: +1 Initiative",
+          "portee": "Groupe",
+          "recharge": "1/scène"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Vision du désert: ignore les gênes mineures d’éblouissement et de mirage.",
+        "Éclaireur, pas aventurier: priorité à l’information et au retour au Bastion."
+      ],
+      "pages_pdf": [
+        3
+      ]
+    },
+    {
+      "id": "artisan-solaire",
+      "nom": "ARTISAN SOLAIRE",
+      "menace": 2,
+      "branche": "Technique",
+      "role": "Maintenance / armurerie / fabrication",
+      "phrase": "Un mur ne tient que si quelqu’un entretient ses pierres.",
+      "stats": {
+        "pv": 18,
+        "def": 12,
+        "attaque": 2,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd": 13
+      },
+      "equipement": [
+        "Marteau-outil",
+        "Kit d’entretien solaire",
+        "Cellules énergétiques",
+        "Instruments de mesure",
+        "Lunettes filtrantes",
+        "Tablier renforcé"
+      ],
+      "actions": [
+        {
+          "nom": "Marteau-outil",
+          "type": "CàC",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6+1",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Réparation de campagne",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Stabilise arme, armure ou installation simple",
+          "portee": "Contact",
+          "recharge": "-"
+        },
+        {
+          "nom": "Changer une cellule",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Rend utilisable une arme solaire déchargée",
+          "portee": "Contact",
+          "recharge": "-"
+        },
+        {
+          "nom": "Calibrage",
+          "type": "Soutien",
+          "attaque_dd": "DD13",
+          "degats_effet": "+1 prochaine attaque avec arme solaire",
+          "portee": "Contact",
+          "recharge": "1/scène"
+        },
+        {
+          "nom": "Extinction d’urgence",
+          "type": "Technique",
+          "attaque_dd": "DD13",
+          "degats_effet": "Stoppe surchauffe, feu ou fuite énergétique",
+          "portee": "Contact",
+          "recharge": "-"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Métier avant guerre: profil technique, pas combattant spécialisé.",
+        "Entretien standardisé: travaille sur la plupart des équipements militaires héritiers."
+      ],
+      "pages_pdf": [
+        4
+      ]
+    },
+    {
+      "id": "soldat-solaire",
+      "nom": "SOLDAT SOLAIRE",
+      "menace": 3,
+      "branche": "Militaire",
+      "role": "Infanterie professionnelle / formation / tenue de ligne",
+      "phrase": "Seul, c’est un soldat. À six, c’est un mur.",
+      "stats": {
+        "pv": 34,
+        "def": 16,
+        "attaque": 5,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 4,
+        "reflexes": 2,
+        "volonte": 4,
+        "dd": 14
+      },
+      "equipement": [
+        "Hallebarde solaire",
+        "Bouclier-miroir",
+        "Armure solaire intermédiaire",
+        "Casque à visière",
+        "Cellule de secours",
+        "Insigne d’unité"
+      ],
+      "actions": [
+        {
+          "nom": "Hallebarde solaire",
+          "type": "CàC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d10+3",
+          "portee": "Allonge",
+          "recharge": "-"
+        },
+        {
+          "nom": "Hampe défensive",
+          "type": "CàC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d6+3; recul 1,5 m sur réussite forte",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Mur solaire",
+          "type": "Défense",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF pour lui et un soldat adjacent",
+          "portee": "1,5 m",
+          "recharge": "Jusqu’au déplacement"
+        },
+        {
+          "nom": "Interception",
+          "type": "Réaction",
+          "attaque_dd": "+5",
+          "degats_effet": "Prend l’attaque à la place d’un allié",
+          "portee": "1,5 m",
+          "recharge": "1/round"
+        },
+        {
+          "nom": "Avance disciplinée",
+          "type": "Tactique",
+          "attaque_dd": "DD14",
+          "degats_effet": "Jusqu’à 3 soldats avancent ensemble",
+          "portee": "Groupe",
+          "recharge": "1/scène"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Formation défensive: ses capacités sont plus fortes au contact d’autres soldats.",
+        "Ne cède pas le passage: +2 contre renversement/déplacement forcé en défense de position."
+      ],
+      "pages_pdf": [
+        5
+      ]
+    },
+    {
+      "id": "garde-du-bastion",
+      "nom": "GARDE DU BASTION",
+      "menace": 4,
+      "branche": "Militaire",
+      "role": "Défense lourde / verrouillage d’accès / rempart",
+      "phrase": "On ne lui demande pas de gagner du terrain. On lui demande de ne jamais le perdre.",
+      "stats": {
+        "pv": 48,
+        "def": 18,
+        "attaque": 6,
+        "initiative": 1,
+        "vitesse": "6 m",
+        "vigueur": 5,
+        "reflexes": 2,
+        "volonte": 4,
+        "dd": 15
+      },
+      "equipement": [
+        "Grande lance solaire",
+        "Pavois-miroir",
+        "Armure lourde solaire",
+        "Ancrages de bottes",
+        "Casque fermé",
+        "Balise de seuil"
+      ],
+      "actions": [
+        {
+          "nom": "Grande lance",
+          "type": "CàC",
+          "attaque_dd": "+6",
+          "degats_effet": "1d12+3",
+          "portee": "Allonge",
+          "recharge": "-"
+        },
+        {
+          "nom": "Coup de pavois",
+          "type": "CàC",
+          "attaque_dd": "+6",
+          "degats_effet": "1d6+3; DD15 ou recul 1,5 m",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Ancrage",
+          "type": "Défense",
+          "attaque_dd": "-",
+          "degats_effet": "Résistance majeure au déplacement; vitesse -3 m",
+          "portee": "Personnel",
+          "recharge": "Activation"
+        },
+        {
+          "nom": "Passage interdit",
+          "type": "Réaction",
+          "attaque_dd": "+6",
+          "degats_effet": "Attaque une cible qui franchit sa ligne",
+          "portee": "Allonge",
+          "recharge": "1/round"
+        },
+        {
+          "nom": "Mur du Bastion",
+          "type": "Défense",
+          "attaque_dd": "-",
+          "degats_effet": "Deux Gardes côte à côte: +2 DEF de face",
+          "portee": "Formation",
+          "recharge": "Continu"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Défenseur de seuil: +2 aux tests pour tenir une porte, un pont ou un passage.",
+        "Priorité aux civils: peut fournir couverture à une cible placée derrière lui."
+      ],
+      "pages_pdf": [
+        6
+      ]
+    },
+    {
+      "id": "artilleur-solaire",
+      "nom": "ARTILLEUR SOLAIRE",
+      "menace": 4,
+      "branche": "Militaire",
+      "role": "Appui lourd / anti-machine / contrôle de zone",
+      "phrase": "Le Soleil ne tire pas souvent. Il n’a besoin de frapper qu’une fois.",
+      "stats": {
+        "pv": 32,
+        "def": 15,
+        "attaque": 6,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 3,
+        "volonte": 3,
+        "dd": 15
+      },
+      "equipement": [
+        "Projecteur thermique",
+        "Batterie dorsale",
+        "Lame courte",
+        "Masque thermique",
+        "Trépied pliant",
+        "Gants isolants"
+      ],
+      "actions": [
+        {
+          "nom": "Projecteur thermique",
+          "type": "Distance",
+          "attaque_dd": "+6",
+          "degats_effet": "2d8 feu",
+          "portee": "24 m",
+          "recharge": "-"
+        },
+        {
+          "nom": "Balayage lumineux",
+          "type": "Zone",
+          "attaque_dd": "DD15 Ref",
+          "degats_effet": "2d6 feu; moitié si réussite",
+          "portee": "Cône 6 m",
+          "recharge": "Recharge 2"
+        },
+        {
+          "nom": "Tir concentré",
+          "type": "Distance",
+          "attaque_dd": "+6",
+          "degats_effet": "3d8 feu contre machine/cible immobile",
+          "portee": "24 m",
+          "recharge": "1/scène"
+        },
+        {
+          "nom": "Déploiement du trépied",
+          "type": "Posture",
+          "attaque_dd": "-",
+          "degats_effet": "+1 ATQ et portée accrue; pas de déplacement",
+          "portee": "Personnel",
+          "recharge": "Action"
+        },
+        {
+          "nom": "Purge thermique",
+          "type": "Technique",
+          "attaque_dd": "-",
+          "degats_effet": "Évite une surchauffe; pas de tir au tour suivant",
+          "portee": "Personnel",
+          "recharge": "Selon besoin"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Arme lourde spécialisée: le projecteur thermique n’est pas une arme standard.",
+        "Surchauffe: alterne tirs puissants, refroidissement et repositionnement."
+      ],
+      "pages_pdf": [
+        7
+      ]
+    },
+    {
+      "id": "ingenieur-des-cellules",
+      "nom": "INGÉNIEUR DES CELLULES",
+      "menace": 4,
+      "branche": "Technique",
+      "role": "Ingénierie antique / énergie / systèmes du Bastion",
+      "phrase": "L’Artisan entretient ce que nous savons construire. L’Ingénieur réveille ce que nous ne savons pas encore comprendre.",
+      "stats": {
+        "pv": 30,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 3,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd": 15
+      },
+      "equipement": [
+        "Bâton conducteur",
+        "Kit d’analyse énergétique",
+        "Cellules solaires",
+        "Lunettes spectrales",
+        "Outils antiques adaptés",
+        "Tablette technique"
+      ],
+      "actions": [
+        {
+          "nom": "Bâton conducteur",
+          "type": "CàC",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+1 électrique",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Diagnostic énergétique",
+          "type": "Technique",
+          "attaque_dd": "DD15",
+          "degats_effet": "Identifie alimentation, surcharge, panne ou circuit actif",
+          "portee": "Proche",
+          "recharge": "-"
+        },
+        {
+          "nom": "Dérivation",
+          "type": "Technique",
+          "attaque_dd": "DD15",
+          "degats_effet": "Réoriente temporairement l’énergie d’un système",
+          "portee": "Contact",
+          "recharge": "-"
+        },
+        {
+          "nom": "Surcharge contrôlée",
+          "type": "Soutien",
+          "attaque_dd": "DD15",
+          "degats_effet": "Effet supérieur sur arme/appareil puis refroidissement",
+          "portee": "Contact",
+          "recharge": "1/scène"
+        },
+        {
+          "nom": "Réactivation antique",
+          "type": "Technique",
+          "attaque_dd": "DD15+",
+          "degats_effet": "Réveille une fonction dormante si accès réel",
+          "portee": "Installation",
+          "recharge": "Défi"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Ingénieur, pas magicien: ne crée ni accès ni fonction inexistante.",
+        "Connaissance d’HÉPHAÏSTOS: +2 sur infrastructures énergétiques du Bastion."
+      ],
+      "pages_pdf": [
+        8
+      ]
+    },
+    {
+      "id": "capitaine-solaire",
+      "nom": "CAPITAINE SOLAIRE",
+      "menace": 5,
+      "branche": "Militaire",
+      "role": "Officier / commandement / coordination",
+      "phrase": "Son arme la plus dangereuse est l’escouade qui lui obéit.",
+      "stats": {
+        "pv": 60,
+        "def": 18,
+        "attaque": 7,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 5,
+        "reflexes": 4,
+        "volonte": 6,
+        "dd": 16
+      },
+      "equipement": [
+        "Lame solaire",
+        "Armure d’officier",
+        "Bouclier compact",
+        "Relais de commandement",
+        "Cape de rang",
+        "Insigne du Bastion"
+      ],
+      "actions": [
+        {
+          "nom": "Lame solaire",
+          "type": "CàC",
+          "attaque_dd": "+7",
+          "degats_effet": "2d8+3",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Ordre: Tenez !",
+          "type": "Commandement",
+          "attaque_dd": "DD16",
+          "degats_effet": "Un allié: +2 DEF contre prochaine attaque",
+          "portee": "12 m",
+          "recharge": "Recharge 2"
+        },
+        {
+          "nom": "Ordre: Avancez !",
+          "type": "Commandement",
+          "attaque_dd": "DD16",
+          "degats_effet": "Jusqu’à 3 alliés se déplacent de 3 m",
+          "portee": "12 m",
+          "recharge": "Recharge 2"
+        },
+        {
+          "nom": "Ordre: Abattez-la !",
+          "type": "Commandement",
+          "attaque_dd": "DD16",
+          "degats_effet": "+1 ATQ des Héritiers contre une cible",
+          "portee": "12 m",
+          "recharge": "1/scène"
+        },
+        {
+          "nom": "Rallier la ligne",
+          "type": "Commandement",
+          "attaque_dd": "DD16",
+          "degats_effet": "Met fin à peur/panique de plusieurs soldats",
+          "portee": "9m",
+          "recharge": "1/scène"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Chaîne de commandement: tant qu’il est conscient, Héritiers à 9 m gagnent +1 Volonté.",
+        "Responsabilité: un Capitaine digne de ce nom évacue ses hommes avant lui."
+      ],
+      "pages_pdf": [
+        9
+      ]
+    },
+    {
+      "id": "champion-solaire-archange",
+      "nom": "CHAMPION SOLAIRE - ARCHANGE",
+      "menace": 6,
+      "branche": "Élite",
+      "role": "Chevalier d’élite / intervention lourde / symbole du Bastion",
+      "phrase": "Lorsque le Bastion envoie un Champion, la bataille est déjà considérée comme grave.",
+      "stats": {
+        "pv": 80,
+        "def": 20,
+        "attaque": 8,
+        "initiative": 5,
+        "vitesse": "9 m / vol assisté",
+        "vigueur": 6,
+        "reflexes": 6,
+        "volonte": 6,
+        "dd": 17
+      },
+      "equipement": [
+        "Armure Archange",
+        "Lame solaire lourde",
+        "Projecteur palmaire",
+        "Cellule dorsale majeure",
+        "Panneaux-ailettes solaires",
+        "Propulseurs stabilisés"
+      ],
+      "actions": [
+        {
+          "nom": "Lame de l’Archange",
+          "type": "CàC",
+          "attaque_dd": "+8",
+          "degats_effet": "2d10+4",
+          "portee": "CàC",
+          "recharge": "-"
+        },
+        {
+          "nom": "Projecteur palmaire",
+          "type": "Distance",
+          "attaque_dd": "+8",
+          "degats_effet": "2d8 feu",
+          "portee": "18 m",
+          "recharge": "-"
+        },
+        {
+          "nom": "Impact descendant",
+          "type": "Charge",
+          "attaque_dd": "+8",
+          "degats_effet": "3d8+4; DD17 ou renversé",
+          "portee": "Déplacement aérien",
+          "recharge": "Recharge 2"
+        },
+        {
+          "nom": "Déploiement des ailes",
+          "type": "Mobilité",
+          "attaque_dd": "-",
+          "degats_effet": "Active vol assisté et stabilisateurs",
+          "portee": "Personnel",
+          "recharge": "1/scène"
+        },
+        {
+          "nom": "Rayonnement solaire",
+          "type": "Zone",
+          "attaque_dd": "DD17 Ref",
+          "degats_effet": "3d6 feu/lumière; moitié si réussite",
+          "portee": "Cône 6 m",
+          "recharge": "Recharge 3"
+        },
+        {
+          "nom": "Interposition de l’Archange",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "Se déplace 3 m et prend l’attaque pour un allié",
+          "portee": "3m",
+          "recharge": "1/round"
+        }
+      ],
+      "traits": [
+        "Discipline solaire.",
+        "Armure Archange: hors armure, le Champion n’est plus Menace 6.",
+        "Système d’assistance: guidage tactique et stabilisation, sans IA consciente.",
+        "Dernier rempart: +1 Volonté et résistance au déplacement lorsqu’il protège explicitement une cible/position.",
+        "Rare: très peu d’armures Archange sont opérationnelles."
+      ],
+      "pages_pdf": [
+        10
+      ]
+    }
+  ]
+}

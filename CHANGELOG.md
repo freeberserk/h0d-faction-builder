@@ -1,3 +1,13 @@
+# Historique H0D Faction Builder
+
+## v0.6.2 — Renouveau et Héritiers du Soleil
+- 24 profils documentés, 123 actions, 82 traits ; deux JSON source lisibles et sourcés page par page.
+- Armement, protections et objets PDF ; intégration à la table CSB avec portées, recharge et DD.
+- Doctrine Renouveau / Discipline solaire respectée, V2 marquées radicalisation.
+- Adaptations des caractéristiques/niveaux explicitement identifiées, XP individuel non chiffré.
+- Rétrocompatibilité : aucune modification automatique de fiches existantes et clé historique Aspirant solaire préservée.
+- Exposition automatique de tous les profils à l'Encounter Builder.
+
 ## 0.6.1 — Perception et DET des PNJ
 
 - Les archétypes de faction reçoivent désormais une Perception et une portée de perception.

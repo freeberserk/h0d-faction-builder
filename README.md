@@ -1,4 +1,23 @@
-# H0D Faction Builder — v0.6.0
+# H0D Faction Builder — v0.6.2
+
+## v0.6.2 — Culte du Renouveau et Héritiers du Soleil
+
+**Culte du Renouveau : 15 profils, 78 actions et 53 traits (Menace 1–6).** Branches : 5 religieux, 4 chercheurs, 3 transfigurés, 3 variantes V2 radicalisées.
+
+**Héritiers du Soleil : 9 profils, 45 actions et 29 traits (Menace 1–6).** Du jeune Aspirant au Champion solaire — Archange.
+
+Les fiches reprennent les stats et capacités complètes de \`Culte_du_Renouveau_PNJ_Builder(1).pdf\` (16 p.) et \`Heritiers_du_Soleil_PNJ_Builder(2).pdf\` (10 p.). Chaque action, ses portées/recharges/effets et chaque trait sont intégrés dans la table de capacités CSB; tous les équipements sont représentés sous forme d'armes, protections à DEF neutre ou objets.
+
+**Canon :** les Intercesseurs utilisent observation et signaux mais aucun piratage ; l'Élu a une véritable liaison IA limitée par le réseau ; les V2 sont des radicalisations scénaristiques. Chez les Héritiers, Discipline solaire = +1 contre peur/déplacement forcé/rupture de formation à 3 m d'un allié conscient ; le Champion Archange dépend de son armure et son assistance ne contient pas d'IA consciente.
+
+**Conventions techniques explicitement distinctes des PDF :** les six caractéristiques et niveaux PNJ sont absents des sources. Pour remplir les fiches CSB, le module reprend le modèle SRD du Faction Builder (15/14/13/12/10/8, niveau Menace+1, +1 à une caractéristique aux paliers de 4 niveaux). Les bonus d'arme sont corrigés pour **reproduire exactement l'ATQ PDF**, sans la compter deux fois. Les XP individuels ne sont pas documentés : 0 signifie **inconnu**, jamais « gratuit ».
+
+**Sécurité :** aucun Actor existant modifié ou supprimé à la mise à jour. Le profil préexistant de l'Aspirant solaire garde sa clé de chargement \`aspirant-solaire-standard\`. Un ancien Adepte du Renouveau générique reste disponible comme héritage antérieur (distinct des 15 profils PDF). Pour actualiser manuellement un ancien Aspirant, sélectionner « Mettre à jour les données générées » après sauvegarde, jamais automatiquement. Les 24 nouveaux profils sont exposés à l'Encounter Builder via l'API habituelle ; les nouveaux XP y restent inconnus.
+
+**Utilisation :** ouvrir la macro H0D Faction Builder → Culte du Renouveau ou Héritiers du Soleil → PNJ et profils de faction → Profil → Créer si absent / ouvrir si présent. En cas de création, le builder range la fiche par faction et Menace, sans placer de tokens sur scène.
+
+---
+
 
 ## v0.6.0 — Faction complète des Pillards Rouges (PDF validé)
 

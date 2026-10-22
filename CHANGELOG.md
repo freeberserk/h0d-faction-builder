@@ -1,5 +1,13 @@
 # Historique H0D Faction Builder
 
+## v0.6.3 — Dent d'Ambre et armée HelioSium
+- 21 profils issus de 2 PDF : 10 du clan / 11 de l'armée finale.
+- 121 actions, 97 traits, équipements et statistiques de combat retranscrits.
+- 9 scénarios d'HelioSium, liaisons I–IV, raretés, rôles, plafonds et conditions explicites.
+- Avatar exclusivement conditionnel, Corps véritable jamais généré aléatoirement ; cœur final séparé.
+- Artilleur : plateforme distincte de son opérateur ; Inquisiteur et Archange : pièces ciblables.
+- Aucun Actor préexistant modifié automatiquement, aucun XP inventé.
+
 ## v0.6.2 — Renouveau et Héritiers du Soleil
 - 24 profils documentés, 123 actions, 82 traits ; deux JSON source lisibles et sourcés page par page.
 - Armement, protections et objets PDF ; intégration à la table CSB avec portées, recharge et DD.

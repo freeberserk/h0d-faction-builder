@@ -1,3 +1,23 @@
+# H0D Faction Builder — v0.6.3
+
+## Nouveaux profils PDF
+
+**Dent d'Ambre : 10 métiers de PNJ ordinaires (Menace 1–4), 54 actions et 32 traits.**
+Ils complètent le Chasseur novice historique et les **9 membres uniques du Conseil**. Le trait « Enfants de la Dent » apporte +2 uniquement sur le territoire et dans le domaine métier. Le Dresseur ne pirate que les machines préparées compatibles ; le Gardien des Focus n'a pas d'accès admin.
+
+**HelioSium : 11 archétypes finaux (Menace 3–15), 67 actions et leurs règles réseau.**
+Les unités se répartissent selon leurs liaisons I, II, III, IV et directe. Les rares et conditionnelles restent étiquetées. L'Artilleur distingue son opérateur (38 PV, DEF 15, ATQ +4) de sa plateforme (40 PV, DEF 16, ATQ +7) ; la plateforme est documentée comme une entité tactique séparée. Le Corps véritable (1300 PV) possède une phase du Cœur exposé distincte (850 PV, DEF 17) : ses PV ne doivent pas être additionnés. Boss final **interdit en génération aléatoire** ; Avatar seulement avec Élu + modules disponibles.
+
+**Les neuf compositions tactiques HelioSium** sont accessibles dans `game.h0dFactionBuilder.heliosiumEncounters` pour l'Encounter Builder. Elles sont des exemples de préparation MJ et **non des validations de budget XP**.
+
+Les sources PDF sont consignées en JSON : `data/dent-ambre-pnj.json` et `data/heliosium-endgame.json`. Chaque capacité (attaques, DD, portée, recharge et notes), trait et équipement est repris. Aucun Actor existant ne sera modifié automatiquement. Les caractéristiques SRD et niveaux PNJ ne sont **pas indiqués dans les PDF** : ce sont des adaptations techniques explicites. Les XP individuels restent inconnus (0 dans la fiche, mais jamais considérés comme gratuits).
+
+### Utilisation
+Relancer Foundry après mise à jour. Ouvrir **H0D Faction Builder** → **Dent d'Ambre** ou **HelioSium** → **PNJ et profils de faction** → sélectionner → **Créer si absent / ouvrir si présent**.
+Pour un profil historique déjà présent, choisir volontairement « Mettre à jour » si nécessaire, sans modifier les membres uniques du Conseil.
+
+---
+
 # H0D Faction Builder — v0.6.2
 
 ## v0.6.2 — Culte du Renouveau et Héritiers du Soleil

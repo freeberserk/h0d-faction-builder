@@ -3,11 +3,13 @@ import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-men
 import {installCouncilUnique} from "./h0d-council-unique.js";
 import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 import {loadNewFactionPdf} from "./h0d-renouveau-soleil.js";
+import {loadDentHelioPdf} from "./h0d-dent-heliosium.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.2";
+const MODULE_VERSION = "0.6.3";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
+let DENT_HELIOSIUM=[];
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 
@@ -2573,6 +2575,14 @@ Hooks.once("ready", async () => {
     notify("error","Nouveaux PNJ PDF : "+(err?.message??err));
   }
   try{
+    DENT_HELIOSIUM=await loadDentHelioPdf({
+      moduleId:MODULE_ID,registerFaction,registerArchetype,registerLoadout
+    });
+  }catch(err){
+    console.error(MODULE_ID+" | Dent d'Ambre et HelioSium",err);
+    notify("error","PNJ Dent/HelioSium : "+(err?.message??err));
+  }
+  try{
     COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
       templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
       clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
@@ -2586,7 +2596,8 @@ Hooks.once("ready", async () => {
     syncPerception: syncFactionPerception,
     council:COUNCIL,
     encounters:PILLARDS?.encounters??[],
-    pdfFactions:NEW_PDF_FACTIONS,
+    pdfFactions:[...NEW_PDF_FACTIONS,...DENT_HELIOSIUM],
+    heliosiumEncounters:DENT_HELIOSIUM.find(x=>x.key==='heliosium')?.encounters??[],
     registerFaction,
     registerFactions,
     registerArchetype,

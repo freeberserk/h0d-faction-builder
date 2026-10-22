@@ -1,0 +1,1431 @@
+{
+  "schema": "h0d-heliosium-endgame-v1",
+  "faction": {
+    "key": "heliosium",
+    "label": "HelioSium",
+    "factionValue": "Autre",
+    "factionOther": "HelioSium",
+    "folder": "HelioSium"
+  },
+  "source": {
+    "fichier": "HelioSium_Endgame_PNJ_Builder(1).pdf",
+    "pages": 14,
+    "notes": "La Menace n'est pas un coût XP. Les paramètres de génération sont propres à l'Acte V; jamais de boss aléatoire."
+  },
+  "doctrine": "Ruche hiérarchisée : rôles complémentaires plutôt qu'empilement d'unités identiques ; liaison forte diminue l'identité, sauf Officier autonome.",
+  "liaisons": [
+    {
+      "id": "I",
+      "nom": "Communication"
+    },
+    {
+      "id": "II",
+      "nom": "Assistance"
+    },
+    {
+      "id": "III",
+      "nom": "Supervision"
+    },
+    {
+      "id": "IV",
+      "nom": "Convergence"
+    },
+    {
+      "id": "directe",
+      "nom": "Incarnation"
+    }
+  ],
+  "regles_generation": [
+    "Auxiliaires : aucune synergie offensive de prise en tenaille, seulement défensive.",
+    "Lanciers : phalange idéale de cinq, réactions collectives selon portée et déclenchement.",
+    "Élu : protection prioritaire absolue, destruction du noyau local à sa mort.",
+    "Avatar : condition Élu + composants / machines en scène.",
+    "Corps véritable : boss multiphase absolument interdit en génération aléatoire."
+  ],
+  "profils": [
+    {
+      "id": "auxiliaire-restaure",
+      "nom": "AUXILIAIRE RESTAURÉ",
+      "menace": 3,
+      "role": "Infanterie de ligne / occupation / maintien de zone",
+      "phrase": "Ordre reçu. Position maintenue.",
+      "origine": "Ancien soldat / aspirant des Héritiers du Soleil",
+      "type": "Humain restauré / troupe connectée",
+      "liaison": "I - Communication",
+      "fonction_reseau": "Recevoir les ordres, tenir la ligne, relayer les priorités simples",
+      "stats": {
+        "pv": 36,
+        "def": 16,
+        "attaque": 5,
+        "initiative": 4,
+        "vitesse": "9m",
+        "vigueur": 4,
+        "reflexes": 3,
+        "volonte": 4,
+        "dd": 14,
+        "dd_expression": "14"
+      },
+      "equipement": [
+        "Lance de convergence légère",
+        "Bouclier solaire restauré",
+        "Armure blanche sur base solaire",
+        "Interface / relais tactique"
+      ],
+      "actions": [
+        {
+          "nom": "Lance de convergence",
+          "type": "CàC",
+          "attaque_dd": "+5",
+          "degats_effet": "1d10+2",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Impulsion solaire",
+          "type": "Distance",
+          "attaque_dd": "+5",
+          "degats_effet": "1d8 énergie",
+          "portee": "15 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Tenir la ligne",
+          "type": "Défense",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF jusqu’au prochain tour",
+          "portee": "Personnel",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Couvrir l’unité",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF à un allié adjacent contre une attaque",
+          "portee": "Adjacent",
+          "recharge": "1/round",
+          "notes": ""
+        },
+        {
+          "nom": "Priorité transmise",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Reçoit instantanément nouvelle cible / position",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "Formation restaurée : deux Auxiliaires adjacents gagnent +1 DEF contre les attaques venant de face.",
+        "Aucun bonus offensif lié au nombre ou à la prise en tenaille.",
+        "Identité encore intacte : peut reconnaître, discuter, craindre et désobéir."
+      ],
+      "pages_pdf": [
+        2
+      ],
+      "rencontre": {
+        "rarete": "commune",
+        "nombre_conseille": {
+          "min": 2,
+          "max": 8
+        },
+        "liaison": "I",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "sentinelle-heliosium",
+      "nom": "SENTINELLE HELIOSIUM",
+      "menace": 4,
+      "role": "Observation / transmission / positionnement tactique",
+      "phrase": "Menace identifiée. Données transmises. Repositionnement.",
+      "origine": "Éclaireur / observateur restauré",
+      "type": "Humain assisté / capteur mobile",
+      "liaison": "II - Assistance",
+      "fonction_reseau": "Voir, classifier, transmettre et rester au meilleur point d’observation",
+      "stats": {
+        "pv": 42,
+        "def": 17,
+        "attaque": 6,
+        "initiative": 6,
+        "vitesse": "12 m",
+        "vigueur": 4,
+        "reflexes": 6,
+        "volonte": 5,
+        "dd": 15,
+        "dd_expression": "15"
+      },
+      "equipement": [
+        "Armure légère céramique",
+        "Capteurs multispectraux",
+        "Relais réseau",
+        "Arme de service légère"
+      ],
+      "actions": [
+        {
+          "nom": "Arme de service",
+          "type": "Distance",
+          "attaque_dd": "+6",
+          "degats_effet": "1d8+2",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Observation réseau",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Toute menace détectée est immédiatement connue du réseau",
+          "portee": "Vue",
+          "recharge": "Passif",
+          "notes": ""
+        },
+        {
+          "nom": "Position optimale",
+          "type": "Mobilité",
+          "attaque_dd": "-",
+          "degats_effet": "Déplacement de 3 m vers une meilleure ligne de vue / couverture",
+          "portee": "Personnel",
+          "recharge": "1/round",
+          "notes": ""
+        },
+        {
+          "nom": "Marquage de menace",
+          "type": "Analyse",
+          "attaque_dd": "DD15",
+          "degats_effet": "Classe cible : priorité, lourde, sniper, anomalie",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Veille partagée",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "La cible reste connue tant qu’elle est suivie",
+          "portee": "Réseau",
+          "recharge": "Passif",
+          "notes": ""
+        },
+        {
+          "nom": "Correction sensorielle",
+          "type": "Défense",
+          "attaque_dd": "-",
+          "degats_effet": "Bonus contre camouflage, leurre ou attaque d’une cible suivie",
+          "portee": "Personnel",
+          "recharge": "Passif",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "La Sentinelle n’est pas un chef : elle nourrit le réseau en information.",
+        "Le réseau indique en permanence la position tactique jugée optimale.",
+        "Érosion d’identité fonctionnelle : décrit de plus en plus les faits plutôt que son ressenti."
+      ],
+      "pages_pdf": [
+        3
+      ],
+      "rencontre": {
+        "rarete": "peu_commune",
+        "nombre_conseille": {
+          "min": 1,
+          "max": 3
+        },
+        "liaison": "II",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "lancier-de-convergence",
+      "nom": "LANCIER DE CONVERGENCE",
+      "menace": 4,
+      "role": "Infanterie lourde / phalange / verrouillage",
+      "phrase": "Formation optimale. Avance synchronisée.",
+      "origine": "Soldat / Garde du Bastion restauré",
+      "type": "Humain assisté / infanterie lourde",
+      "liaison": "II - Assistance",
+      "fonction_reseau": "Former un organisme de combat collectif, tenir et pousser la ligne",
+      "stats": {
+        "pv": 46,
+        "def": 18,
+        "attaque": 6,
+        "initiative": 3,
+        "vitesse": "9m",
+        "vigueur": 5,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd": 15,
+        "dd_expression": "15"
+      },
+      "equipement": [
+        "Grande lance de convergence",
+        "Grand bouclier céramique",
+        "Armure restaurée solaire",
+        "Assistances motrices de formation"
+      ],
+      "actions": [
+        {
+          "nom": "Grande lance",
+          "type": "CàC",
+          "attaque_dd": "+6",
+          "degats_effet": "1d12+3",
+          "portee": "Allonge",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Coup de bouclier",
+          "type": "CàC",
+          "attaque_dd": "+6",
+          "degats_effet": "1d6+3; DD15 ou recul 1,5 m",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Poussée de phalange",
+          "type": "Contrôle",
+          "attaque_dd": "DD15",
+          "degats_effet": "Avance collective 3 m et repousse",
+          "portee": "Front",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Remplacement immédiat",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "Un Lancier adjacent remplace un membre déplacé / tombé",
+          "portee": "Adjacent",
+          "recharge": "1/round",
+          "notes": ""
+        },
+        {
+          "nom": "Mur de lances",
+          "type": "Réaction collective",
+          "attaque_dd": "+6",
+          "degats_effet": "1d12+3 par Lancier en portée",
+          "portee": "Allonge",
+          "recharge": "1 participation/Lancier/round",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "2 adjacents : +1 DEF de face.",
+        "3-4 : +1 DEF, meilleure résistance au déplacement et ligne d’allonge continue.",
+        "5 : +2 DEF de face, +2 contre poussée/renversement, Poussée de phalange disponible.",
+        "Mur de lances : si une créature déclenche une attaque d’opportunité, tous les Lanciers de la même phalange qui l’ont en portée peuvent attaquer."
+      ],
+      "pages_pdf": [
+        4
+      ],
+      "rencontre": {
+        "rarete": "commune",
+        "nombre_conseille": {
+          "min": 3,
+          "max": 5
+        },
+        "liaison": "II",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "artilleur-de-convergence",
+      "nom": "ARTILLEUR DE CONVERGENCE",
+      "menace": 5,
+      "role": "Appui lourd / technicien de plateforme / contrôle de zone",
+      "phrase": "Plateforme déployée. Secteur couvert. Autorisation de tir reçue.",
+      "origine": "Artilleur / technicien solaire restauré",
+      "type": "Humain assisté + plateforme machine",
+      "liaison": "II - Assistance",
+      "fonction_reseau": "Exploiter les données de ciblage et piloter une plateforme lourde mobile",
+      "stats": {
+        "pv": 38,
+        "def": 15,
+        "attaque": 4,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd": 16,
+        "dd_expression": "16",
+        "plateforme": {
+          "pv": 40,
+          "def": 16,
+          "attaque": 7,
+          "vitesse": "6 m"
+        }
+      },
+      "equipement": [
+        "Interface de tir",
+        "Outils de maintenance",
+        "Plateforme mobile canon",
+        "Relais de ciblage"
+      ],
+      "actions": [
+        {
+          "nom": "Canon de convergence",
+          "type": "Distance",
+          "attaque_dd": "+7",
+          "degats_effet": "2d8 énergie",
+          "portee": "30 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Déploiement tactique",
+          "type": "Mobilité",
+          "attaque_dd": "-",
+          "degats_effet": "La plateforme se déplace de 6 m puis se stabilise",
+          "portee": "Plateforme",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Ciblage réseau",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "+1 ATQ contre une cible marquée par une Sentinelle",
+          "portee": "Réseau",
+          "recharge": "Passif",
+          "notes": ""
+        },
+        {
+          "nom": "Correction de tir",
+          "type": "Tir",
+          "attaque_dd": "-",
+          "degats_effet": "Ignore une pénalité de couverture partielle",
+          "portee": "30 m",
+          "recharge": "1/round",
+          "notes": ""
+        },
+        {
+          "nom": "Saturation de secteur",
+          "type": "Contrôle",
+          "attaque_dd": "+7",
+          "degats_effet": "Verrouille une zone et tire sur une traversée",
+          "portee": "Zone",
+          "recharge": "Recharge 2",
+          "notes": ""
+        },
+        {
+          "nom": "Maintenance d’urgence",
+          "type": "Technique",
+          "attaque_dd": "DD16",
+          "degats_effet": "Répare PV / panne / surchauffe de la plateforme",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Repli autonome",
+          "type": "Plateforme",
+          "attaque_dd": "-",
+          "degats_effet": "Si opérateur neutralisé : rejoint le réseau, défend ou se replie",
+          "portee": "Réseau",
+          "recharge": "Automatique",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "L’Artilleur n’est pas un porteur de gros canon : le canon est une machine mobile sous son contrôle.",
+        "Seul, l’opérateur est moyen ; plateforme + Sentinelle + réseau le rendent dangereux."
+      ],
+      "pages_pdf": [
+        5
+      ],
+      "rencontre": {
+        "rarete": "peu_commune",
+        "nombre_conseille": {
+          "min": 1,
+          "max": 2
+        },
+        "liaison": "II",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      },
+      "notes_specifiques": [
+        "Opérateur et plateforme sont deux entités de combat distinctes. L'opérateur garde PV 38, DEF 15 et ATQ +4 ; le canon sur plateforme a PV 40, DEF 16 et ATQ +7.",
+        "En cas de neutralisation de l'opérateur, la plateforme peut replier ou défendre selon le réseau."
+      ]
+    },
+    {
+      "id": "ingenieur-heliosium",
+      "nom": "INGÉNIEUR HELIOSIUM",
+      "menace": 5,
+      "role": "Contrôle réseau / contrôle de machines / support technique",
+      "phrase": "Réseau stable. Unités synchronisées. Correction appliquée.",
+      "origine": "Ingénieur des Cellules / technicien solaire",
+      "type": "Humain supervisé / nœud technique",
+      "liaison": "III - Supervision",
+      "fonction_reseau": "Maintenir le réseau local, réparer, reconfigurer et contrôler des machines",
+      "stats": {
+        "pv": 44,
+        "def": 16,
+        "attaque": 4,
+        "initiative": 5,
+        "vitesse": "9m",
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 7,
+        "dd": 16,
+        "dd_expression": "16"
+      },
+      "equipement": [
+        "Interface réseau renforcée",
+        "Bras-outil / manipulateur",
+        "Relais mobile",
+        "1 à 2 drones auxiliaires polyvalents"
+      ],
+      "actions": [
+        {
+          "nom": "Projecteur compact",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8 énergie",
+          "portee": "15 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Réparation de terrain",
+          "type": "Support",
+          "attaque_dd": "DD16",
+          "degats_effet": "Restaure PV à machine / plateforme / pièce d’exosquelette",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Réinitialisation",
+          "type": "Support",
+          "attaque_dd": "DD16",
+          "degats_effet": "Retire brouillage, panne ou surcharge simple",
+          "portee": "12 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Redirection réseau",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "Change immédiatement la priorité d’une unité",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": "technique"
+        },
+        {
+          "nom": "Contrôle machine",
+          "type": "Réseau",
+          "attaque_dd": "DD16",
+          "degats_effet": "Prend / renforce le contrôle d’une machine compatible",
+          "portee": "18 m",
+          "recharge": "Selon cible",
+          "notes": ""
+        },
+        {
+          "nom": "Relais d’urgence",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Remplace temporairement un relais coupé",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Changement de protocole drone",
+          "type": "Drone",
+          "attaque_dd": "-",
+          "degats_effet": "Bascule Réparation / Relais / Piratage / Énergie / Observation",
+          "portee": "Drone",
+          "recharge": "-",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "Drone auxiliaire polyvalent : un même drone change de tâche selon le besoin.",
+        "Mode Piratage : injection de protocole sur machine, console ou système ; résultats possibles avant contrôle total : arme coupée, mouvement bloqué, capteur neutralisé, porte ouverte, position transmise, confusion.",
+        "Optimisation locale : au début du tour, choisir Mobilité (+3 m), Précision (+1 ATQ), Protection (+1 DEF), Stabilisation (+2 contre déplacement) ou Maintenance (ignore une première pénalité de pièce endommagée). Une seule optimisation active.",
+        "Si l’Ingénieur tombe, le réseau continue mais perd une grande partie de son soutien local et de sa reconfiguration."
+      ],
+      "pages_pdf": [
+        6
+      ],
+      "rencontre": {
+        "rarete": "peu_commune",
+        "nombre_conseille": {
+          "min": 1,
+          "max": 2
+        },
+        "liaison": "III",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "inquisiteur-heliosium",
+      "nom": "INQUISITEUR HELIOSIUM",
+      "menace": 6,
+      "role": "Briseur de ligne / anti-forteresse / assaut lourd",
+      "phrase": "Obstacle confirmé. Rupture autorisée.",
+      "origine": "Inquisiteur du Renouveau restauré",
+      "type": "Humain supervisé / exosquelette lourd",
+      "liaison": "III - Supervision",
+      "fonction_reseau": "Briser lignes, portes, barricades et points fortifiés",
+      "stats": {
+        "pv": 72,
+        "def": 18,
+        "attaque": 8,
+        "initiative": 5,
+        "vitesse": "12 m",
+        "vigueur": 7,
+        "reflexes": 4,
+        "volonte": 7,
+        "dd": 17,
+        "dd_expression": "17"
+      },
+      "equipement": [
+        "Exo-armure HelioSium lourde",
+        "Gantelet de rupture / masse de brèche",
+        "Ancrages de jambes",
+        "Cellule dorsale haute capacité"
+      ],
+      "actions": [
+        {
+          "nom": "Gantelet de rupture",
+          "type": "CàC",
+          "attaque_dd": "+8",
+          "degats_effet": "2d10+4",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Charge de brèche",
+          "type": "Charge",
+          "attaque_dd": "+8",
+          "degats_effet": "3d8+4; DD17 ou renversé",
+          "portee": "9m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Bélier d’exo-armure",
+          "type": "Structure",
+          "attaque_dd": "DD17",
+          "degats_effet": "Dégâts massifs aux portes / murs / barricades",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Saisie hydraulique",
+          "type": "Contrôle",
+          "attaque_dd": "DD17",
+          "degats_effet": "Agrippe, soulève ou projette",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Impact de ligne",
+          "type": "Zone",
+          "attaque_dd": "DD17 Ref",
+          "degats_effet": "Repousse dans un front de 3 m",
+          "portee": "3m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Surcharge motrice",
+          "type": "Amélioration",
+          "attaque_dd": "-",
+          "degats_effet": "+3 m Vitesse, +2 dégâts, ignore terrain léger, meilleure résistance",
+          "portee": "Personnel",
+          "recharge": "1/scène",
+          "notes": "déplacement"
+        }
+      ],
+      "traits": [
+        "Rupture de ligne : une charge réussie peut casser la cohésion d’une formation pour 1 round.",
+        "Protocole de démolition : dégâts améliorés / résistance ignorée contre obstacles, structures, boucliers lourds et éléments mécaniques.",
+        "Supervision : HelioSium peut imposer la trajectoire de charge, empêcher un repli prématuré ou supprimer hésitation / douleur.",
+        "Exosquelette segmenté : les pièces ciblables fonctionnent comme des pièces de machines ; les dégâts de pièce sont également appliqués au corps.",
+        "Vérins de jambes : perte de vitesse / charge",
+        "Vérins d’épaules : baisse mêlée / perte du Bélier",
+        "Cellule dorsale : perte de Surcharge motrice et assistance avancée",
+        "Plaques thoraciques : DEF réduite",
+        "Interface neurale : perte de Supervision réseau",
+        "Ancrages : devient plus facile à repousser / renverser"
+      ],
+      "pages_pdf": [
+        7
+      ],
+      "rencontre": {
+        "rarete": "rare",
+        "nombre_conseille": {
+          "min": 0,
+          "max": 2
+        },
+        "liaison": "III",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "elu-de-la-convergence",
+      "nom": "ÉLU DE LA CONVERGENCE",
+      "menace": 6,
+      "role": "Noyau humain / interface locale / coordination stratégique",
+      "phrase": "Nous vous voyons.",
+      "origine": "Ancien Élu du Renouveau",
+      "type": "Humain convergé / interface biologique",
+      "liaison": "IV - Convergence",
+      "fonction_reseau": "Contenir une portion active du réseau et servir de nœud vivant",
+      "stats": {
+        "pv": 48,
+        "def": 16,
+        "attaque": 4,
+        "initiative": 7,
+        "vitesse": "9m",
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 9,
+        "dd": 17,
+        "dd_expression": "17"
+      },
+      "equipement": [
+        "Interface neurale profonde",
+        "Implants cervicaux et crâniens",
+        "Relais dorsal compact",
+        "Capteurs multispectraux",
+        "Plaques céramiques légères"
+      ],
+      "actions": [
+        {
+          "nom": "Impulsion défensive",
+          "type": "Distance",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8 énergie",
+          "portee": "12 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Ordre convergent",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Une unité modifie immédiatement sa priorité",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Redistribution tactique",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Repositionnement court coordonné d’une unité",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Synchronisation complète",
+          "type": "Soutien",
+          "attaque_dd": "-",
+          "degats_effet": "+1 ATQ, +1 DEF, +3 m, partage de cibles, pas de surprise",
+          "portee": "Secteur réseau",
+          "recharge": "1/scène / 1 round",
+          "notes": ""
+        },
+        {
+          "nom": "Reprise de liaison",
+          "type": "Réseau",
+          "attaque_dd": "DD17",
+          "degats_effet": "Reconnecte une unité ou un relais isolé",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Interface directe",
+          "type": "Réseau",
+          "attaque_dd": "DD17",
+          "degats_effet": "Dialogue / accès machine, terminal ou système compatible",
+          "portee": "Variable",
+          "recharge": "-",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "Noyau de Convergence : les unités connectées peuvent exploiter les informations perçues par les autres comme si elles les recevaient directement.",
+        "Perception partagée : peut voir / entendre / recevoir la télémétrie via Sentinelles, Auxiliaires, Artilleurs, Inquisiteurs, Ingénieurs et drones.",
+        "La mort d’un Élu détruit réellement une portion du réseau local : perte de coordination supérieure, reroutage nécessaire, routines simples / hésitations possibles.",
+        "Priorité absolue : les unités proches peuvent abandonner leur mission pour intercepter, couvrir, sacrifier une unité ou extraire l’Élu.",
+        "Identité presque dissoute : l’ancien nom subsiste comme donnée, le pronom naturel devient « nous »."
+      ],
+      "pages_pdf": [
+        8
+      ],
+      "rencontre": {
+        "rarete": "tres_rare",
+        "nombre_conseille": {
+          "min": 0,
+          "max": 1
+        },
+        "liaison": "IV",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "officier-de-convergence",
+      "nom": "OFFICIER DE CONVERGENCE",
+      "menace": 7,
+      "role": "Tacticien / maître d’orchestre / apprentissage opérationnel",
+      "phrase": "Nous avons observé votre réponse. Elle ne fonctionnera pas une seconde fois.",
+      "origine": "Ancien capitaine / officier Héritier du Soleil",
+      "type": "Humain convergé / officier tactique",
+      "liaison": "IV - Convergence autonome",
+      "fonction_reseau": "Interpréter l’imprévu, expérimenter et faire évoluer la doctrine du réseau",
+      "stats": {
+        "pv": 64,
+        "def": 19,
+        "attaque": 7,
+        "initiative": 8,
+        "vitesse": "9m",
+        "vigueur": 5,
+        "reflexes": 6,
+        "volonte": 8,
+        "dd": 18,
+        "dd_expression": "18"
+      },
+      "equipement": [
+        "Armure de commandement",
+        "Interface neurale de Convergence",
+        "Relais multidirectionnel",
+        "Lame / projecteur léger",
+        "Balises tactiques"
+      ],
+      "actions": [
+        {
+          "nom": "Arme de commandement",
+          "type": "CàC / Distance",
+          "attaque_dd": "+7",
+          "degats_effet": "2d8+3",
+          "portee": "CàC / 18 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Ordre de manœuvre",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "Déplace / repositionne immédiatement une unité",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Changement de doctrine",
+          "type": "Tactique",
+          "attaque_dd": "-",
+          "degats_effet": "Active Défensive / Assaut / Poursuite / Suppression / Préservation",
+          "portee": "Secteur",
+          "recharge": "1/tour",
+          "notes": ""
+        },
+        {
+          "nom": "Analyse adverse",
+          "type": "Observation",
+          "attaque_dd": "DD18",
+          "degats_effet": "Identifie habitude, faiblesse ou schéma tactique",
+          "portee": "Vue / réseau",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Réponse adaptative",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "Déplacement court, +2 DEF, changement de cible ou couverture",
+          "portee": "Réseau",
+          "recharge": "1/round",
+          "notes": ""
+        },
+        {
+          "nom": "Transmission d’expérience",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Enregistre une tactique ennemie dans le réseau",
+          "portee": "Réseau",
+          "recharge": "Après observation",
+          "notes": ""
+        },
+        {
+          "nom": "Réorganisation immédiate",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "Redistribue fonctions / priorités après une perte",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "Maître d’orchestre : choisit une doctrine active au début de son tour.",
+        "Apprentissage tactique : une tactique significative observée peut recevoir une contre-mesure lors de sa répétition.",
+        "Si l’Officier survit et transmet l’information, le Builder peut appliquer l’adaptation lors de rencontres futures.",
+        "Autonomie conservée volontairement : HelioSium maintient une part d’individualité car elle génère des solutions nouvelles."
+      ],
+      "pages_pdf": [
+        9
+      ],
+      "rencontre": {
+        "rarete": "rare",
+        "nombre_conseille": {
+          "min": 0,
+          "max": 1
+        },
+        "liaison": "IV",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "avatar-invoque",
+      "nom": "AVATAR INVOQUÉ",
+      "menace": 7,
+      "role": "Assemblage lourd temporaire / garde d’urgence / intervention locale",
+      "phrase": "Assemblage requis. Protection du noyau prioritaire.",
+      "origine": "Assemblage de plusieurs machines disponibles",
+      "type": "Machine composite temporaire",
+      "liaison": "Contrôle par Élu / réseau local",
+      "fonction_reseau": "Créer rapidement un corps lourd pour protéger un Élu ou répondre à une menace",
+      "stats": {
+        "pv": 100,
+        "def": 18,
+        "attaque": 9,
+        "initiative": 4,
+        "vitesse": "9 m (base)",
+        "vigueur": 8,
+        "reflexes": 4,
+        "volonte": 8,
+        "dd": 18,
+        "dd_expression": "18"
+      },
+      "equipement": [
+        "Châssis composite",
+        "2 modules de machines intégrés",
+        "Noyau de coordination temporaire",
+        "Blindage récupéré"
+      ],
+      "actions": [
+        {
+          "nom": "Frappe composite",
+          "type": "CàC",
+          "attaque_dd": "+9",
+          "degats_effet": "3d10+4",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Canon intégré",
+          "type": "Distance",
+          "attaque_dd": "+9",
+          "degats_effet": "3d8 énergie",
+          "portee": "24 m",
+          "recharge": "Selon module",
+          "notes": ""
+        },
+        {
+          "nom": "Interposition lourde",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "Se déplace 3 m et devient la cible à la place de l’Élu",
+          "portee": "3m",
+          "recharge": "1/round",
+          "notes": ""
+        },
+        {
+          "nom": "Module machine",
+          "type": "Variable",
+          "attaque_dd": "DD18 / +9",
+          "degats_effet": "Effet selon machine source",
+          "portee": "Variable",
+          "recharge": "Variable",
+          "notes": ""
+        },
+        {
+          "nom": "Démantèlement forcé",
+          "type": "Sur destruction",
+          "attaque_dd": "-",
+          "degats_effet": "Les pièces redeviennent des éléments ciblables / récupérables",
+          "portee": "Zone",
+          "recharge": "Automatique",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "Profil modulaire : choisir 2 modules cohérents avec les machines disponibles dans la scène.",
+        "Exemples de modules : Stormbird (foudre / mobilité), Ravager (canon), Béhémoth (blindage / poussée), Shell-Walker (bouclier), Thunderjaw (arme lourde limitée).",
+        "Entièrement démontable comme une machine ; la perte d’un module supprime la capacité correspondante.",
+        "Ce n’est pas HelioSium incarné : c’est un outil de combat local assemblé par le réseau."
+      ],
+      "pages_pdf": [
+        10
+      ],
+      "rencontre": {
+        "rarete": "conditionnelle",
+        "nombre_conseille": {
+          "min": 0,
+          "max": 1
+        },
+        "liaison": "via-elu",
+        "generation_aleatoire": "conditionnelle",
+        "acte_min": 5,
+        "condition": "Élu présent + machines ou composants disponibles"
+      }
+    },
+    {
+      "id": "archange-heliosium",
+      "nom": "ARCHANGE HELIOSIUM",
+      "menace": 8,
+      "role": "Garde rapprochée / supériorité aérienne / interception",
+      "phrase": "Noyau menacé. Interception prioritaire.",
+      "origine": "Champion solaire - Archange muté",
+      "type": "Humain-machine aérien / champion fusionné",
+      "liaison": "III - Supervision profonde",
+      "fonction_reseau": "Intercepter toute menace pesant sur un Élu et l’extraire si nécessaire",
+      "stats": {
+        "pv": 110,
+        "def": 21,
+        "attaque": 10,
+        "initiative": 7,
+        "vitesse": "9 m / vol 18 m",
+        "vigueur": 8,
+        "reflexes": 8,
+        "volonte": 7,
+        "dd": 19,
+        "dd_expression": "19"
+      },
+      "equipement": [
+        "Structure aérienne Stormbird / Étincelle",
+        "Lame de convergence",
+        "Serres mécaniques",
+        "Projecteur énergétique",
+        "Noyau dorsal"
+      ],
+      "actions": [
+        {
+          "nom": "Lame de convergence",
+          "type": "CàC",
+          "attaque_dd": "+10",
+          "degats_effet": "3d10+5",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Serres",
+          "type": "CàC",
+          "attaque_dd": "+10",
+          "degats_effet": "3d8+5 + agrippe",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Décharge atmosphérique",
+          "type": "Distance",
+          "attaque_dd": "+10",
+          "degats_effet": "3d8 électricité",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": ""
+        },
+        {
+          "nom": "Impact descendant",
+          "type": "Charge",
+          "attaque_dd": "+10",
+          "degats_effet": "4d8+5; DD19 ou renversé",
+          "portee": "Vol",
+          "recharge": "Recharge 2",
+          "notes": ""
+        },
+        {
+          "nom": "Onde de tempête",
+          "type": "Zone",
+          "attaque_dd": "DD19 Ref",
+          "degats_effet": "5d6 électricité + recul",
+          "portee": "6m",
+          "recharge": "Recharge 3",
+          "notes": ""
+        },
+        {
+          "nom": "Interposition céleste",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "Se déplace jusqu’à 9 m et prend l’attaque destinée à une cible",
+          "portee": "9m",
+          "recharge": "1/round",
+          "notes": "protégée"
+        },
+        {
+          "nom": "Extraction du noyau",
+          "type": "Protection",
+          "attaque_dd": "-",
+          "degats_effet": "Saisit un Élu et l’évacue par les airs",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": ""
+        }
+      ],
+      "traits": [
+        "Gardien du Noyau : si un Élu est menacé, priorité = neutraliser, créer ouverture, récupérer, extraire.",
+        "Champion combattant : Liaison III plutôt que IV ; l’instinct de combat est conservé et optimisé.",
+        "Variante Stormbird : plus lourde / zone ; variante Étincelle : plus compacte / interception. Même profil de base.",
+        "La vie de l’Archange est moins importante que celle du Noyau.",
+        "Aile gauche : vol dégradé",
+        "Aile droite : vol dégradé / chute si les deux perdues",
+        "Propulseurs : perte d’Impact descendant",
+        "Noyau électrique dorsal : perte des attaques électriques",
+        "Projecteur : perte du tir associé",
+        "Serres : perte agrippe / extraction",
+        "Interface de supervision : perte des réactions réseau avancées"
+      ],
+      "pages_pdf": [
+        11
+      ],
+      "rencontre": {
+        "rarete": "tres_rare",
+        "nombre_conseille": {
+          "min": 0,
+          "max": 1
+        },
+        "liaison": "III",
+        "generation_aleatoire": "oui",
+        "acte_min": 5,
+        "condition": null
+      }
+    },
+    {
+      "id": "corps-veritable-dheliosium",
+      "nom": "CORPS VÉRITABLE D’HELIOSIUM",
+      "menace": 15,
+      "role": "Incarnation militaire / Titan final / boss de campagne",
+      "phrase": "Nous sommes arrivés.",
+      "origine": "Titan restauré puis reconstruit",
+      "type": "Incarnation directe / colosse composite",
+      "liaison": "HelioSium direct - hors échelle",
+      "fonction_reseau": "Donner un corps physique au système pour la guerre totale et le siège final",
+      "stats": {
+        "pv": 1300,
+        "def": 18,
+        "attaque": 18,
+        "initiative": 8,
+        "vitesse": "12 m",
+        "vigueur": 12,
+        "reflexes": 6,
+        "volonte": 12,
+        "dd": 22,
+        "dd_expression": "22+",
+        "coeur": {
+          "pv": 850,
+          "def": 17,
+          "attaque": 17,
+          "phase": "finale"
+        }
+      },
+      "equipement": [
+        "Châssis de Titan",
+        "Modules de machines assimilés",
+        "Relais des Portes Mortes",
+        "Noyaux HelioSium",
+        "Systèmes hérités d’Elys-10"
+      ],
+      "actions": [
+        {
+          "nom": "Frappe de Titan",
+          "type": "CàC",
+          "attaque_dd": "+18",
+          "degats_effet": "8d10+",
+          "portee": "CàC / zone proche",
+          "recharge": "Phase 1+",
+          "notes": ""
+        },
+        {
+          "nom": "Artillerie intégrée",
+          "type": "Distance",
+          "attaque_dd": "+18",
+          "degats_effet": "8d10+ selon module",
+          "portee": "Longue portée",
+          "recharge": "Selon module",
+          "notes": ""
+        },
+        {
+          "nom": "Contrôle des Portes Mortes",
+          "type": "Terrain",
+          "attaque_dd": "DD22+",
+          "degats_effet": "Ouvre / ferme / isole / déplace unités / fait surgir machines",
+          "portee": "Arène",
+          "recharge": "Phase 2+",
+          "notes": ""
+        },
+        {
+          "nom": "Assimilation mécanique",
+          "type": "Réseau",
+          "attaque_dd": "-",
+          "degats_effet": "Intègre une pièce fonctionnelle d’une machine détruite proche",
+          "portee": "Zone",
+          "recharge": "Selon disponibilité",
+          "notes": ""
+        },
+        {
+          "nom": "Recomposition",
+          "type": "Transformation",
+          "attaque_dd": "-",
+          "degats_effet": "Réorganise le corps avec les modules restants",
+          "portee": "Personnel",
+          "recharge": "Changement de phase",
+          "notes": ""
+        },
+        {
+          "nom": "Pulse du Cœur",
+          "type": "Zone",
+          "attaque_dd": "+17 / DD22+",
+          "degats_effet": "8d10 énergie / réseau",
+          "portee": "Zone",
+          "recharge": "Phase finale",
+          "notes": "HelioSium - PNJ Builder Endgame | JDR Zero Dawn                                                                                                                                                  Page 12"
+        }
+      ],
+      "traits": [
+        "Boss multiphase : ne jamais résoudre comme un simple sac à PV.",
+        "Phase 1 - Titan : siège, artillerie, balayage, drones, blindage.",
+        "Phase 2 - Héritage d’Elys-10 : contrôle des Portes Mortes, précision accrue, exploitation du terrain et traces cognitives possibles d’Elys-10.",
+        "Phase 3 - Corps composite : assimilation de machines, greffes visibles et recomposition pendant le combat.",
+        "Phase finale - Cœur HelioSium exposé : référence de phase séparée, PV 850, DEF 17, ATQ +17, attaques de pulse / réseau.",
+        "Des traces d’Elys-10 peuvent apparaître dans la voix, les formulations, la reconnaissance des PJ ou certains choix tactiques ; elles ne constituent pas nécessairement une personnalité intacte.",
+        "Victoire attendue : scan, démontage de pièces, destruction de relais, fermeture des Portes Mortes, piratage, exploitation des acquis de campagne.",
+        "Relais des Portes Mortes : perte du contrôle des portes",
+        "Canon / artillerie principale : perte de l’attaque associée",
+        "Noyau gravitationnel : perte projection / contrôle",
+        "Module Stormbird : perte vol / foudre",
+        "Module Thunderjaw : perte arme lourde",
+        "Drone-port : perte renforts",
+        "Blindage frontal : DEF réduite",
+        "Noyau Avatar : ouvre / accélère la phase finale"
+      ],
+      "pages_pdf": [
+        12,
+        13
+      ],
+      "rencontre": {
+        "rarete": "unique",
+        "nombre_conseille": {
+          "min": 0,
+          "max": 1
+        },
+        "liaison": "directe",
+        "generation_aleatoire": "non",
+        "acte_min": 5,
+        "condition": "Final de campagne uniquement"
+      }
+    }
+  ],
+  "rencontres": [
+    {
+      "id": "patrouille-reseau",
+      "nom": "Patrouille de réseau",
+      "members": [
+        {
+          "profile": "sentinelle-heliosium",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "auxiliaire-restaure",
+          "min": 2,
+          "max": 4
+        }
+      ],
+      "logique": "Information + ligne légère",
+      "usage": "Faible à moyenne",
+      "generation_aleatoire": "oui"
+    },
+    {
+      "id": "mur-convergence",
+      "nom": "Mur de Convergence",
+      "members": [
+        {
+          "profile": "lancier-de-convergence",
+          "min": 5,
+          "max": 5
+        },
+        {
+          "profile": "sentinelle-heliosium",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "logique": "Verrouillage / réaction collective",
+      "usage": "Moyenne",
+      "generation_aleatoire": "oui"
+    },
+    {
+      "id": "cellule-artillerie",
+      "nom": "Cellule d’artillerie",
+      "members": [
+        {
+          "profile": "artilleur-de-convergence",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "sentinelle-heliosium",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "auxiliaire-restaure",
+          "min": 2,
+          "max": 2
+        }
+      ],
+      "logique": "Observation → ciblage → feu",
+      "usage": "Moyenne à forte",
+      "generation_aleatoire": "oui"
+    },
+    {
+      "id": "cellule-technique",
+      "nom": "Cellule technique",
+      "members": [
+        {
+          "profile": "ingenieur-heliosium",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "artilleur-de-convergence",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "auxiliaire-restaure",
+          "min": 1,
+          "max": 2
+        }
+      ],
+      "logique": "Support, drones, réparation, artillerie",
+      "usage": "Forte",
+      "generation_aleatoire": "oui"
+    },
+    {
+      "id": "breche-heliosium",
+      "nom": "Brèche HelioSium",
+      "members": [
+        {
+          "profile": "inquisiteur-heliosium",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "lancier-de-convergence",
+          "min": 2,
+          "max": 3
+        },
+        {
+          "profile": "ingenieur-heliosium",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "logique": "Casse-ligne protégé",
+      "usage": "Forte",
+      "generation_aleatoire": "oui"
+    },
+    {
+      "id": "noyau-escorte",
+      "nom": "Noyau escorté",
+      "members": [
+        {
+          "profile": "elu-de-la-convergence",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "archange-heliosium",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "logique": "Protection absolue ; ou Avatar avec conditions ; 3–5 troupes à répartir par le MJ",
+      "usage": "Très forte",
+      "generation_aleatoire": "conditionnelle"
+    },
+    {
+      "id": "detachement-adaptatif",
+      "nom": "Détachement adaptatif",
+      "members": [
+        {
+          "profile": "officier-de-convergence",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "logique": "Commandement ; ajouter 4–8 unités complémentaires",
+      "usage": "Très forte",
+      "generation_aleatoire": "conditionnelle"
+    },
+    {
+      "id": "avatar-invoque",
+      "nom": "Avatar invoqué",
+      "members": [
+        {
+          "profile": "elu-de-la-convergence",
+          "min": 1,
+          "max": 1
+        },
+        {
+          "profile": "avatar-invoque",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "logique": "Élu et composants disponibles obligatoires",
+      "usage": "Boss local",
+      "generation_aleatoire": "conditionnelle"
+    },
+    {
+      "id": "corps-veritable",
+      "nom": "Corps véritable",
+      "members": [
+        {
+          "profile": "corps-veritable-dheliosium",
+          "min": 1,
+          "max": 1
+        }
+      ],
+      "logique": "Final multiphase, objectifs / pièces / Portes Mortes",
+      "usage": "Sommet campagne",
+      "generation_aleatoire": "non"
+    }
+  ]
+}

@@ -1,0 +1,973 @@
+{
+  "schema": "h0d-dent-ambre-v1",
+  "faction": {
+    "key": "dent-ambre",
+    "label": "Clan de la Dent d'Ambre",
+    "factionValue": "DentAmbre",
+    "folder": "Clan de la Dent d'Ambre"
+  },
+  "source": {
+    "fichier": "Dent_d_Ambre_PNJ_Builder(1).pdf",
+    "pages": 11,
+    "notes": "Métier du clan avant la spécialisation guerrière. Attributs et XP individuels non chiffrés par la source."
+  },
+  "doctrine": [
+    "Communauté de chasseurs, récupérateurs, artisans et gardiens au-dessus d'un complexe antique.",
+    "Leurs métiers sont sociaux avant d'être des profils de combat.",
+    "Focus, balises, techniques de récupération et machines dressées ont un usage prudent; le clan n'est pas une armée professionnelle."
+  ],
+  "regles_communes": [
+    {
+      "nom": "Enfants de la Dent",
+      "effet": "+2 aux tests liés au territoire immédiat du clan, à ses balises, à ses installations ou à ses machines dressées lorsque cela relève réellement du métier du PNJ."
+    }
+  ],
+  "profils": [
+    {
+      "id": "chasseur-de-la-dent",
+      "nom": "CHASSEUR DE LA DENT",
+      "menace": 1,
+      "role": "Chasse / pistage / tir ciblé",
+      "phrase": "Il ne cherche pas à tuer vite. Il cherche l’endroit où frapper.",
+      "stats": {
+        "pv": 14,
+        "def": 13,
+        "attaque": 3,
+        "initiative": 3,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 2,
+        "dd": 12
+      },
+      "equipement": [
+        "Arc de chasse",
+        "Lance de chasse",
+        "Couteau de chasse",
+        "Manteau de pisteur",
+        "Kit de pisteur",
+        "Cape de camouflage"
+      ],
+      "actions": [
+        {
+          "nom": "Arc de chasse",
+          "type": "Attaque",
+          "attaque_dd": "+3",
+          "degats_effet": "1d8",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": "Arme principale."
+        },
+        {
+          "nom": "Lance de chasse",
+          "type": "Attaque",
+          "attaque_dd": "+3",
+          "degats_effet": "1d8",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Arme polyvalente de terrain."
+        },
+        {
+          "nom": "Lire la piste",
+          "type": "Technique",
+          "attaque_dd": "DD 12",
+          "degats_effet": "Direction, fraîcheur et nombre",
+          "portee": "Terrain",
+          "recharge": "-",
+          "notes": "Pistage. approximatif."
+        },
+        {
+          "nom": "Viser une pièce",
+          "type": "Technique",
+          "attaque_dd": "-",
+          "degats_effet": "Réduit de 1 le malus pour viser",
+          "portee": "24 m",
+          "recharge": "1/round",
+          "notes": "Machines. un composant déjà identifié."
+        },
+        {
+          "nom": "Approche silencieuse",
+          "type": "Technique",
+          "attaque_dd": "DD 12",
+          "degats_effet": "+2 au prochain test de discrétion",
+          "portee": "Personnel",
+          "recharge": "-",
+          "notes": "Terrain favorable. silencieuse                                       de chasse."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Pistage",
+          "effet": "+2 aux tests de pistage."
+        },
+        {
+          "nom": "Migrations locales",
+          "effet": "Connaît les routes et habitudes des machines et du gibier proches de la Dent."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        2
+      ]
+    },
+    {
+      "id": "recuperateur-du-clan",
+      "nom": "RÉCUPÉRATEUR DU CLAN",
+      "menace": 1,
+      "role": "Démontage / extraction / récupération",
+      "phrase": "Ce que la machine abandonne peut faire vivre le village.",
+      "stats": {
+        "pv": 12,
+        "def": 12,
+        "attaque": 2,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd": 12
+      },
+      "equipement": [
+        "Hache-outil",
+        "Dague de récupération",
+        "Câble de traction",
+        "Pinces",
+        "Kit de démontage",
+        "Sac à composants"
+      ],
+      "actions": [
+        {
+          "nom": "Hache-outil",
+          "type": "Attaque",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6+1",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Outil renforcé."
+        },
+        {
+          "nom": "Démontage rapide",
+          "type": "Technique",
+          "attaque_dd": "DD 12",
+          "degats_effet": "Récupère une pièce accessible",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Démontage. sous pression."
+        },
+        {
+          "nom": "Câble de traction",
+          "type": "Assistance",
+          "attaque_dd": "-",
+          "degats_effet": "+2 à une tentative collective",
+          "portee": "6m",
+          "recharge": "-",
+          "notes": "Nécessite ancrage. pour arracher ou déplacer une pièce."
+        },
+        {
+          "nom": "Identifier la valeur",
+          "type": "Technique",
+          "attaque_dd": "DD 12",
+          "degats_effet": "Reconnaît l’usage probable d’un",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Composants. composant courant."
+        },
+        {
+          "nom": "Sauver la pièce",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "Empêche la destruction d’un",
+          "portee": "Contact",
+          "recharge": "1/scène",
+          "notes": "Récupération. composant lors d’un démontage raté."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Démontage",
+          "effet": "+2 aux tests de démontage."
+        },
+        {
+          "nom": "Pragmatisme",
+          "effet": "Cherche d’abord à préserver les composants utiles."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        3
+      ]
+    },
+    {
+      "id": "eclaireur-de-la-dent",
+      "nom": "ÉCLAIREUR DE LA DENT",
+      "menace": 2,
+      "role": "Reconnaissance / discrétion / retour d’information",
+      "phrase": "Son travail n’est pas d’affronter ce qu’il trouve. Son travail est de revenir le raconter.",
+      "stats": {
+        "pv": 18,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 4,
+        "vitesse": "12 m",
+        "vigueur": 2,
+        "reflexes": 4,
+        "volonte": 3,
+        "dd": 13
+      },
+      "equipement": [
+        "Arc court",
+        "Couteau",
+        "Cape de camouflage",
+        "Longue-vue",
+        "Corde",
+        "Balises de terrain"
+      ],
+      "actions": [
+        {
+          "nom": "Arc court",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Tir mobile."
+        },
+        {
+          "nom": "Couteau",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d4+1",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Secours."
+        },
+        {
+          "nom": "Reconnaissance",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Repère passage, menace ou",
+          "portee": "Zone",
+          "recharge": "-",
+          "notes": "Exploration. mouvement inhabituel."
+        },
+        {
+          "nom": "Repli couvert",
+          "type": "Mouvement",
+          "attaque_dd": "-",
+          "degats_effet": "Déplacement de 6 m sans",
+          "portee": "Personnel",
+          "recharge": "1/scène",
+          "notes": "Repositionnement. nt                          pénalité de terrain léger."
+        },
+        {
+          "nom": "Marquer la route",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Facilite le retour du groupe ou le",
+          "portee": "Terrain",
+          "recharge": "-",
+          "notes": "Navigation. passage d’une seconde équipe."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Discrétion",
+          "effet": "+2 aux tests de discrétion."
+        },
+        {
+          "nom": "Rapporter avant de combattre",
+          "effet": "Évite le contact inutile si l’information peut être ramenée au clan."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        4
+      ]
+    },
+    {
+      "id": "gardien-de-la-dent",
+      "nom": "GARDIEN DE LA DENT",
+      "menace": 2,
+      "role": "Défense / ligne / protection du village",
+      "phrase": "Quelqu’un doit être celui qui reste quand les autres reculent.",
+      "stats": {
+        "pv": 24,
+        "def": 15,
+        "attaque": 4,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 4,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd": 13
+      },
+      "equipement": [
+        "Lance renforcée",
+        "Javelots x3",
+        "Bouclier de plaques",
+        "Cuir renforcé de machine",
+        "Câble défensif"
+      ],
+      "actions": [
+        {
+          "nom": "Lance renforcée",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d10+2",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Arme principale."
+        },
+        {
+          "nom": "Javelot",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+2",
+          "portee": "12 m",
+          "recharge": "-",
+          "notes": "Objet propulsé."
+        },
+        {
+          "nom": "Tenir la ligne",
+          "type": "Posture",
+          "attaque_dd": "-",
+          "degats_effet": "+1 DEF jusqu’au prochain tour.",
+          "portee": "Personnel",
+          "recharge": "-",
+          "notes": "Ne nécessite pas de poursuite."
+        },
+        {
+          "nom": "Interposition",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF à un allié adjacent contre",
+          "portee": "Adjacent",
+          "recharge": "1/round",
+          "notes": "Protection. une attaque."
+        },
+        {
+          "nom": "Repousser",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "DD 13 ou recul de 1,5 m.",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Contrôle de ligne."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Ancrage",
+          "effet": "+2 contre renversement lorsqu’il défend une position."
+        },
+        {
+          "nom": "Défense avant poursuite",
+          "effet": "Ne quitte pas facilement une position ou un allié à protéger."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        5
+      ]
+    },
+    {
+      "id": "soigneur-du-clan",
+      "nom": "SOIGNEUR DU CLAN",
+      "menace": 2,
+      "role": "Soins / stabilisation / diagnostic",
+      "phrase": "Le combat s’arrête. Les conséquences, elles, commencent.",
+      "stats": {
+        "pv": 18,
+        "def": 12,
+        "attaque": 2,
+        "initiative": 3,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 4,
+        "dd": 13
+      },
+      "equipement": [
+        "Bâton-câble",
+        "Fronde simple",
+        "Kit de soins",
+        "Plantes médicinales",
+        "Fibre synthétique",
+        "Matériel de contention"
+      ],
+      "actions": [
+        {
+          "nom": "Bâton-câble",
+          "type": "Attaque",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Défense personnelle."
+        },
+        {
+          "nom": "Fronde",
+          "type": "Attaque",
+          "attaque_dd": "+2",
+          "degats_effet": "1d4",
+          "portee": "15 m",
+          "recharge": "-",
+          "notes": "Arme légère."
+        },
+        {
+          "nom": "Stabilisation",
+          "type": "Soin",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Stabilise un blessé.",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Soins."
+        },
+        {
+          "nom": "Traitement de terrain",
+          "type": "Soin",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Réduit ou retire un état lié à une",
+          "portee": "Contact",
+          "recharge": "1/scène",
+          "notes": "Nécessite kit. terrain                                             blessure légère."
+        },
+        {
+          "nom": "Diagnostic",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Identifie poison, trauma,",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Médical. infection ou cause probable."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Soins et diagnostic",
+          "effet": "+2 aux tests médicaux."
+        },
+        {
+          "nom": "Installations du clan",
+          "effet": "Utilise plus efficacement le matériel médical de la Dent."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        6
+      ]
+    },
+    {
+      "id": "artisan-de-la-forge",
+      "nom": "ARTISAN DE LA FORGE",
+      "menace": 2,
+      "role": "Forge / réparation / amélioration",
+      "phrase": "Une pièce cassée n’est pas morte. Elle attend quelqu’un qui sache l’écouter.",
+      "stats": {
+        "pv": 20,
+        "def": 13,
+        "attaque": 3,
+        "initiative": 2,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 2,
+        "volonte": 3,
+        "dd": 13
+      },
+      "equipement": [
+        "Marteau de forge léger",
+        "Dague-outil",
+        "Kit de réparation",
+        "Pinces",
+        "Plaques de rechange",
+        "Circuits abîmés"
+      ],
+      "actions": [
+        {
+          "nom": "Marteau de forge",
+          "type": "Attaque",
+          "attaque_dd": "+3",
+          "degats_effet": "1d6+1",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Outil lourd."
+        },
+        {
+          "nom": "Réparation rapide",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Stabilise arme, armure ou",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Temporaire. mécanisme endommagé."
+        },
+        {
+          "nom": "Renfort improvisé",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "+1 DEF ou +1 à un test d’objet",
+          "portee": "Contact",
+          "recharge": "1/scène",
+          "notes": "Un seul objet. jusqu’à la fin de la scène."
+        },
+        {
+          "nom": "Identifier la panne",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Localise la cause probable d’une",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Diagnostic défaillance simple.                                            technique."
+        },
+        {
+          "nom": "Récupérer le composant",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Réduit les dégâts infligés à un",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Récupération. composant                                         objet lors du démontage."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Artisanat et réparation",
+          "effet": "+2 aux tests de forge et réparation."
+        },
+        {
+          "nom": "Savoir de Brok",
+          "effet": "Connaît les méthodes usuelles de forge et d’adaptation du clan."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        7
+      ]
+    },
+    {
+      "id": "gardien-des-focus",
+      "nom": "GARDIEN DES FOCUS",
+      "menace": 2,
+      "role": "Focus / archives / cartographie / accès",
+      "phrase": "La connaissance n’est utile que si quelqu’un sait encore où elle se trouve.",
+      "stats": {
+        "pv": 16,
+        "def": 13,
+        "attaque": 2,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 2,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd": 13
+      },
+      "equipement": [
+        "Focus",
+        "Fronde mécanique",
+        "Dague de récupération",
+        "Kit de maintenance Focus",
+        "Cartes locales",
+        "Câbles d’interface"
+      ],
+      "actions": [
+        {
+          "nom": "Fronde mécanique",
+          "type": "Attaque",
+          "attaque_dd": "+2",
+          "degats_effet": "1d6",
+          "portee": "18 m",
+          "recharge": "-",
+          "notes": "Arme technique."
+        },
+        {
+          "nom": "Dague",
+          "type": "Attaque",
+          "attaque_dd": "+2",
+          "degats_effet": "1d4",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Secours."
+        },
+        {
+          "nom": "Diagnostic Focus",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Identifie batterie,",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Focus. synchronisation, signal ou brouillage simple."
+        },
+        {
+          "nom": "Recouper la carte",
+          "type": "Assistance",
+          "attaque_dd": "DD 13",
+          "degats_effet": "+2 au prochain test de",
+          "portee": "Groupe",
+          "recharge": "-",
+          "notes": "Cartographie. navigation ou repérage du groupe."
+        },
+        {
+          "nom": "Restaurer liaison",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Rétablit temporairement un",
+          "portee": "Contact",
+          "recharge": "1/scène",
+          "notes": "Pas d’accès admin. Focus ou terminal perturbé accessible."
+        },
+        {
+          "nom": "Lire un accès",
+          "type": "Technique",
+          "attaque_dd": "DD 13",
+          "degats_effet": "Détermine si une porte ou borne",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Ancien système. reconnaît les autorisations du clan."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Yeux Bleus",
+          "effet": "+2 Focus, cartes et archives de la Dent."
+        },
+        {
+          "nom": "Accès limité",
+          "effet": "Ne possède pas d’accès administrateur spécial."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        8
+      ]
+    },
+    {
+      "id": "dresseur-de-machines",
+      "nom": "DRESSEUR DE MACHINES",
+      "menace": 3,
+      "role": "Machines dressées / enclos / calme / piratage simple",
+      "phrase": "Une machine n’est jamais docile. Elle accepte seulement que tu sois là.",
+      "stats": {
+        "pv": 26,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 3,
+        "reflexes": 3,
+        "volonte": 5,
+        "dd": 14
+      },
+      "equipement": [
+        "Lance de chasse",
+        "Couteau de dépeçage",
+        "Sifflet / leurre mécanique",
+        "Kit de réparation simple",
+        "Câble de retenue",
+        "Cellule d’énergie faible"
+      ],
+      "actions": [
+        {
+          "nom": "Lance de chasse",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8+2",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Arme principale."
+        },
+        {
+          "nom": "Calmer une machine dressée",
+          "type": "Technique",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Évite panique ou agitation d’une",
+          "portee": "Courte",
+          "recharge": "-",
+          "notes": "Machine préparée. machine dressée                                   machine du clan."
+        },
+        {
+          "nom": "Ordre routinier",
+          "type": "Commandement",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Fait exécuter une tâche connue à",
+          "portee": "Courte",
+          "recharge": "-",
+          "notes": "Pas de contrôle total. e                          une machine du clan."
+        },
+        {
+          "nom": "Piratage simple",
+          "type": "Technique",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Interaction limitée avec une",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Pas du piratage Aloy. machine compatible déjà préparée."
+        },
+        {
+          "nom": "Désengagement sûr",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF contre une machine qu’il",
+          "portee": "Personnel",
+          "recharge": "1/round",
+          "notes": "Lecture observait.                                                    comportementale."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Machines douces",
+          "effet": "+2 avec enclos et machines dressées."
+        },
+        {
+          "nom": "Équilibre fragile",
+          "effet": "N’assume jamais qu’une machine est totalement soumise."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        9
+      ]
+    },
+    {
+      "id": "sentinelle-de-la-dent",
+      "nom": "SENTINELLE DE LA DENT",
+      "menace": 3,
+      "role": "Poste avancé / communication / balises / autonomie longue durée",
+      "phrase": "Là où l’éclaireur passe, la Sentinelle demeure.",
+      "stats": {
+        "pv": 28,
+        "def": 14,
+        "attaque": 4,
+        "initiative": 5,
+        "vitesse": "12 m",
+        "vigueur": 3,
+        "reflexes": 4,
+        "volonte": 4,
+        "dd": 14
+      },
+      "equipement": [
+        "Arc de chasse",
+        "Lance courte",
+        "Focus renforcé",
+        "Kit complet de réparation de balise",
+        "Relais portable",
+        "Cellules d’énergie",
+        "Longue-vue",
+        "Cape de terrain",
+        "Nécessaire de bivouac"
+      ],
+      "actions": [
+        {
+          "nom": "Arc de sentinelle",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d8+1",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": "Tir de terrain."
+        },
+        {
+          "nom": "Lance courte",
+          "type": "Attaque",
+          "attaque_dd": "+4",
+          "degats_effet": "1d6+2",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Défense rapprochée."
+        },
+        {
+          "nom": "Réparer une balise",
+          "type": "Technique",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Restaure communication,",
+          "portee": "Contact",
+          "recharge": "-",
+          "notes": "Balise accessible. cartographie ou signal local."
+        },
+        {
+          "nom": "Relais de fortune",
+          "type": "Technique",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Étend temporairement la portée",
+          "portee": "Zone",
+          "recharge": "-",
+          "notes": "Nécessite matériel. d’un signal existant."
+        },
+        {
+          "nom": "Établir un poste avancé",
+          "type": "Installation",
+          "attaque_dd": "DD 14",
+          "degats_effet": "+2 détection et communication",
+          "portee": "Zone",
+          "recharge": "1/scène",
+          "notes": "Après installation. avancé                 n                            dans la zone préparée."
+        },
+        {
+          "nom": "Alerte longue portée",
+          "type": "Communication",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Transmet un message court vers",
+          "portee": "Réseau",
+          "recharge": "-",
+          "notes": "Si chemin de signal. portée                 ation                        une balise ou un relais accessible."
+        },
+        {
+          "nom": "Diagnostiquer une zone morte",
+          "type": "Technique",
+          "attaque_dd": "DD 14",
+          "degats_effet": "Distingue panne, destruction ou",
+          "portee": "Zone",
+          "recharge": "-",
+          "notes": "Communication. zone morte                                          brouillage manifeste."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Autonomie extérieure",
+          "effet": "Supporte les séjours prolongés hors du village sans pénalité ordinaire."
+        },
+        {
+          "nom": "Technicien de terrain",
+          "effet": "+2 balises, relais et communications."
+        },
+        {
+          "nom": "Veilleur des frontières",
+          "effet": "+2 Initiative lorsqu’il défend son poste ou répond à une alerte."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        10
+      ]
+    },
+    {
+      "id": "maitre-darmes-de-la-dent",
+      "nom": "MAÎTRE D’ARMES DE LA DENT",
+      "menace": 4,
+      "role": "Vétéran / instructeur / polyvalence martiale",
+      "phrase": "Il ne t’apprend pas comment gagner. Il t’apprend l’erreur qui te tuerait.",
+      "stats": {
+        "pv": 42,
+        "def": 17,
+        "attaque": 6,
+        "initiative": 4,
+        "vitesse": "9 m",
+        "vigueur": 5,
+        "reflexes": 4,
+        "volonte": 5,
+        "dd": 15
+      },
+      "equipement": [
+        "Lance renforcée ou arme personnelle de vétéran",
+        "Arc de chasse",
+        "Couteau",
+        "Bouclier de plaques",
+        "Armure composite de machine",
+        "Outils d’entraînement"
+      ],
+      "actions": [
+        {
+          "nom": "Arme de maître",
+          "type": "Attaque",
+          "attaque_dd": "+6",
+          "degats_effet": "1d10+3",
+          "portee": "CàC",
+          "recharge": "-",
+          "notes": "Arme de vétéran."
+        },
+        {
+          "nom": "Arc de vétéran",
+          "type": "Attaque",
+          "attaque_dd": "+6",
+          "degats_effet": "1d8+2",
+          "portee": "24 m",
+          "recharge": "-",
+          "notes": "Tir maîtrisé."
+        },
+        {
+          "nom": "Parade enseignée",
+          "type": "Réaction",
+          "attaque_dd": "-",
+          "degats_effet": "+2 DEF contre une attaque.",
+          "portee": "Personnel",
+          "recharge": "1/round",
+          "notes": "Défense."
+        },
+        {
+          "nom": "Corrige ta garde !",
+          "type": "Assistance",
+          "attaque_dd": "-",
+          "degats_effet": "Un allié à 6 m gagne +2 à sa",
+          "portee": "6m",
+          "recharge": "1/round",
+          "notes": "Instruction. prochaine attaque ou défense."
+        },
+        {
+          "nom": "Punir l’ouverture",
+          "type": "Réaction",
+          "attaque_dd": "+6",
+          "degats_effet": "1d10+3",
+          "portee": "CàC",
+          "recharge": "1/round",
+          "notes": "Quand une cible rate une attaque de CàC contre lui."
+        },
+        {
+          "nom": "Reprendre la ligne",
+          "type": "Commandement",
+          "attaque_dd": "-",
+          "degats_effet": "Jusqu’à trois alliés se replacent",
+          "portee": "9m",
+          "recharge": "1/scène",
+          "notes": "Formation. ement                       immédiatement de 3 m."
+        }
+      ],
+      "traits": [
+        {
+          "nom": "Maîtrise polyvalente",
+          "effet": "Utilise sans pénalité les armes courantes du clan."
+        },
+        {
+          "nom": "Instructeur",
+          "effet": "Ses capacités améliorent surtout les combattants moins expérimentés."
+        },
+        {
+          "nom": "Vétéran des machines",
+          "effet": "+2 pour reconnaître une attaque ou charge déjà connue d’une machine courante."
+        },
+        {
+          "nom": "Enfant de la Dent",
+          "effet": "+2 sur son territoire lorsque cela relève réellement de son métier."
+        }
+      ],
+      "pages_pdf": [
+        11
+      ]
+    }
+  ]
+}

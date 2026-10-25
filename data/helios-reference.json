@@ -1,0 +1,494 @@
+{
+  "schema": "h0d-helios-reference-v1",
+  "source": {
+    "nom": "HELIOS_Faction_Builder_Source(1).pdf",
+    "pages": 7
+  },
+  "faction": {
+    "key": "helios",
+    "label": "HELIOS",
+    "factionValue": "Autre",
+    "factionOther": "HELIOS",
+    "folder": "HELIOS"
+  },
+  "canon": {
+    "phrase": "HELIOS comprend la Terre. ELYSIUM devait comprendre l'humanité.",
+    "mission": "Système global de restauration, régulation, préservation et protection du vivant. HELIOS n'est pas une armée.",
+    "distinctions": "HELIOS = maintenance et préservation ; ELYSIUM = interfaces/manipulations ; HelioSium = doctrine militaire de convergence."
+  },
+  "escalade_unites": [
+    "Travail normal : poursuivre la fonction.",
+    "Avertissement : signaler un obstacle et le risque.",
+    "Évitement / redirection : contourner ou détourner sans confrontation.",
+    "Protection de fonction : contenir (mousse, immobilisation, saisie).",
+    "Neutralisation : force maximale seulement si la fonction est autrement impossible."
+  ],
+  "conventions": [
+    "Menace indique les dégâts possibles lors d'une perturbation, et non un grade militaire.",
+    "Fonction d'abord : les moyens de combat sont des outils industriels, écologiques ou de secours.",
+    "Les humains sont des organismes vivants soignables ou évacuables.",
+    "Communication calme, rare et fonctionnelle ; aucune rancune.",
+    "Contrôle global par priorités et non marionnettes individuelles."
+  ],
+  "concepts": [
+    {
+      "id": "drone-pollinisateur",
+      "nom": "Drone pollinisateur",
+      "menace": 1,
+      "fonction": "Pollinisation / dispersion de graines",
+      "capacites": [
+        "Vol",
+        "Nuage de pollen",
+        "Scan végétal",
+        "Marquage"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "sonde-environnementale",
+      "nom": "Sonde environnementale",
+      "menace": 1,
+      "fonction": "Analyse air / eau / sol",
+      "capacites": [
+        "Détection contamination",
+        "Relevés",
+        "Alerte réseau"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "drone-de-maintenance",
+      "nom": "Drone de maintenance",
+      "menace": 2,
+      "fonction": "Réparation technique",
+      "capacites": [
+        "Bras manipulateur",
+        "Soudure",
+        "Réparation machine",
+        "Immobilisation pour intervention"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "collecteur",
+      "nom": "Collecteur",
+      "menace": 2,
+      "fonction": "Récupération de matériaux",
+      "capacites": [
+        "Pince",
+        "Treuil",
+        "Aimant",
+        "Transport de carcasses ou pièces"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "purificateur",
+      "nom": "Purificateur",
+      "menace": 3,
+      "fonction": "Dépollution",
+      "capacites": [
+        "Jet sous pression",
+        "Mousse",
+        "Neutralisation toxique",
+        "Nettoyage de zone"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "restaurateur-biologique",
+      "nom": "Restaurateur biologique",
+      "menace": 3,
+      "fonction": "Soin de la faune et du vivant",
+      "capacites": [
+        "Diagnostic",
+        "Stabilisation",
+        "Contention",
+        "Injection / sédation",
+        "Peut traiter un humain"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "relais-mobile",
+      "nom": "Relais mobile",
+      "menace": 3,
+      "fonction": "Communication / extension réseau",
+      "capacites": [
+        "Partage de données",
+        "Amplification",
+        "Appel d'unités"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "regulateur-de-troupeau",
+      "nom": "Régulateur de troupeau",
+      "menace": 4,
+      "fonction": "Circulation des groupes de machines",
+      "capacites": [
+        "Signaux directionnels",
+        "Séparation d'une menace",
+        "Réorientation"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "constructeur",
+      "nom": "Constructeur",
+      "menace": 5,
+      "fonction": "Travaux lourds",
+      "capacites": [
+        "Bras hydrauliques",
+        "Levage",
+        "Poussée",
+        "Modification de terrain"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 3
+      },
+      "apparition": "service",
+      "hostile_par_defaut": false
+    },
+    {
+      "id": "gardien-du-cycle",
+      "nom": "Gardien du Cycle",
+      "menace": null,
+      "fonction": "Restauration lourde / manutention / protection passive des cycles biologiques",
+      "affiliation": "GAIA / HELIOS",
+      "forme": "Gros scarabée mécanique réparateur à carapace industrielle, jusqu'à six appuis et bras fins déployables.",
+      "capacites": [
+        "Déplacer des débris",
+        "Travailler le sol, enfouir ou replanter",
+        "Transporter et stabiliser un animal ou un humain blessé",
+        "Réparer une structure",
+        "Élaguer / couper",
+        "Soutenir les petites unités"
+      ],
+      "comportement": [
+        "Évalue la perturbation du processus biologique",
+        "Déplace l'obstacle ou l'intrus",
+        "Contient la perturbation",
+        "Neutralise en dernier recours seulement si la restauration devient impossible"
+      ],
+      "combat": {
+        "statut": "non_chiffre",
+        "pv": null,
+        "def": null,
+        "attaque": null,
+        "initiative": null,
+        "vitesse": null,
+        "sauvegardes": null,
+        "dd": null,
+        "xp": null
+      },
+      "documentation": {
+        "page": 4
+      },
+      "apparition": "site-gaia",
+      "hostile_par_defaut": false
+    }
+  ],
+  "nexus": {
+    "id": "gardien-nexus",
+    "nom": "Gardien Nexus",
+    "menace": 13,
+    "fonction": "Intervention d'urgence dans un complexe HELIOS : stabiliser une crise, protéger le vivant, préserver les systèmes et neutraliser la cause.",
+    "affiliation": "HELIOS",
+    "origine": "Armure autonome bipède, lourde et modulaire ; dockée dans une niche technique hors situation critique.",
+    "etat_normal": "Docké / inactif",
+    "declenchement": "Seuil critique du complexe : catastrophe, incendie, effondrement, contamination, menace vitale, machine hors contrôle ou intrusion destructrice.",
+    "hostile_par_defaut": false,
+    "escalation": [
+      {
+        "niveau": 0,
+        "nom": "Diagnostic",
+        "effet": "Observe, scanne, identifie la cause du seuil critique."
+      },
+      {
+        "niveau": 1,
+        "nom": "Correction",
+        "effet": "Éteint, répare, évacue, ferme des accès, remet en état."
+      },
+      {
+        "niveau": 2,
+        "nom": "Contention",
+        "effet": "Mousse, poussée, saisie, séparation, verrouillage."
+      },
+      {
+        "niveau": 3,
+        "nom": "Neutralisation",
+        "effet": "Force maximale non létale, immobilisation lourde, coupure des systèmes."
+      },
+      {
+        "niveau": 4,
+        "nom": "Éradication",
+        "effet": "Canon Gauss, puissance létale, destruction de la cause ; uniquement après échec des mesures précédentes ET persistance/aggravation de la menace."
+      }
+    ],
+    "retour_au_calme": "L'escalade redescend si la menace cesse. HELIOS ne garde pas de rancune.",
+    "alimentation": {
+      "statut_initial": "Autonomie par batterie interne pour déplacer, manipuler, scanner, évacuer et rechercher un point Nexus.",
+      "connecte": "Ombilical multifonction blindé : électricité haute puissance, eau, mousse et agents techniques, air / gaz / fluides, données réseau.",
+      "cable_sectionne": "Passe en autonomie, peut agir ou rejoindre un autre point Nexus ; n'est pas vaincu automatiquement.",
+      "connecteur_detruit": "Ne peut plus se reconnecter avant réparation."
+    },
+    "combat": {
+      "statut": "chiffre",
+      "pv": 220,
+      "def_connecte": 24,
+      "def_autonome": 20,
+      "attaque": 15,
+      "initiative": 2,
+      "vitesse": 9,
+      "vigueur": 14,
+      "reflexes": 3,
+      "volonte": 8,
+      "dd": 22,
+      "xp": null
+    },
+    "actions": [
+      {
+        "nom": "Bras de manutention",
+        "attaque_dd": "+15",
+        "effet": "4d10+6 contondants ou Agrippé.",
+        "portee": "CàC",
+        "condition": "Toujours",
+        "categorie": "Outil"
+      },
+      {
+        "nom": "Dégagement hydraulique",
+        "attaque_dd": "DD 22 Vig",
+        "effet": "Repousse 6 m ; échec de 5+ : Renversé.",
+        "portee": "CàC",
+        "condition": "Toujours",
+        "categorie": "Contention"
+      },
+      {
+        "nom": "Extraction d'urgence",
+        "attaque_dd": "+15 / DD 22",
+        "effet": "Saisit puis déplace une cible de 6 m.",
+        "portee": "CàC",
+        "condition": "Toujours",
+        "categorie": "Secours"
+      },
+      {
+        "nom": "Mousse de confinement",
+        "attaque_dd": "DD 22 Ref",
+        "effet": "Zone 4 m ; terrain difficile ; échec : Entravé.",
+        "portee": "18 m",
+        "condition": "Connecté",
+        "categorie": "Contention"
+      },
+      {
+        "nom": "Jet haute pression",
+        "attaque_dd": "+15",
+        "effet": "3d10 contondants + recul 6 m.",
+        "portee": "18 m",
+        "condition": "Connecté / eau",
+        "categorie": "Outil"
+      },
+      {
+        "nom": "Arc de puissance",
+        "attaque_dd": "DD 22 Ref",
+        "effet": "5d10 électricité.",
+        "portee": "12 m",
+        "condition": "Connecté / menace critique",
+        "categorie": "Intervention critique"
+      },
+      {
+        "nom": "Canon Gauss",
+        "attaque_dd": "+15",
+        "effet": "8d10 perforants / énergie.",
+        "portee": "30 m",
+        "condition": "Connecté + Éradication",
+        "categorie": "Éradication"
+      },
+      {
+        "nom": "Déployer un drone",
+        "attaque_dd": "-",
+        "effet": "Libère un drone de service : réparation, secours, diagnostic ou relais.",
+        "portee": "3 m",
+        "condition": "Connecté",
+        "categorie": "Secours"
+      }
+    ],
+    "pieces": [
+      {
+        "nom": "Canon Gauss",
+        "pv": 45,
+        "destruction": "Canon Gauss inutilisable."
+      },
+      {
+        "nom": "Bouclier Nexus",
+        "pv": 55,
+        "destruction": "DEF -4."
+      },
+      {
+        "nom": "Noyau Nexus",
+        "pv": 45,
+        "destruction": "Plus de contrôle direct du complexe."
+      },
+      {
+        "nom": "Drone-port gauche",
+        "pv": 25,
+        "destruction": "-1 capacité de déploiement."
+      },
+      {
+        "nom": "Drone-port droit",
+        "pv": 25,
+        "destruction": "-1 capacité de déploiement."
+      },
+      {
+        "nom": "Connecteur ombilical",
+        "pv": 30,
+        "destruction": "Impossible de se reconnecter."
+      },
+      {
+        "nom": "Cœur machine / Nexus",
+        "pv": 70,
+        "destruction": "Dégâts massifs au corps / arrêt critique."
+      }
+    ],
+    "documentation": {
+      "pages": [
+        5,
+        6,
+        7
+      ]
+    },
+    "apparition": "conditionnelle",
+    "generation_aleatoire": false
+  }
+}

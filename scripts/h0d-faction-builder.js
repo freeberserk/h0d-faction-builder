@@ -4,12 +4,14 @@ import {installCouncilUnique} from "./h0d-council-unique.js";
 import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 import {loadNewFactionPdf} from "./h0d-renouveau-soleil.js";
 import {loadDentHelioPdf} from "./h0d-dent-heliosium.js";
+import {loadHeliosPdf} from "./h0d-helios.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.3";
+const MODULE_VERSION = "0.6.4";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
 let DENT_HELIOSIUM=[];
+let HELIOS_REFERENCE=null;
 let COUNCIL=null;
 const ROOT_FOLDER = "H0D — Factions générées";
 
@@ -1993,8 +1995,12 @@ function itemData(entry,kind,imgOverride=null){
 }
 
 async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}){
-  const state=templateState(); if(!state.ok) throw new Error(state.message);
   const arch=ARCHETYPES.get(archetypeKey); if(!arch) throw new Error(`Archétype inconnu : ${archetypeKey}`);
+  // Les unités de service HELIOS n'ont aucune statistique de combat chiffrée
+  // dans leur PDF : ne créer ni Actor avec 0 PV ni fiche équilibrée artificiellement.
+  if(arch.combatReady===false||arch.incomplete===true)
+    throw new Error(`Profil conceptuel « ${arch.label} » : PV, DEF, ATQ, DD et sauvegardes non documentés. Impossible de créer un Actor de combat avant validation MJ.`);
+  const state=templateState(); if(!state.ok) throw new Error(state.message);
   const faction=FACTIONS.get(arch.factionKey); if(!faction) throw new Error(`Faction non enregistrée : ${arch.factionKey}`);
   const chosenLoadout=loadoutKey ? LOADOUTS.get(loadoutKey) : (arch.defaultLoadout ? LOADOUTS.get(arch.defaultLoadout) : null);
   if(loadoutKey && !chosenLoadout) throw new Error(`Loadout inconnu : ${loadoutKey}`);
@@ -2035,7 +2041,8 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
 
   const props={
     H0D_Creature_Type:"Faction",
-    ...clone(arch.actor?.props??{})
+    ...clone(arch.actor?.props??{}),
+    ...clone(chosenLoadout?.actor?.props??{})
   };
   // Chef de bande : garder seulement les techniques de la variante choisie,
   // avec indices de table CSB strictement séquentiels.
@@ -2495,6 +2502,31 @@ async function openBuilder(){
             return;
           }
           if(choice.kind!=="profile")throw new Error("Choix de PNJ non reconnu.");
+          if(choice.action==="consult"){
+            const ref=ARCHETYPES.get(choice.target);
+            if(!ref)throw new Error("Profil de référence introuvable.");
+            const props=ref.actor?.props??{};
+            const rows=Object.values(props.H0D_Creature_Capacites_Table??{});
+            const details=rows.length?
+              "<h3>Fonctions / capacités documentées</h3><ul>"+
+              rows.map(r=>"<li><strong>"+esc(r.H0D_Creature_Capacite_Nom)+
+               "</strong> — "+esc(r.H0D_Creature_Capacite_Effet)+"</li>").join("")+"</ul>":"";
+            const fiche="<section style='max-height:70vh;overflow:auto;'>"+
+              "<p><strong>"+esc(ref.incomplete?"Profil de référence non chiffré — Actor bloqué":
+                "Profil de combat chiffré — Actor disponible")+"</strong></p>"+
+              "<p>Menace : "+esc(props.H0D_Creature_Menace||"non définie")+
+              " · Faction : "+esc(props.H0D_Creature_Faction_Autre||props.H0D_Creature_Faction||"")+"</p>"+
+              "<p style='white-space:pre-wrap'>"+esc(props.H0D_Creature_Notes??"")+"</p>"+
+              details+"</section>";
+            await foundry.applications.api.DialogV2.wait({
+              window:{title:"H0D — Référence "+ref.label},
+              content:fiche,
+              buttons:[{action:"close",label:"Fermer",icon:"fa-solid fa-xmark"}],
+              rejectClose:false
+            });
+            status.textContent="Référence consultée sans création de fiche : "+ref.label;
+            return;
+          }
           if(choice.action==="update"||choice.action==="replace"){
             const label=choice.action==="replace"?"SUPPRIMER puis recréer":"METTRE À JOUR";
             const confirmed=await foundry.applications.api.DialogV2.confirm({
@@ -2583,6 +2615,14 @@ Hooks.once("ready", async () => {
     notify("error","PNJ Dent/HelioSium : "+(err?.message??err));
   }
   try{
+    HELIOS_REFERENCE=await loadHeliosPdf({
+      moduleId:MODULE_ID,registerFaction,registerArchetype,registerLoadout
+    });
+  }catch(err){
+    console.error(MODULE_ID+" | HELIOS",err);
+    notify("error","HELIOS : "+(err?.message??err));
+  }
+  try{
     COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
       templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
       clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
@@ -2596,7 +2636,9 @@ Hooks.once("ready", async () => {
     syncPerception: syncFactionPerception,
     council:COUNCIL,
     encounters:PILLARDS?.encounters??[],
-    pdfFactions:[...NEW_PDF_FACTIONS,...DENT_HELIOSIUM],
+    pdfFactions:[...NEW_PDF_FACTIONS,...DENT_HELIOSIUM,...(HELIOS_REFERENCE?[{key:'helios',count:HELIOS_REFERENCE.archetypes.length}]:[])],
+    heliosReference:HELIOS_REFERENCE?.source??null,
+    heliosProfiles:HELIOS_REFERENCE?.archetypes??[],
     heliosiumEncounters:DENT_HELIOSIUM.find(x=>x.key==='heliosium')?.encounters??[],
     registerFaction,
     registerFactions,

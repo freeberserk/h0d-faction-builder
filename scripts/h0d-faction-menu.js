@@ -20,7 +20,7 @@ export function targetsForGroup(faction,group,archetypes,councilEntries=[],encou
     return councilEntries.map(x=>({key:x.key,label:x.name+" — "+(x.role||"Conseil"),menace:null}));
   if(group!=="profiles")return [];
   return archetypes.filter(x=>x.factionKey===faction).map(x=>({
-    key:x.key,label:x.label,menace:Number(x.actor?.props?.H0D_Creature_Menace??0)
+    key:x.key,label:x.label+(x.incomplete?" — référence à compléter":""),menace:x.actor?.props?.H0D_Creature_Menace===""?null:Number(x.actor?.props?.H0D_Creature_Menace??0)
   })).sort((a,b)=>a.menace-b.menace||a.label.localeCompare(b.label,"fr"));
 }
 export function actionsForGroup(group) {
@@ -32,6 +32,7 @@ export function actionsForGroup(group) {
   if(group==="encounters")return [{key:"prepare",label:"Préparer les profils (sans créer de doublons)"}];
   if(group==="profiles")return [
     {key:"skip",label:"Créer si absent / ouvrir si présent"},
+    {key:"consult",label:"Consulter le profil et ses capacités (sans création)"},
     {key:"update",label:"Mettre à jour les données générées ⚠"},
     {key:"replace",label:"Supprimer puis recréer le PNJ ⚠"}
   ];
@@ -103,7 +104,14 @@ export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,enc
       hint.textContent="Les PNJ uniques du Conseil ne sont jamais réinitialisés par ce menu.";return;
     }
     if(group.value==="profiles"){
-      hint.textContent=action.value==="update"||action.value==="replace"?
+      const profile=archetypes.find(a=>a.key===target.value);
+      if(profile?.incomplete){
+        hint.textContent="Profil HELIOS documenté mais non chiffré : consulte la référence ; impossible de créer un Actor de combat sans validation MJ.";
+        return;
+      }
+      hint.textContent=action.value==="consult"?
+        "Consultation des données source sans toucher aux Actors existants.":
+        action.value==="update"||action.value==="replace"?
         "Attention : cette action peut écraser les modifications manuelles des profils génériques.":
         "Un PNJ générique déjà présent est ouvert sans être modifié.";return;
     }
@@ -121,7 +129,9 @@ export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,enc
     const suggested=group.value==="council" && target.value && suggestCouncilAction?
       suggestCouncilAction(target.value):null;
     action.value=options.some(x=>x.key===suggested)?suggested:
-      group.value==="profiles"?"skip":group.value==="council"?"open":group.value==="encounters"?"prepare":"";
+      group.value==="profiles"?
+        (archetypes.find(a=>a.key===target.value)?.incomplete?"consult":"skip"):
+        group.value==="council"?"open":group.value==="encounters"?"prepare":"";
     actionRow.style.display=faction.value===MAINTENANCE_KEY||!target.value?"none":"";
     refreshHint();
   }

@@ -1,5 +1,13 @@
 # Historique H0D Faction Builder
 
+## v0.6.4 — HELIOS, restauration planétaire et Gardien Nexus
+- 9 profils d'unités de service + Gardien du Cycle enregistrés sans statistiques inventées.
+- Consultation sécurisée des références conceptuelles ; blocage de création d'Actors non chiffrés.
+- Gardien Nexus Menace 13 : 8 actions, 7 pièces ciblables, 5 protocoles et deux variantes DEF 24/20.
+- Escalade progressive, interdiction du Canon Gauss hors connexion/protocole Éradication, aucune hostilité initiale automatique.
+- Doctrine HELIOS distincte de l'armée HelioSium ; 0 XP signifie non documenté.
+- Source PDF lisible et exposée en API ; anciennes fiches inchangées.
+
 ## v0.6.3 — Dent d'Ambre et armée HelioSium
 - 21 profils issus de 2 PDF : 10 du clan / 11 de l'armée finale.
 - 121 actions, 97 traits, équipements et statistiques de combat retranscrits.

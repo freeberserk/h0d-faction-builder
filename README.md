@@ -1,3 +1,44 @@
+# H0D Faction Builder — v0.6.4 : HELIOS
+
+## Source officielle ajoutée
+
+PDF : `HELIOS_Faction_Builder_Source(1).pdf` (7 pages).
+Intégration distincte de l'armée **HelioSium** et des unités **ELYSIUM** : HELIOS est le système de régulation et de restauration de la biosphère, **pas une armée**.
+
+### 10 fiches conceptuelles non chiffrées, consultables et NON créables en Actor
+
+Le PDF donne un niveau de Menace et des **fonctions**, mais **aucun** PV, DEF, ATQ, DD, Vitesse, sauvegarde, dé de dégâts ou coût XP individuel pour :
+
+- **Menace 1** : Drone pollinisateur, Sonde environnementale.
+- **Menace 2** : Drone de maintenance, Collecteur.
+- **Menace 3** : Purificateur, Restaurateur biologique, Relais mobile.
+- **Menace 4** : Régulateur de troupeau.
+- **Menace 5** : Constructeur.
+- **Menace non définie** : **Gardien du Cycle** (GAIA / HELIOS), scarabée réparateur, manutention et protection des processus biologiques.
+
+Pour ne pas fabriquer des statistiques, ces dix profils sont enregistrés avec **`incomplete:true` et `combatReady:false`**. Dans le menu, ils portent l'étiquette **« référence à compléter »**. Sélectionner **Consulter le profil et ses capacités (sans création)** affiche la doctrine et les fonctions PDF. La création d'un Actor de combat est volontairement bloquée jusqu'à validation d'une fiche complète. Le **Drone de maintenance mineur** historique Menace 1 reste disponible sans suppression, distinct du nouveau Drone de maintenance Menace 2.
+
+### Gardien Nexus — Menace 13, fiche chiffrée
+
+- **PV 220**, **DEF 24 connecté** ou **20 autonome**, **ATQ +15**, **Init +2**, **Vig +14 / Ref +3 / Vol +8**, **Vitesse 9 m**, **DD 22**.
+- **8 actions**, incluant soins/manutention, mousse et pression, avec restrictions explicites ; **Canon Gauss** utilisable uniquement si **connecté** ET en **protocole d'Éradication**.
+- **7 pièces ciblables** avec PV et conséquences de destruction, consignées dans les capacités CSB. Les dégâts aux pièces sont appliqués au corps selon les règles H0D.
+- **5 protocoles** : Diagnostic → Correction → Contention → Neutralisation → Éradication. L'Éradication n'est autorisée qu'en dernier recours ; la désescalade est possible, aucune rancune.
+- **Ombilical sectionné** = passe à l'autonomie, **pas** défaite automatique. **Connecteur détruit** = pas de reconnexion avant réparation.
+- **Deux équipements/variantes sélectionnables** : `gardien-nexus-connecte` (DEF 24) ou `gardien-nexus-autonome` (DEF 20). Les restrictions d'actions sont décrites et doivent être appliquées par le MJ ; le module **ne change pas automatiquement de variante** en fonction des dégâts de câble.
+- Le Gardien est **docké en temps normal**. Il ne doit être activé que pour un seuil critique d'un complexe, et son activation **n'implique pas l'hostilité**. **Aucune génération aléatoire** depuis le Faction Builder.
+- Les scores FOR/DEX/CON/INT/SAG/CHA neutres à **10**, et le niveau **14**, sont des **adaptations CSB**, pas des valeurs canon du PDF. Les XP restent inconnus (`0` est un marqueur de champ non renseigné).
+
+### Usage dans Foundry
+
+Mettre à jour vers v0.6.4, relancer le monde et ouvrir `H0D — Générateur factions` → **HELIOS** → **PNJ et profils de faction**. Le Gardien Nexus peut être créé en choisissant sa variante. Pour les autres unités, utiliser le nouvel acte **Consulter le profil**. Aucun ancien Actor ou Token n'est modifié automatiquement.
+
+### Référence technique
+
+`data/helios-reference.json` conserve la doctrine canon, les dix concepts, le Gardien Nexus, ses actions/pièces/protocoles et toutes les inconnues comme `null`. `game.h0dFactionBuilder.heliosReference` expose ces données sans inventer d'XP. `game.h0dFactionBuilder.heliosProfiles` expose les 11 entrées référençables.
+
+---
+
 # H0D Faction Builder — v0.6.3
 
 ## Nouveaux profils PDF

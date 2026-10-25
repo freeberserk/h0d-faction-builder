@@ -1,8 +1,8 @@
 {
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
-  "description": "Générateur de factions H0D — PNJ de la Dent d'Ambre, Caravanes, Pillards, Renouveau, Héritiers, armée HelioSium et Conseil.",
-  "version": "0.6.3",
+  "description": "H0D Faction Builder : Clan, Caravanes, Pillards, Renouveau, Soleil, HELIOS préservation, HelioSium armée et Conseil.",
+  "version": "0.6.4",
   "authors": [
     {
       "name": "JDR Zero Dawn"

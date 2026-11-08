@@ -1,3 +1,16 @@
+## v0.6.6 — Visuels privés : variations d'apparence par archétype
+
+Compatibilité **optionnelle** avec H0D Visuels local v1.1.0. Aucun asset privé n'est distribué par ce dépôt.
+
+- Le Faction Builder propose « Apparence » lors de la sélection d'un archétype illustré : aléatoire, manuel, masculine annotée, féminine annotée ou aucune image.
+- Le choix d'image est effectué uniquement **à la création d'une fiche** ; « Créer si absent », « Mettre à jour » et « Ouvrir » préservent les images existantes. Le mode « remplacer » recrée explicitement l'Actor selon le fonctionnement préexistant et réattribue une illustration.
+- Les variantes sont identifiées par une clé stable fournie par le module privé, sans déduire automatiquement le genre d'un portrait.
+- Le Faction Builder ne distribue ni catalogue d'illustrations ni images ; il lit l'API facultative `game.h0dVisuels`.
+- Pour appliquer un nouveau visuel à une fiche existante : `game.h0dVisuels.openPicker(actor)`.
+- Le mode « aucun visuel » empêche également l'attribution automatique par le hook du module privé.
+- Les groupes de rencontre continuent à produire une **seule fiche modèle par archétype**, pas plusieurs PNJ clonés. La rotation d'apparences concerne les *nouvelles créations distinctes*.
+- Le fonctionnement reste inchangé si H0D Visuels est désactivé.
+
 # H0D Faction Builder v0.6.5 — Liaison conservatrice au Catalogue
 
 Le Catalogue H0D v0.1.7 est la **source canonique** des équipements publiés. Les armes et protections créées depuis les anciennes fiches de PNJ **ne sont pas fusionnées par simple ressemblance** :

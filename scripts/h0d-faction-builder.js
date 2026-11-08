@@ -1,5 +1,6 @@
 import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
 import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-menu.js";
+import {installFactionVisualControls} from "./h0d-faction-visuals.js";
 import {installCouncilUnique} from "./h0d-council-unique.js";
 import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 import {loadNewFactionPdf} from "./h0d-renouveau-soleil.js";
@@ -8,7 +9,7 @@ import {loadHeliosPdf} from "./h0d-helios.js";
 import {resolveFactionCatalogueItem,summarizeFactionCatalogue} from "./h0d-catalogue-links.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.5";
+const MODULE_VERSION = "0.6.6";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
 let DENT_HELIOSIUM=[];
@@ -2020,7 +2021,7 @@ function itemData(entry,kind,imgOverride=null){
   };
 }
 
-async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}){
+async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update",visualMode="random",visualVariantId=null}={}){
   const arch=ARCHETYPES.get(archetypeKey); if(!arch) throw new Error(`Archétype inconnu : ${archetypeKey}`);
   // Les unités de service HELIOS n'ont aucune statistique de combat chiffrée
   // dans leur PDF : ne créer ni Actor avec 0 PV ni fiche équilibrée artificiellement.
@@ -2056,11 +2057,24 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
 
   const displayName=(arch.allLoadouts?.length>1 && chosenLoadout)?arch.label+" — "+chosenLoadout.label:arch.label;
   if(!actor){
+    // Module visuel privé facultatif : une variante ne change jamais les stats.
+    const visuels=game.h0dVisuels;
+    const choice=visuels?.pickForBuilder?.({
+      kind:"faction",key:archetypeKey,mode:visualMode,variantId:visualVariantId
+    })??null;
+    const portrait=choice?.portrait?visuels.visualUrl(choice.portrait):null;
+    const tokenImage=choice?.token?visuels.visualUrl(choice.token):null;
+    const token=clone(actorTemplate.prototypeToken??{});
+    token.name=displayName;token.actorLink=false;
+    if(tokenImage)token.texture={...(token.texture??{}),src:tokenImage};
     const [created]=await Actor.implementation.createDocuments([{
-      name:displayName,type:"character",img:arch.img||actorTemplate.img||"systems/custom-system-builder/img/template-logo.svg",
+      name:displayName,type:"character",img:portrait||arch.img||actorTemplate.img||"systems/custom-system-builder/img/template-logo.svg",
       folder:threatFolder.id,system:systemFromTemplate(actorTemplate),
-      prototypeToken:{...clone(actorTemplate.prototypeToken??{}),name:displayName,actorLink:false},
-      flags:{[MODULE_ID]:{generated:true,buildKey,archetypeKey,factionKey:arch.factionKey,loadoutKey:chosenLoadout?.key??null,sourceTemplateId:actorTemplate.id,sourceDataset:arch.sourceDataset||"PNJ_Factions_Menace_1_Foundry"}}
+      prototypeToken:token,
+      flags:{
+        [MODULE_ID]:{generated:true,buildKey,archetypeKey,factionKey:arch.factionKey,loadoutKey:chosenLoadout?.key??null,sourceTemplateId:actorTemplate.id,sourceDataset:arch.sourceDataset||"PNJ_Factions_Menace_1_Foundry"},
+        ...((choice||visualMode==="none")?{"h0d-visuels":{...(choice?{selectedVariant:choice.id,source:"faction-builder"}:{}),...(visualMode==="none"?{disableAuto:true}:{})}}:{})
+      }
     }]);
     actor=created;
   }
@@ -2463,6 +2477,7 @@ async function openBuilder(){
         suggestCouncilAction:key=>COUNCIL?.suggestedAction?.(key)
       });
       const root=dialog.element?.querySelector(".h0d-faction-menu");
+      if(root)installFactionVisualControls(root,esc);
       const button=root?.querySelector("[data-h0d-run]");
       const status=root?.querySelector("[data-h0d-status]");
       if(!button||!status||button.dataset.ready==="1")return;
@@ -2569,7 +2584,9 @@ async function openBuilder(){
           }
           const arch=ARCHETYPES.get(choice.target);
           const actor=await buildFactionActor(choice.target,{
-            loadoutKey:choice.loadout || arch?.defaultLoadout || null,mode:choice.action
+            loadoutKey:choice.loadout || arch?.defaultLoadout || null,mode:choice.action,
+            visualMode:String(data.visualMode||"random"),
+            visualVariantId:String(data.visualVariant||"")||null
           });
           actor?.sheet?.render(true);
           if(actor){

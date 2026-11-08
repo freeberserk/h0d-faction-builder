@@ -1,3 +1,9 @@
+## v0.6.6 — Intégration optionnelle des variantes visuelles
+- Menu de sélection des apparences par archétype, via module local privé.
+- Aléatoire sans répétition, choix manuel, filtrage par présentation annotée MJ, mode sans image.
+- Protection des images déjà présentes ; aucune publication d'images tierces sur GitHub.
+- Tests d'intégration et de non-régression.
+
 ## v0.6.5 — Référence Catalogue et audit des items de PNJ
 - Références canoniques exactes et contrôlées par type.
 - Application des propriétés Catalogue lorsque les fiches concordent ; divergences signalées sans écrasement.

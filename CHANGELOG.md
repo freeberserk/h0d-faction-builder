@@ -1,3 +1,9 @@
+## v0.6.5 — Référence Catalogue et audit des items de PNJ
+- Références canoniques exactes et contrôlées par type.
+- Application des propriétés Catalogue lorsque les fiches concordent ; divergences signalées sans écrasement.
+- Audit via API des équipements locaux non rapprochés, pour validation par le MJ.
+- Aucune migration ou création au chargement.
+
 # Historique H0D Faction Builder
 
 ## v0.6.4 — HELIOS, restauration planétaire et Gardien Nexus

@@ -5,9 +5,10 @@ import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 import {loadNewFactionPdf} from "./h0d-renouveau-soleil.js";
 import {loadDentHelioPdf} from "./h0d-dent-heliosium.js";
 import {loadHeliosPdf} from "./h0d-helios.js";
+import {resolveFactionCatalogueItem,summarizeFactionCatalogue} from "./h0d-catalogue-links.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.4";
+const MODULE_VERSION = "0.6.5";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
 let DENT_HELIOSIUM=[];
@@ -1984,13 +1985,38 @@ function combineEntries(arch, loadout){
   }
   return rows;
 }
+function catalogueEquipmentApi(){
+  const mod=game.modules?.get("h0d-catalogue");
+  return mod?.active&&game.h0dCatalogue?.getStatus?.()?.ready?game.h0dCatalogue:null;
+}
+function equipmentCatalogueAudit(){
+  const catalog=catalogueEquipmentApi();
+  const entries=[];
+  for(const arch of ARCHETYPES.values()){
+    // Les variantes sont auditées comme ensembles distincts : un équipement
+    // répété compte deux occurrences, pas deux références canoniques.
+    const options=[...LOADOUTS.values()].filter(l=>l.archetypeKey===arch.key);
+    for(const loadout of options.length?options:[null]){
+      for(const row of combineEntries(arch,loadout))
+        if(["weapon","armor","object","resource"].includes(row.kind))
+          entries.push({...row,archetypeKey:arch.key,loadoutKey:loadout?.key??null});
+    }
+  }
+  return {...summarizeFactionCatalogue(entries,catalog),
+    catalogueReady:!!catalog,source:"H0D Catalogue",safe:true};
+}
+
 function itemData(entry,kind,imgOverride=null){
   const t=itemTemplateForKind(kind);
   if(!t) throw new Error(`Template ${kind} introuvable via H0D Template Manager.`);
+  const link=resolveFactionCatalogueItem(entry,kind,catalogueEquipmentApi());
   return {
-    name:entry.name,type:"equippableItem",img:imgOverride||entry.img||t.img||"icons/svg/item-bag.svg",
+    name:link.status==="canonique"?link.definition.name:entry.name,
+    type:"equippableItem",img:imgOverride||entry.img||t.img||"icons/svg/item-bag.svg",
     system:systemFromTemplate(t),
-    flags:{[MODULE_ID]:{generated:true,kind,entryKey:entry.key,sourceTemplateId:t.id}}
+    flags:{[MODULE_ID]:{generated:true,kind,entryKey:entry.key,sourceTemplateId:t.id,
+      catalogueKey:link.key??null,catalogueStatus:link.status,
+      catalogueDifferences:link.differences??[]}}
   };
 }
 
@@ -2081,7 +2107,8 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update"}={}
     const sign=`${doc.getFlag(MODULE_ID,"kind")}::${doc.getFlag(MODULE_ID,"entryKey")}`;
     const row=sourceBySignature.get(sign);
     if(!row) throw new Error(`Item embarqué non reconnu : ${doc.name} (${sign})`);
-    await forceTemplateAndProps(doc,itemTemplateForKind(row.kind),row.entry.props??{});
+    const link=resolveFactionCatalogueItem(row.entry,row.kind,catalogueEquipmentApi());
+    await forceTemplateAndProps(doc,itemTemplateForKind(row.kind),link.props);
   }
   return actor;
 }
@@ -2640,6 +2667,7 @@ Hooks.once("ready", async () => {
     heliosReference:HELIOS_REFERENCE?.source??null,
     heliosProfiles:HELIOS_REFERENCE?.archetypes??[],
     heliosiumEncounters:DENT_HELIOSIUM.find(x=>x.key==='heliosium')?.encounters??[],
+    equipmentCatalogueAudit,
     registerFaction,
     registerFactions,
     registerArchetype,

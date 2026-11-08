@@ -1,3 +1,17 @@
+# H0D Faction Builder v0.6.5 — Liaison conservatrice au Catalogue
+
+Le Catalogue H0D v0.1.7 est la **source canonique** des équipements publiés. Les armes et protections créées depuis les anciennes fiches de PNJ **ne sont pas fusionnées par simple ressemblance** :
+
+- Résolution par clé stable ou nom exact et type, jamais par similarité vague.
+- Si les propriétés locales concordent avec H0D Catalogue (hors état « équipé / actif » et quantité), l'Item reçoit les propriétés canoniques.
+- Si une portée, un dé de dégâts, un bonus d'attaque ou un autre champ diverge, la variante du PNJ est **préservée**, le lien porte `catalogueStatus: "divergence-a-valider"` et le rapport donne les champs contradictoires.
+- Si le nom n'est pas au Catalogue, la fiche reste locale, clairement signalée « missing », sans inventer une nouvelle définition.
+- Les Items possèdent un `catalogueKey` lorsque la correspondance est prouvée.
+- La console MJ peut demander `game.h0dFactionBuilder.equipmentCatalogueAudit()` pour recenser toutes les correspondances, divergences, absences, identités et variantes de loadout.
+
+**Aucune migration automatique d'Actor, aucun écrasement d'Item de PJ, et aucune modification des caractéristiques sources non rapprochées.** Il faudra valider séparément les équivalences d'équipements historiques et de variantes spécialisées. Le module fonctionne aussi en l'absence du Catalogue, avec le statut « catalogue-absent ».
+
+---
 # H0D Faction Builder — v0.6.4 : HELIOS
 
 ## Source officielle ajoutée

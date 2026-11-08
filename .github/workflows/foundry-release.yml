@@ -34,6 +34,8 @@ jobs:
           node tests/dent-heliosium.mjs
           node --check scripts/h0d-helios.js
           node tests/helios-reference.mjs
+          node --check scripts/h0d-catalogue-links.js
+          node tests/catalogue-links.mjs
           python3 -m json.tool data/pillards-rouges.json > /dev/null
           python3 -m json.tool data/culte-renouveau.json > /dev/null
           python3 -m json.tool data/heritiers-soleil.json > /dev/null

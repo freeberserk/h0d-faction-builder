@@ -1,3 +1,7 @@
+## v0.6.7 — Annotations d'apparences depuis le Builder
+
+Quand le module privé H0D Visuels v1.1.0 est actif, le menu « Apparence » affiche désormais **Étiqueter / valider les variantes**. Le MJ classe explicitement chaque illustration comme masculine, féminine ou non renseignée, et peut autoriser/interdire son tirage aléatoire. Aucune présentation n'est déduite des fichiers. Les annotations sont enregistrées dans les réglages du monde Foundry, sans écraser les portraits existants.
+
 ## v0.6.6 — Visuels privés : variations d'apparence par archétype
 
 Compatibilité **optionnelle** avec H0D Visuels local v1.1.0. Aucun asset privé n'est distribué par ce dépôt.

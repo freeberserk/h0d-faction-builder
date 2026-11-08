@@ -17,6 +17,8 @@ assert(visual.includes('option value="manual"'));
 assert(visual.includes('option value="masculin"'));
 assert(visual.includes('option value="feminin"'));
 assert(visual.includes('option value="none"'));
+assert(visual.includes('data-h0d-annotate-visuals'));
+assert(visual.includes("api.manageVariants('faction',target.value)"));
 assert(visual.includes("c.approved&&c.presentation===presentation"));
 assert(!visual.includes('assets/'),'Aucun asset privé dans GitHub public.');
 const idx=source.indexOf('if(actor && mode==="skip") return actor;');

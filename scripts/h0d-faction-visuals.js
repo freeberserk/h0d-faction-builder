@@ -22,6 +22,7 @@ export function installFactionVisualControls(root,esc){
       '<label>Variante <select name="visualVariant"></select></label>'+
       '<img data-role="visualPreview" alt="Aperçu" width="90" height="90" style="display:block;object-fit:contain;margin-top:4px">'+
     '</div>'+
+    '<button type="button" data-h0d-annotate-visuals style="margin-top:6px">Étiqueter / valider les variantes</button>'+ 
     '<p style="margin:3px 0;opacity:.75;font-size:.85em" data-role="visualHint"></p>'+
   '</fieldset>';
   run.before(panel);
@@ -52,6 +53,12 @@ export function installFactionVisualControls(root,esc){
       ' variantes validées. Catégories d’apparence annotées par le MJ.';
     updatePreview();
   }
+  const annotate=panel.querySelector('[data-h0d-annotate-visuals]');
+  annotate.addEventListener('click',async()=>{
+    if(!target.value||typeof api.manageVariants!=='function')return;
+    try{await api.manageVariants('faction',target.value);refresh();}
+    catch(err){console.error('H0D Visuels : annotations',err);ui.notifications?.error?.(String(err?.message??err));}
+  });
   mode.addEventListener('change',updatePreview);
   variant.addEventListener('change',updatePreview);
   group.addEventListener('change',refresh);

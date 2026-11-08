@@ -1,3 +1,8 @@
+## v0.6.7 — Bouton d'annotation visuelle dans le Faction Builder
+- Ouvre directement le gestionnaire local des variantes du profil sélectionné.
+- Réactualise les filtres de présentation après annotation, sans recharger le monde.
+- Aucun fichier image privé ajouté au dépôt.
+
 ## v0.6.6 — Intégration optionnelle des variantes visuelles
 - Menu de sélection des apparences par archétype, via module local privé.
 - Aléatoire sans répétition, choix manuel, filtrage par présentation annotée MJ, mode sans image.

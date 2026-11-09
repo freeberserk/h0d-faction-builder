@@ -49,7 +49,7 @@ export async function ensureManagedLauncherMacro({moduleId,name,command,img,noti
   if(names.has(launcherName)){
     launcherName=name+" (module officiel)";
     let index=2;
-    while(names.has(launcherName))launcherName=name+" (module officiel "+index+++ ")";
+    while(names.has(launcherName))launcherName=name+" (module officiel "+index++ + ")";
     notify?.("warn",moduleId+" : macro existante conservée ; lanceur officiel créé séparément.");
   }
   const created=await Macro.create({

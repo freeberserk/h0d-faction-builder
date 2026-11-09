@@ -44,6 +44,7 @@ jobs:
           python3 -m json.tool data/dent-ambre-pnj.json > /dev/null
           python3 -m json.tool data/heliosium-endgame.json > /dev/null
           python3 -m json.tool data/helios-reference.json > /dev/null
+          node tests/dependency-manifest.mjs
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null
           python3 -m json.tool data/conseil-dent-ambre.json > /dev/null

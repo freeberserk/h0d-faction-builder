@@ -8,7 +8,7 @@ import {loadHeliosPdf} from "./h0d-helios.js";
 import {resolveFactionCatalogueItem,summarizeFactionCatalogue} from "./h0d-catalogue-links.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.8";
+const MODULE_VERSION = "0.6.9";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
 let DENT_HELIOSIUM=[];

@@ -2,9 +2,14 @@ import assert from "node:assert/strict";
 import {readFile} from "node:fs/promises";
 
 const source=await readFile(new URL("../scripts/h0d-launcher-macro.js",import.meta.url),"utf8");
-const importer=await readFile(new URL("../scripts/"+(
-  process.env.H0D_MAIN_SCRIPT || "h0d-machine-builder.js"
-),import.meta.url),"utf8").catch(()=>null);
+const manifest=JSON.parse(await readFile(new URL("../module.json",import.meta.url),"utf8"));
+const mainSource=await readFile(new URL("../"+manifest.esmodules[0],import.meta.url),"utf8");
+assert.match(mainSource,/import \\{ensureManagedLauncherMacro\\} from ["']\\.\\/h0d-launcher-macro\\.js["']/,
+  "Le module doit charger le gestionnaire sécurisé de macros.");
+assert.match(mainSource,/return ensureManagedLauncherMacro\\(\\{/,
+  "Le lanceur doit passer par le gestionnaire sécurisé.");
+assert.doesNotMatch(mainSource,/game\\.macros\\?\\.getName\\(/,
+  "Les macros de lancement ne doivent plus être retrouvées par nom seul.");
 assert.match(source,/export async function ensureManagedLauncherMacro/);
 assert.ok(!source.includes("game.macros?.getName("),"Ne jamais gérer une macro uniquement par son nom.");
 

@@ -1,6 +1,5 @@
 import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
 import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-menu.js";
-import {installFactionVisualControls} from "./h0d-faction-visuals.js";
 import {installCouncilUnique} from "./h0d-council-unique.js";
 import {loadPillardsRouges} from "./h0d-pillards-rouges.js";
 import {loadNewFactionPdf} from "./h0d-renouveau-soleil.js";
@@ -9,7 +8,7 @@ import {loadHeliosPdf} from "./h0d-helios.js";
 import {resolveFactionCatalogueItem,summarizeFactionCatalogue} from "./h0d-catalogue-links.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.7";
+const MODULE_VERSION = "0.6.8";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
 let DENT_HELIOSIUM=[];
@@ -2021,7 +2020,7 @@ function itemData(entry,kind,imgOverride=null){
   };
 }
 
-async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update",visualMode="random",visualVariantId=null}={}){
+async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update",visualMode="balanced",visualVariantId=null}={}){
   const arch=ARCHETYPES.get(archetypeKey); if(!arch) throw new Error(`Archétype inconnu : ${archetypeKey}`);
   // Les unités de service HELIOS n'ont aucune statistique de combat chiffrée
   // dans leur PDF : ne créer ni Actor avec 0 PV ni fiche équilibrée artificiellement.
@@ -2039,9 +2038,11 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update",vis
   const factionFolder=await ensureFolder(faction.folder||faction.label,root.id);
   const threat=Number(arch.actor?.props?.H0D_Creature_Menace??0);
   const threatFolder=await ensureFolder(`Menace ${threat}`,factionFolder.id);
-  const buildKey=`${archetypeKey}::${chosenLoadout?.key??"default"}`;
+  const baseBuildKey=`${archetypeKey}::${chosenLoadout?.key??"default"}`;
+  // Chaque clic Créer donne une instance indépendante ; aucune fiche précédente modifiée.
+  const buildKey=mode==="create"?baseBuildKey+"::"+foundry.utils.randomID():baseBuildKey;
 
-  let actor=Array.from(game.actors??[]).find(a=>a.getFlag(MODULE_ID,"generated")===true && a.getFlag(MODULE_ID,"buildKey")===buildKey);
+  let actor=mode==="create"?null:Array.from(game.actors??[]).find(a=>a.getFlag(MODULE_ID,"generated")===true && a.getFlag(MODULE_ID,"buildKey")===buildKey);
   if(actor && mode==="skip") return actor;
   if(actor && mode==="replace"){ await actor.delete(); actor=null; }
 
@@ -2055,7 +2056,9 @@ async function buildFactionActor(archetypeKey,{loadoutKey=null,mode="update",vis
     if(generated.length) await actor.deleteEmbeddedDocuments("Item",generated.map(i=>i.id));
   }
 
-  const displayName=(arch.allLoadouts?.length>1 && chosenLoadout)?arch.label+" — "+chosenLoadout.label:arch.label;
+  const baseName=(arch.allLoadouts?.length>1 && chosenLoadout)?arch.label+" — "+chosenLoadout.label:arch.label;
+  const instanceCount=mode==="create"?Array.from(game.actors??[]).filter(a=>a.getFlag(MODULE_ID,"generated")===true&&a.getFlag(MODULE_ID,"archetypeKey")===archetypeKey).length:0;
+  const displayName=instanceCount>0?`${baseName} — ${instanceCount+1}`:baseName;
   if(!actor){
     // Module visuel privé facultatif : une variante ne change jamais les stats.
     const visuels=game.h0dVisuels;
@@ -2477,7 +2480,6 @@ async function openBuilder(){
         suggestCouncilAction:key=>COUNCIL?.suggestedAction?.(key)
       });
       const root=dialog.element?.querySelector(".h0d-faction-menu");
-      if(root)installFactionVisualControls(root,esc);
       const button=root?.querySelector("[data-h0d-run]");
       const status=root?.querySelector("[data-h0d-status]");
       if(!button||!status||button.dataset.ready==="1")return;
@@ -2584,9 +2586,8 @@ async function openBuilder(){
           }
           const arch=ARCHETYPES.get(choice.target);
           const actor=await buildFactionActor(choice.target,{
-            loadoutKey:choice.loadout || arch?.defaultLoadout || null,mode:choice.action,
-            visualMode:String(data.visualMode||"random"),
-            visualVariantId:String(data.visualVariant||"")||null
+            loadoutKey:choice.loadout || arch?.defaultLoadout || null,
+            mode:"create",visualMode:"balanced"
           });
           actor?.sheet?.render(true);
           if(actor){

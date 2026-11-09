@@ -1,3 +1,11 @@
+## v0.6.8 — Création directe et token attribué automatiquement
+
+- Dans « PNJ et profils de faction », **un seul bouton Créer**, sans choix Consulter/Mettre à jour/Supprimer.
+- Chaque clic crée un **Actor indépendant**, numéroté en cas de répétition ; aucune fiche existante n'est modifiée ni détruite. Les opérations techniques de maintenance des autres groupes restent séparées.
+- Les illustrations de fiche et de prototypeToken sont attribuées pendant la création depuis H0D Visuels privé v1.2.0 lorsqu'il est installé. Le mode équilibré répartit les variantes explicitement annotées masculine/féminine en alternance 50/50 ; sans annotation des deux catégories, il tire parmi les images validées, sans inventer une catégorie.
+- Le MJ peut toujours retoucher un token avec le sélecteur de visuels privé, sans multiplier les réglages au moment de créer.
+- Les profils HELIOS non chiffrés demeurent non créables ; les opérations de groupe, Conseil et réparation ne sont pas modifiées.
+
 ## v0.6.7 — Annotations d'apparences depuis le Builder
 
 Quand le module privé H0D Visuels v1.1.0 est actif, le menu « Apparence » affiche désormais **Étiqueter / valider les variantes**. Le MJ classe explicitement chaque illustration comme masculine, féminine ou non renseignée, et peut autoriser/interdire son tirage aléatoire. Aucune présentation n'est déduite des fichiers. Les annotations sont enregistrées dans les réglages du monde Foundry, sans écraser les portraits existants.

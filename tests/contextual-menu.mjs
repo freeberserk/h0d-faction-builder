@@ -22,12 +22,12 @@ assert.deepEqual(m.groupsForFaction("pillards-rouges",factions,true),[]);
 assert.deepEqual(m.groupsForFaction(m.MAINTENANCE_KEY,factions,true).map(x=>x.key),["repair-capabilities","upgrade-caravanes","sync-perception"]);
 assert.deepEqual(m.targetsForGroup("dent-ambre","council",archetypes,council).map(x=>x.key),["kael","brok"]);
 assert.deepEqual(m.targetsForGroup("caravanes-libres","profiles",archetypes,council).map(x=>x.key),["messager","medecin"]);
-assert.equal(m.actionsForGroup("profiles")[0].key,"skip","Non-destructive default");
+assert.equal(m.actionsForGroup("profiles")[0].key,"create","Non-destructive default");
 assert.equal(m.actionsForGroup("council")[0].key,"open","Unique actors must not be overwritten");
 for(const rawChoice of [
  {faction:"dent-ambre",group:"council",target:"kael",action:"create"},
- {faction:"dent-ambre",group:"profiles",target:"garde",action:"skip"},
- {faction:"caravanes-libres",group:"profiles",target:"medecin",action:"skip"},
+ {faction:"dent-ambre",group:"profiles",target:"garde",action:"create"},
+ {faction:"caravanes-libres",group:"profiles",target:"medecin",action:"create"},
  {faction:m.MAINTENANCE_KEY,group:"repair-capabilities"},
  {faction:m.MAINTENANCE_KEY,group:"sync-perception"}
 ])assert.equal(m.resolveMenuSelection(rawChoice,factions,archetypes,council).ok,true);
@@ -35,7 +35,7 @@ for(const invalid of [
  {faction:"dent-ambre",group:"council",target:"kael",action:"replace"},
  {faction:"dent-ambre",group:"council",target:"medecin",action:"create"},
  {faction:"caravanes-libres",group:"council",target:"brok",action:"create"},
- {faction:"pillards-rouges",group:"profiles",target:"garde",action:"skip"}
+ {faction:"pillards-rouges",group:"profiles",target:"garde",action:"create"}
 ])assert.equal(m.resolveMenuSelection(invalid,factions,archetypes,council).ok,false);
 const ui=m.menuHTML({factions,esc:x=>x});
 assert.match(ui,/data-h0d-run/);
@@ -49,4 +49,4 @@ assert.match(builder,/new FormData\(form\)/);
 assert.match(builder,/button\.disabled=true/);
 assert.match(builder,/buttons:\[\{action:"close"/);
 assert.match(builder,/const confirmed=await foundry\.applications\.api\.DialogV2\.confirm/);
-console.log("OK: hierarchical menu, scoped actions, persistent operation, guarded destructive modes.");
+console.log("OK: hierarchical menu, scoped actions, persistent operation, non-destructive profile creation.");

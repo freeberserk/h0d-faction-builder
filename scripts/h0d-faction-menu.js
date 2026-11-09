@@ -30,17 +30,12 @@ export function actionsForGroup(group) {
     {key:"adopt",label:"Adopter une fiche existante (sans modification)"}
   ];
   if(group==="encounters")return [{key:"prepare",label:"Préparer les profils (sans créer de doublons)"}];
-  if(group==="profiles")return [
-    {key:"skip",label:"Créer si absent / ouvrir si présent"},
-    {key:"consult",label:"Consulter le profil et ses capacités (sans création)"},
-    {key:"update",label:"Mettre à jour les données générées ⚠"},
-    {key:"replace",label:"Supprimer puis recréer le PNJ ⚠"}
-  ];
+  if(group==="profiles")return [{key:"create",label:"Créer"}];
   return [];
 }
 export function resolveMenuSelection(raw,factions,archetypes,councilEntries,encounters=[],loadouts=[]) {
   const faction=String(raw?.faction??""),group=String(raw?.group??""),
-    target=String(raw?.target??""),action=String(raw?.action??"");
+    target=String(raw?.target??""),action=group==="profiles"?"create":String(raw?.action??"");
   const groups=groupsForFaction(faction,factions,!!councilEntries);
   if(!groups.some(x=>x.key===group))
     return {ok:false,message:"Choisis une faction, puis une catégorie."};
@@ -70,10 +65,10 @@ export function menuHTML({factions,esc}) {
       '<select name="target"><option value="">— Choisir un personnage —</option></select></div>'+
     '<div class="form-group" data-role="loadout" style="display:none"><label>Variante / équipement</label>'+
       '<select name="loadout"><option value="">— Par défaut —</option></select></div>'+
-    '<div class="form-group" data-role="action" style="display:none"><label>4 · Action</label>'+
+    '<div class="form-group" data-role="action" style="display:none"><label>Action</label>'+
       '<select name="action"><option value="">— Choisir une action —</option></select></div>'+
     '<p data-role="hint" style="opacity:.75;margin:0">Choisis une faction pour afficher ses groupes.</p>'+
-    '<button type="button" data-h0d-run><i class="fa-solid fa-play"></i> Exécuter</button>'+
+    '<button type="button" data-h0d-run><i class="fa-solid fa-plus"></i> Créer</button>'+
     '<p data-h0d-status role="status" aria-live="polite" style="margin:0;min-height:1.2em;opacity:.8"></p></div>';
 }
 export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,encounters=[],loadouts=[],esc,suggestCouncilAction}) {
@@ -109,11 +104,7 @@ export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,enc
         hint.textContent="Profil HELIOS documenté mais non chiffré : consulte la référence ; impossible de créer un Actor de combat sans validation MJ.";
         return;
       }
-      hint.textContent=action.value==="consult"?
-        "Consultation des données source sans toucher aux Actors existants.":
-        action.value==="update"||action.value==="replace"?
-        "Attention : cette action peut écraser les modifications manuelles des profils génériques.":
-        "Un PNJ générique déjà présent est ouvert sans être modifié.";return;
+      hint.textContent="Création avec portrait et token attribués automatiquement. Une fiche déjà créée est simplement ouverte.";return;
     }
     hint.textContent="Choisis un groupe pour afficher les personnages disponibles.";
   }
@@ -129,10 +120,9 @@ export function attachFactionMenu(dialog,{factions,archetypes,councilEntries,enc
     const suggested=group.value==="council" && target.value && suggestCouncilAction?
       suggestCouncilAction(target.value):null;
     action.value=options.some(x=>x.key===suggested)?suggested:
-      group.value==="profiles"?
-        (archetypes.find(a=>a.key===target.value)?.incomplete?"consult":"skip"):
+      group.value==="profiles"?"create":
         group.value==="council"?"open":group.value==="encounters"?"prepare":"";
-    actionRow.style.display=faction.value===MAINTENANCE_KEY||!target.value?"none":"";
+    actionRow.style.display=faction.value===MAINTENANCE_KEY||!target.value||group.value==="profiles"?"none":"";
     refreshHint();
   }
   function refreshTarget(){

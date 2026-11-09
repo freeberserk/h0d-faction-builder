@@ -1,3 +1,8 @@
+## v0.6.8 — Interface simplifiée et création répétable
+- Un seul bouton « Créer » pour les profils, création d'Actor indépendant par clic.
+- Portrait et prototypeToken appliqués directement selon l'équilibrage visuel optionnel du pack privé.
+- Plus d'actions destructrices proposées dans la liste des profils.
+
 ## v0.6.7 — Bouton d'annotation visuelle dans le Faction Builder
 - Ouvre directement le gestionnaire local des variantes du profil sélectionné.
 - Réactualise les filtres de présentation après annotation, sans recharger le monde.

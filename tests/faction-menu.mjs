@@ -19,7 +19,7 @@ assert.deepEqual(groupsForFaction("__maintenance__",factions,true).map(x=>x.key)
 assert.deepEqual(targetsForGroup("dent-ambre","council",archetypes,members).map(x=>x.key),["kael","brok"]);
 assert.deepEqual(targetsForGroup("caravanes-libres","profiles",archetypes,members).map(x=>x.key),["caravanier"]);
 assert.equal(actionsForGroup("council").length,3);
-assert.equal(actionsForGroup("profiles")[0].key,"skip");
+assert.equal(actionsForGroup("profiles")[0].key,"create");
 assert.deepEqual(resolveMenuSelection({faction:"dent-ambre",group:"council",target:"kael",action:"open"},factions,archetypes,members),
  {ok:true,kind:"council",faction:"dent-ambre",group:"council",target:"kael",action:"open"});
 assert.equal(resolveMenuSelection({faction:"caravanes-libres",group:"council",target:"kael",action:"create"},factions,archetypes,members).ok,false);

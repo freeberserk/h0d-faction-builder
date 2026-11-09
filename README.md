@@ -1,3 +1,7 @@
+## v0.6.10 — Protection des macros personnalisées
+
+Le lanceur officiel de Faction Builder porte désormais un flag d'appartenance au module. Une macro personnalisée ayant le même nom n'est jamais modifiée : en cas de collision, un lanceur séparé « (module officiel) » est créé. Seules les macros identifiées comme officielles et dont le code n'a pas été modifié par l'utilisateur peuvent être actualisées. Les anciennes macros sont adoptées uniquement sur une correspondance exacte (nom, type, portée, commande).
+
 ## v0.6.8 — Création directe et token attribué automatiquement
 
 - Dans « PNJ et profils de faction », **un seul bouton Créer**, sans choix Consulter/Mettre à jour/Supprimer.

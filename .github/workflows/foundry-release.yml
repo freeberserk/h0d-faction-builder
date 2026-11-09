@@ -2,6 +2,7 @@ name: Build and publish Foundry faction module
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: write
@@ -45,11 +46,14 @@ jobs:
           python3 -m json.tool data/heliosium-endgame.json > /dev/null
           python3 -m json.tool data/helios-reference.json > /dev/null
           node tests/dependency-manifest.mjs
+          node --check scripts/h0d-launcher-macro.js
+          node tests/launcher-macro.test.mjs
           python3 -m json.tool module.json > /dev/null
           python3 -m json.tool data/caravanes-libres.json > /dev/null
           python3 -m json.tool data/conseil-dent-ambre.json > /dev/null
           python3 -c 'import json; d=json.load(open("data/caravanes-libres.json")); assert len(d["profils"]) == 14; assert sum(len(p["actions"]) for p in d["profils"]) == 89'
       - name: Package and publish module
+        if: github.event_name != 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

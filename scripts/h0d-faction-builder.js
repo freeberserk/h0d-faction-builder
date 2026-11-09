@@ -1,3 +1,4 @@
+import {ensureManagedLauncherMacro} from "./h0d-launcher-macro.js";
 import {ABILITY_NAMES,ordinaryNpcLevelFromCR,caravanScores,caravanMods,scoreToMod,legacyCaravanMods,caravanAttackPlan,caravanCompactNotes} from "./h0d-caravanes-stats.js";
 import {menuHTML,attachFactionMenu,resolveMenuSelection} from "./h0d-faction-menu.js";
 import {installCouncilUnique} from "./h0d-council-unique.js";
@@ -8,7 +9,7 @@ import {loadHeliosPdf} from "./h0d-helios.js";
 import {resolveFactionCatalogueItem,summarizeFactionCatalogue} from "./h0d-catalogue-links.js";
 
 const MODULE_ID = "h0d-faction-builder";
-const MODULE_VERSION = "0.6.9";
+const MODULE_VERSION = "0.6.10";
 let PILLARDS=null;
 let NEW_PDF_FACTIONS=[];
 let DENT_HELIOSIUM=[];
@@ -2609,27 +2610,13 @@ async function openBuilder(){
 }
 
 async function ensureLauncherMacro() {
-  if (!game.user?.isGM) return;
-  const name = "H0D — Générateur factions";
-  const command = "game.h0dFactionBuilder.open();";
-  let macro = game.macros?.getName(name);
-
-  if (macro) {
-    const updates = {};
-    if (macro.command !== command) updates.command = command;
-    if (macro.type !== "script") updates.type = "script";
-    if (Object.keys(updates).length) await macro.update(updates);
-    return;
-  }
-
-  await Macro.create({
-    name,
-    type: "script",
-    scope: "global",
-    img: "icons/svg/gears.svg",
-    command
+  return ensureManagedLauncherMacro({
+    moduleId:MODULE_ID,
+    name:"H0D — Générateur factions",
+    command:"game.h0dFactionBuilder.open();",
+    img:"icons/svg/gears.svg",
+    notify:notify
   });
-  notify("info", `${MODULE_ID} : macro de lancement créée.`);
 }
 
 Hooks.once("ready", async () => {

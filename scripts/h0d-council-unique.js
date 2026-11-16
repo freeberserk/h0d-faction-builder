@@ -30,7 +30,7 @@ export function isLegacyCouncilActor(actor,entry) {
 export async function installCouncilUnique({
   moduleId,rootFolder,templateState,template,actorTemplateKey,
   clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
-  perceptionPropsForActor
+  perceptionPropsForActor,getCatalogueDefinition
 }) {
   const path="modules/"+moduleId+"/data/conseil-dent-ambre.json";
   const route=foundry.utils.getRoute ? foundry.utils.getRoute(path) : path;
@@ -75,6 +75,16 @@ export async function installCouncilUnique({
     if(!state.ok)throw new Error(state.message);
     const t=template(actorTemplateKey);
     if(!t)throw new Error("Template Créature H0D absent.");
+    // Les clés validées n'utilisent plus les propriétés du fichier Conseil.
+    // Préflight avant toute création d'Actor pour éviter un import partiel.
+    const canonicalItems=new Map();
+    for(const item of e.items){
+      if(!item.catalogueKey)continue;
+      const definition=getCatalogueDefinition?.(item.catalogueKey);
+      if(!definition||definition.kind!==item.kind||definition.catalogue?.pret_pour_builder!==true)
+        throw new Error("Référence absente ou non prête dans H0D Catalogue : "+item.catalogueKey);
+      canonicalItems.set(item.key,definition);
+    }
     const folder=await councilFolder();
     const token=clone(t.prototypeToken??{});
     token.name=e.name;token.actorLink=false;
@@ -102,7 +112,11 @@ export async function installCouncilUnique({
         const doc=createdItems[i],source=e.items[i];
         const tpl=template({weapon:"item-arme",armor:"item-armure",object:"item-objet"}[source.kind]);
         if(!tpl)throw new Error("Template manquant : "+source.kind);
-        await forceTemplateAndProps(doc,tpl,source.props);
+        const definition=canonicalItems.get(source.key);
+        const props=definition
+          ? {...clone(definition.props),...clone(source.runtimeProps??{})}
+          : source.props;
+        await forceTemplateAndProps(doc,tpl,props);
       }
       return actor;
     }catch(err){

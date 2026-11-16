@@ -23,11 +23,10 @@ for(const npc of source.characters){
  for(const item of npc.items){
    assert.ok(["weapon","armor","object"].includes(item.kind));
    if(item.catalogueKey){
-     assert.equal(item.catalogueKey,"marteau-de-brok");
-     assert.equal(item.name,"Marteau de Brok");
-     assert.equal(item.props,undefined,"Les props de l'arme canonique ne doivent pas être dupliquées.");
+     assert.ok(["marteau-de-brok","hache-de-recuperation-brok"].includes(item.catalogueKey));
+     assert.equal(item.props,undefined,"Les props des armes canoniques ne doivent pas être dupliquées.");
      assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
-     assert.equal(item.runtimeProps.H0D_Arme_Active,true);
+     assert.equal(item.runtimeProps.H0D_Arme_Active,item.catalogueKey==="marteau-de-brok");
      continue;
    }
    assert.ok(!Object.keys(item.props).some(k=>k.includes("_Container")),"Stale Item cache");
@@ -60,9 +59,14 @@ globalThis.ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 globalThis.foundry={utils:{getRoute:x=>x,escapeHTML:x=>x},
   applications:{api:{DialogV2:{confirm:async()=>true}}}};
 globalThis.fetch=async()=>({ok:true,json:async()=>source});
-let catalogueAvailable=false;
+let catalogueAvailable=false,axeAvailable=false;
 const brokCanonical={key:"marteau-de-brok",kind:"weapon",catalogue:{pret_pour_builder:true},
  props:{H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:"0",H0D_Arme_Degats:"1d8",
+ H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
+ H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
+const axeCanonical={key:"hache-de-recuperation-brok",kind:"weapon",catalogue:{pret_pour_builder:true},
+ props:{H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:"0",H0D_Arme_Degats:"1d8",
+ H0D_Arme_Type_Degats:"Tranchant",H0D_Arme_Mains:"1",H0D_Arme_Encombrement:"1",
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
  H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
 const updated=[],folders=[],templateStub={id:"template",system:{props:{},templateSystemUniqueVersion:1},prototypeToken:{}};
@@ -87,17 +91,31 @@ const council=await installCouncilUnique({
  systemFromTemplate:()=>({props:{}}),
  forceTemplateAndProps:async(doc,t,p)=>{doc.system.props=structuredClone(p);},
  itemData:(entry,kind)=>({name:entry.name,kind}),notify:()=>{},
- getCatalogueDefinition:key=>catalogueAvailable&&key==="marteau-de-brok"?structuredClone(brokCanonical):null
+ getCatalogueDefinition:key=>catalogueAvailable
+ ?(key==="marteau-de-brok"?structuredClone(brokCanonical)
+ :key==="hache-de-recuperation-brok"&&axeAvailable?structuredClone(axeCanonical):null):null
 });
 await assert.rejects(council.create("brok"),/Référence absente ou non prête dans H0D Catalogue/);
 assert.equal(game.actors.length,0,"Ne pas générer un Acteur partiel si le Catalogue est absent.");
 catalogueAvailable=true;
+await assert.rejects(council.create("brok"),/hache-de-recuperation-brok/);
+assert.equal(game.actors.length,0,"Hache absente : Brok ne doit pas être créé partiellement.");
+axeAvailable=true;
 const brok=await council.create("brok");
 assert.equal(brok.items[0].name,"Marteau de Brok");
 assert.equal(brok.items[0].system.props.H0D_Arme_Degats,"1d8");
 assert.equal(brok.items[0].system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Type,"outil");
 assert.equal(brok.items[0].system.props.H0D_Arme_Equipee,true);
 assert.equal(brok.items[0].system.props.H0D_Arme_Active,true);
+assert.equal(brok.items[1].name,"Hache de récupération");
+assert.equal(brok.items[1].system.props.H0D_Arme_Degats,"1d8");
+assert.equal(brok.items[1].system.props.H0D_Arme_Type_Degats,"Tranchant");
+assert.equal(brok.items[1].system.props.H0D_Arme_Mains,"1");
+assert.equal(brok.items[1].system.props.H0D_Arme_Encombrement,"1");
+assert.equal(brok.items[1].system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Type,"outil");
+assert.equal(brok.items[1].system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Valeur,0);
+assert.equal(brok.items[1].system.props.H0D_Arme_Equipee,true);
+assert.equal(brok.items[1].system.props.H0D_Arme_Active,false);
 assert.equal(brok.items.length,5);
 assert.ok(brok.img.endsWith("/brok.webp"));
 assert.ok(brok.prototypeToken.texture.src.includes("tokens/brok.webp"));

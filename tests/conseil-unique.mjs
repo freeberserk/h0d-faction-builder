@@ -8,7 +8,7 @@ assert.equal(source.characters.reduce((s,x)=>s+x.items.length,0),49);
 assert.deepEqual(source.characters.map(x=>x.key).sort(),["brok","eron","isha","kael","maela","nerys","odran","sava","tarek"]);
 const std=[8,10,12,13,14,15],stats=["FOR","DEX","CON","INT","SAG","CHA"];
 const attackTargets={brok:6,eron:2,isha:3,kael:4,maela:7,nerys:4,odran:4,sava:5,tarek:7};
-const preferred={brok:"Marteau de forge de Brok",eron:"Bâton de marche d’Eron",isha:"Fronde simple",kael:"Lance courte du Conseil",
+const preferred={brok:"Marteau de Brok",eron:"Bâton de marche d’Eron",isha:"Fronde simple",kael:"Lance courte du Conseil",
 maela:"Arc de chasse de Maela",nerys:"Fronde mécanique",odran:"Bâton-câble d’Odran",sava:"Fronde mécanique",tarek:"Lance courte du Mur-de-Fer"};
 for(const npc of source.characters){
  const p=npc.actor.props;
@@ -22,6 +22,14 @@ for(const npc of source.characters){
  assert.ok(!Object.keys(p).some(k=>k.includes("_Container")),"Stale Actor item cache");
  for(const item of npc.items){
    assert.ok(["weapon","armor","object"].includes(item.kind));
+   if(item.catalogueKey){
+     assert.equal(item.catalogueKey,"marteau-de-brok");
+     assert.equal(item.name,"Marteau de Brok");
+     assert.equal(item.props,undefined,"Les props de l'arme canonique ne doivent pas être dupliquées.");
+     assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
+     assert.equal(item.runtimeProps.H0D_Arme_Active,true);
+     continue;
+   }
    assert.ok(!Object.keys(item.props).some(k=>k.includes("_Container")),"Stale Item cache");
    if(item.kind==="weapon"){
      assert.equal(typeof item.props.H0D_Arme_Portee,"number");
@@ -30,9 +38,12 @@ for(const npc of source.characters){
  }
  const weapon=npc.items.find(x=>x.name===preferred[npc.key]);
  assert.ok(weapon,npc.key+": missing main weapon");
- const cat=weapon.props.H0D_Arme_Categorie;
+ const weaponStats=weapon.props??(weapon.catalogueKey==="marteau-de-brok"?
+   {H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:0}:null);
+ assert.ok(weaponStats,npc.key+": missing weapon stats");
+ const cat=weaponStats.H0D_Arme_Categorie;
  const bonus=Number(p["H0D_Creature_"+(cat==="distance"?"DEX":"FOR")+"_MOD"]);
- const attack=Number(p.H0D_Creature_Attaque_Base)+bonus+Number(weapon.props.H0D_Arme_Bonus_Attaque);
+ const attack=Number(p.H0D_Creature_Attaque_Base)+bonus+Number(weaponStats.H0D_Arme_Bonus_Attaque);
  assert.equal(attack,attackTargets[npc.key],npc.key+": exported attack changed");
  for(const mode of ["portrait","token"]){
    const asset=npc.image[mode];
@@ -49,6 +60,11 @@ globalThis.ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 globalThis.foundry={utils:{getRoute:x=>x,escapeHTML:x=>x},
   applications:{api:{DialogV2:{confirm:async()=>true}}}};
 globalThis.fetch=async()=>({ok:true,json:async()=>source});
+let catalogueAvailable=false;
+const brokCanonical={key:"marteau-de-brok",kind:"weapon",catalogue:{pret_pour_builder:true},
+ props:{H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:"0",H0D_Arme_Degats:"1d8",
+ H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
+ H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
 const updated=[],folders=[],templateStub={id:"template",system:{props:{},templateSystemUniqueVersion:1},prototypeToken:{}};
 globalThis.Actor={implementation:{createDocuments:async([payload])=>{
  const items=[];items.get=id=>items.find(x=>x.id===id);
@@ -70,9 +86,18 @@ const council=await installCouncilUnique({
  clone:x=>structuredClone(x),ensureFolder:async(name,parent)=>{const t={name,parent,id:"folder"+folders.length};folders.push(t);return t;},
  systemFromTemplate:()=>({props:{}}),
  forceTemplateAndProps:async(doc,t,p)=>{doc.system.props=structuredClone(p);},
- itemData:(entry,kind)=>({name:entry.name,kind}),notify:()=>{}
+ itemData:(entry,kind)=>({name:entry.name,kind}),notify:()=>{},
+ getCatalogueDefinition:key=>catalogueAvailable&&key==="marteau-de-brok"?structuredClone(brokCanonical):null
 });
+await assert.rejects(council.create("brok"),/Référence absente ou non prête dans H0D Catalogue/);
+assert.equal(game.actors.length,0,"Ne pas générer un Acteur partiel si le Catalogue est absent.");
+catalogueAvailable=true;
 const brok=await council.create("brok");
+assert.equal(brok.items[0].name,"Marteau de Brok");
+assert.equal(brok.items[0].system.props.H0D_Arme_Degats,"1d8");
+assert.equal(brok.items[0].system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Type,"outil");
+assert.equal(brok.items[0].system.props.H0D_Arme_Equipee,true);
+assert.equal(brok.items[0].system.props.H0D_Arme_Active,true);
 assert.equal(brok.items.length,5);
 assert.ok(brok.img.endsWith("/brok.webp"));
 assert.ok(brok.prototypeToken.texture.src.includes("tokens/brok.webp"));

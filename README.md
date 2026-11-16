@@ -1,3 +1,11 @@
+## Marteau de Brok — premier équipement du Conseil relié au Catalogue
+
+Le Conseil utilise désormais la référence `marteau-de-brok` de **H0D Catalogue** pour sa première arme. Le Faction Builder ne contient plus de copie des caractéristiques du marteau : uniquement sa `catalogueKey`, le nom, l'identité historique et l'état de Brok (**équipé/actif**).
+
+À la création d'un **nouveau** Brok, le module vérifie avant de créer l'Actor que H0D Catalogue est prêt et possède la fiche validée. Les dégâts 1d8, le type contondant, une main et le trait **outil** proviennent alors exclusivement du Catalogue. Les huit autres membres du Conseil et leurs équipements ne changent pas.
+
+La fonctionnalité « Adopter » conserve intégralement les fiches et inventaires du monde. Aucun objet déjà créé n'est migré automatiquement ; pour un Brok existant, audit manuel et sauvegarde préalable.
+
 ## v0.6.10 — Protection des macros personnalisées
 
 Le lanceur officiel de Faction Builder porte désormais un flag d'appartenance au module. Une macro personnalisée ayant le même nom n'est jamais modifiée : en cas de collision, un lanceur séparé « (module officiel) » est créé. Seules les macros identifiées comme officielles et dont le code n'a pas été modifié par l'utilisateur peuvent être actualisées. Les anciennes macros sont adoptées uniquement sur une correspondance exacte (nom, type, portée, commande).

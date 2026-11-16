@@ -1,3 +1,7 @@
+## Deuxième équipement du Conseil — Hache de récupération
+
+Brok conserve la **Hache de récupération** (1d8 Tranchant, une main, encombrement 1, trait **outil**), désormais liée à `hache-de-recuperation-brok` dans H0D Catalogue v0.1.20. Le Faction Builder ne duplique plus les propriétés de cette arme et ne garde que `catalogueKey` ainsi que son état **équipée mais inactive**. Pas de bonus supplémentaire, de prix ni de recette inventés. En absence de cette référence, la création du nouveau Brok est refusée *avant* toute écriture de l'Actor. Un Brok déjà présent dans Foundry reste intact, notamment en mode « Adopter ».
+
 ## Marteau de Brok — premier équipement du Conseil relié au Catalogue
 
 Le Conseil utilise désormais la référence `marteau-de-brok` de **H0D Catalogue** pour sa première arme. Le Faction Builder ne contient plus de copie des caractéristiques du marteau : uniquement sa `catalogueKey`, le nom, l'identité historique et l'état de Brok (**équipé/actif**).

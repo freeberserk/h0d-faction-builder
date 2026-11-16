@@ -1,3 +1,10 @@
+## 0.6.12 — Hache de récupération de Brok depuis le Catalogue
+
+- Nouvelle deuxième arme du Conseil centralisée : la **Hache de récupération** de Brok (clé `hache-de-recuperation-brok`) dépend désormais exclusivement des caractéristiques du Catalogue 0.1.20, soit 1d8 Tranchant, une main, encombrement 1, trait **outil** sans bonus.
+- Le fichier Conseil ne conserve que la référence et les états personnels : **équipée, non active**, identiques à l'ancienne fiche. Prix et recette non inventés.
+- Préflight : si le marteau ou la hache manque dans le Catalogue, aucun nouveau Brok partiel n'est créé ; aucun PNJ existant n'est modifié.
+- La dépendance obligatoire à H0D Catalogue passe à **0.1.20**.
+
 ## 0.6.11 — Premier équipement du Conseil sous H0D Catalogue
 
 - Le **Marteau de Brok** utilise exclusivement la référence `marteau-de-brok` du Catalogue, avec 1d8 Contondant, une main, le trait **outil** et les caractéristiques déjà validées.

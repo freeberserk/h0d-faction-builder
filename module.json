@@ -2,7 +2,7 @@
   "id": "h0d-faction-builder",
   "title": "H0D Faction Builder",
   "description": "H0D Faction Builder : Clan, Caravanes, Pillards, Renouveau, Soleil, HELIOS préservation, HelioSium armée et Conseil.",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "authors": [
     {
       "name": "JDR Zero Dawn"
@@ -29,6 +29,14 @@
         "manifest": "https://github.com/freeberserk/h0d-template-manager/releases/latest/download/module.json",
         "compatibility": {
           "minimum": "0.3.0"
+        }
+      },
+      {
+        "id": "h0d-catalogue",
+        "type": "module",
+        "manifest": "https://github.com/freeberserk/H0D-catalogue/releases/latest/download/module.json",
+        "compatibility": {
+          "minimum": "0.1.19"
         }
       }
     ]

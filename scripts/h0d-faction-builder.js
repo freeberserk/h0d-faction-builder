@@ -2658,7 +2658,8 @@ Hooks.once("ready", async () => {
     COUNCIL=await installCouncilUnique({moduleId:MODULE_ID,rootFolder:ROOT_FOLDER,
       templateState,template,actorTemplateKey:TEMPLATE_KEYS.actor,
       clone,ensureFolder,systemFromTemplate,forceTemplateAndProps,itemData,notify,
-      perceptionPropsForActor:factionPerceptionProps});
+      perceptionPropsForActor:factionPerceptionProps,
+      getCatalogueDefinition:key=>catalogueEquipmentApi()?.getDefinition(key)??null});
   }catch(err){console.error(MODULE_ID+" | Conseil",err);notify("error","Conseil : "+(err?.message??err));}
   const api = {
     open: openBuilder,

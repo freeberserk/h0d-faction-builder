@@ -1,3 +1,10 @@
+## 0.6.11 — Premier équipement du Conseil sous H0D Catalogue
+
+- Le **Marteau de Brok** utilise exclusivement la référence `marteau-de-brok` du Catalogue, avec 1d8 Contondant, une main, le trait **outil** et les caractéristiques déjà validées.
+- Les états personnels de Brok (équipé et actif) sont appliqués à la création sans figurer dans la définition canonique.
+- Aucune création partielle lorsque la référence est absente ; les anciens PNJ, l'adoption et les 48 autres Items du Conseil restent préservés.
+- Dépendance explicite à **H0D Catalogue 0.1.19** pour éviter une création avec des définitions non installées.
+
 ## 0.6.10 — Préservation des macros de lancement personnalisées (P1)
 - Les macros existantes ne sont plus mises à jour sur la seule correspondance de leur nom.
 - Chaque macro créée par H0D porte un flag de propriété explicite et mémorise sa dernière commande générée.

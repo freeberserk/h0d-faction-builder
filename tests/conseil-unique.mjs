@@ -38,12 +38,12 @@ for(const npc of source.characters){
  }
  const weapon=npc.items.find(x=>x.name===preferred[npc.key]);
  assert.ok(weapon,npc.key+": missing main weapon");
- const stats=weapon.props??(weapon.catalogueKey==="marteau-de-brok"?
+ const weaponStats=weapon.props??(weapon.catalogueKey==="marteau-de-brok"?
    {H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:0}:null);
- assert.ok(stats,npc.key+": missing weapon stats");
- const cat=stats.H0D_Arme_Categorie;
+ assert.ok(weaponStats,npc.key+": missing weapon stats");
+ const cat=weaponStats.H0D_Arme_Categorie;
  const bonus=Number(p["H0D_Creature_"+(cat==="distance"?"DEX":"FOR")+"_MOD"]);
- const attack=Number(p.H0D_Creature_Attaque_Base)+bonus+Number(stats.H0D_Arme_Bonus_Attaque);
+ const attack=Number(p.H0D_Creature_Attaque_Base)+bonus+Number(weaponStats.H0D_Arme_Bonus_Attaque);
  assert.equal(attack,attackTargets[npc.key],npc.key+": exported attack changed");
  for(const mode of ["portrait","token"]){
    const asset=npc.image[mode];

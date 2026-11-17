@@ -1,3 +1,18 @@
+## v0.6.16 — Conseil : 28 équipements canoniques (17 novembre 2026)
+
+Les 28 armes et protections des neuf Maîtres du Cercle de la Dent d'Ambre utilisent désormais la clé explicite `catalogueKey` et les propriétés de H0D Catalogue **v0.1.24**, sans copie locale. Le Conseil conserve uniquement les états équipé/actif propres à chaque Maître. Toutes les fiches déjà présentes dans le monde Foundry restent inchangées : **pas de migration automatique**. Prévoir sauvegarde et vérification manuelle dans BAC avant de recréer les Maîtres.
+
+- Eron : tenue renforcée du soigneur +2 DEF et +3 m (vitesse effective 12 m à partir de 9 m).
+- Isha : Bâton des récits, fronde simple à une main (1d6+FOR), tenue cérémonielle renforcée.
+- Kael : lance 1d8, armure assistée +3 DEF avec −1,5 m (sans bonus de FOR), bouclier léger.
+- Maela : arc à bobine personnel 18 m (12 charges manuelles, 1d8 alimenté / 1d6 non alimenté), lance de chasse longue 1d10+1 à deux mains, tenue de chasse renforcée.
+- Nerys : Bâton-câble +1, fronde mécanique standard ; protection Focus réactive DEF physique +1 et +1 conditionnel en cas d'agression détectée. Les attaques surprises restent à arbitrer.
+- Odran : Bâton-câble +1 avec décharge Choc non létale (durée, DD et alimentation non définis), lance courte standard, harnais de conducteur renforcé.
+- Sava : hache-outil 1d8+1, fronde à composants de machines compatibles (+1d6 élémentaire si charge exploitable, sans effet persistant), armure de récupération avec crochets de traction sans bonus.
+- Tarek : lance 1d8+1, hache-outil 1d8, armure DEF +4 / encombrement 3 ; pavois DEF +2, résistance 1 à chaque élément, vitesse −1,5 m, Couverture −2 au toucher pour les ennemis uniquement **si déployé au sol**.
+
+Les effets conditionnels sont **gérés manuellement par le MJ**, sans durée, DD, charge, coût d'action ou cumul de DEF non validé. L'ancienne fiche Focus et les autres objets `kind:object` ne sont pas concernés.
+
 ## 0.6.15 — Lance courte de secours d'Eron (Polyvalent Tranchant)
 
 - Deuxième arme d'Eron centralisée : `lance-courte-secours-eron`, **1d8+1 Perforant**, une main, encombrement 1, trait **Polyvalent (Tranchant)**. Statistiques validées par le MJ.

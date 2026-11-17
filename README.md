@@ -1,3 +1,7 @@
+## Eron des Racines — Bâton de marche d'Eron
+
+Le bâton `baton-de-marche-eron` appartient exclusivement au Catalogue. Sa version validée conserve **1d6+1 Contondant**, deux mains, encombrement 1 et aucun trait ou pouvoir ajouté. Eron n'étant pas un combattant, aucun passage aux 1d8 des armes de Brok n'est effectué. À la création d'un nouvel Eron, Faction Builder lit la définition canonique et n'applique que ses états personnels, équipé/actif. Les fiches déjà présentes dans Foundry ne sont pas migrées.
+
 ## Troisième équipement du Conseil — Tablier de plaques du forgeron
 
 `tablier-plaques-forgeron-brok` est une armure propre à Brok, distincte du `cuir-renforce-machine`, **DEF +3**, encombrement **2**. Elle en reprend le malus de déplacement **−1,5 m**, la **FOR min 14** mentionnée dans la référence Template Manager (à appliquer manuellement) et les **3 emplacements d'amélioration**. Aucun trait chiffré, aucune résistance supplémentaire. Les propriétés de l'armure sont lues exclusivement depuis H0D Catalogue v0.1.21 ; le Faction Builder ne conserve que la clé et l'état actif. Les fiches Foundry existantes ne sont pas réécrites.

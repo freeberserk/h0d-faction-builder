@@ -1,3 +1,10 @@
+## 0.6.14 — Bâton de marche d'Eron depuis H0D Catalogue
+
+- Premier équipement d'Eron des Racines centralisé sous `baton-de-marche-eron` dans H0D Catalogue **0.1.22** : **1d6+1 contondant**, deux mains, encombrement 1, critique 20/×2, sans bonus d'attaque ni trait supplémentaire.
+- Faction Builder conserve uniquement le lien canonique et les états personnels **équipé/actif**. Eron demeure un maître des Remèdes pratiquant l'autodéfense et non un combattant principal.
+- Le préflight refuse de créer un nouvel Eron si le bâton est absent du Catalogue. Aucun Actor déjà installé ni autre équipement du Conseil n'est modifié.
+- Dépendance Catalogue minimale : **0.1.22**.
+
 ## 0.6.13 — Tablier de plaques du forgeron depuis H0D Catalogue
 
 - Troisième équipement de Brok centralisé : `tablier-plaques-forgeron-brok`, **DEF +3**, encombrement **2**, malus **−1,5 m de déplacement**, comme le Cuir renforcé de machine pour les contraintes, et FOR minimale **14** (contrôle manuel). Le Catalogue retient trois emplacements d'amélioration, zéro résistance élémentaire et aucun trait supplémentaire.

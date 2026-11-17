@@ -13,7 +13,7 @@ assert.equal(refs[0].compatibility.minimum,"0.3.0");
 const catalogue=m.relationships.requires.filter(r=>r.id==="h0d-catalogue");
 assert.equal(catalogue.length,1,"Catalogue requis pour générer le Marteau de Brok.");
 assert.equal(catalogue[0].type,"module");
-assert.equal(catalogue[0].compatibility.minimum,"0.1.24");
+assert.equal(catalogue[0].compatibility.minimum,"0.1.25");
 assert.equal(catalogue[0].manifest,"https://github.com/freeberserk/H0D-catalogue/releases/latest/download/module.json");
 assert.ok(m.relationships.systems?.some(s=>s.id==="custom-system-builder"&&s.type==="system"&&s.compatibility?.minimum==="6.0.2"),"Conserver la déclaration du système CSB.");
 console.log("OK — h0d-faction-builder : dépendance Template Manager requise et manifeste Foundry valide.");

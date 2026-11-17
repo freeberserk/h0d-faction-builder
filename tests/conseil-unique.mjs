@@ -93,7 +93,7 @@ const eronLanceCanonical={key:"lance-courte-secours-eron",kind:"weapon",catalogu
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"polyvalent",H0D_Arme_Trait_Parametre:"Tranchant",H0D_Arme_Trait_Valeur:0}},
  H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
 const extraMockDefinitions=new Map(
-  source.characters.flatMap(npc=>npc.items.filter(i=>i.catalogueKey).map(i=>[i.catalogueKey,{
+  source.characters.flatMap(npc=>npc.items.filter(i=>i.catalogueKey && !["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok","baton-de-marche-eron","lance-courte-secours-eron"].includes(i.catalogueKey)).map(i=>[i.catalogueKey,{
     key:i.catalogueKey,kind:i.kind,catalogue:{pret_pour_builder:true},
     props:i.kind==="weapon"
       ?{H0D_Arme_Equipee:false,H0D_Arme_Active:false,H0D_Arme_Bonus_Attaque:"0"}

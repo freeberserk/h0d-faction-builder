@@ -103,7 +103,7 @@ export async function installCouncilUnique({
         ? perceptionPropsForActor(key,e.actor.props,{unique:true,name:e.name})
         : {};
       await forceTemplateAndProps(actor,t,{...perceptionProps,...e.actor.props});
-      // Construction des 49 équipements à partir des templates courants.
+      // Construction des 52 équipements à partir des templates courants.
       // Aucun cache CSB issu de l'ancien export n'est réutilisé.
       const payload=e.items.map(item=>itemData(item,item.kind));
       const createdItems=await actor.createEmbeddedDocuments("Item",payload);

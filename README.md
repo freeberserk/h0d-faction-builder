@@ -1,3 +1,7 @@
+## Eron — Lance courte de secours depuis H0D Catalogue
+
+`lance-courte-secours-eron` : **1d8+1 Perforant**, une main, encombrement 1, trait **Polyvalent (Tranchant)**. Elle sert à défendre les blessés ; la version du Maître demeure distincte de la lance standard (1d8 sans bonus fixe), dont le type secondaire est également corrigé de Contondant à Tranchant dans le Catalogue. Faction Builder conserve uniquement la référence canonique et les états équipé/inactif, sans cloner les caractéristiques. Les fiches Foundry existantes restent inchangées.
+
 ## Eron des Racines — Bâton de marche d'Eron
 
 Le bâton `baton-de-marche-eron` appartient exclusivement au Catalogue. Sa version validée conserve **1d6+1 Contondant**, deux mains, encombrement 1 et aucun trait ou pouvoir ajouté. Eron n'étant pas un combattant, aucun passage aux 1d8 des armes de Brok n'est effectué. À la création d'un nouvel Eron, Faction Builder lit la définition canonique et n'applique que ses états personnels, équipé/actif. Les fiches déjà présentes dans Foundry ne sont pas migrées.

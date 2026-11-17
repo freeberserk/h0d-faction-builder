@@ -1,3 +1,10 @@
+## 0.6.15 — Lance courte de secours d'Eron (Polyvalent Tranchant)
+
+- Deuxième arme d'Eron centralisée : `lance-courte-secours-eron`, **1d8+1 Perforant**, une main, encombrement 1, trait **Polyvalent (Tranchant)**. Statistiques validées par le MJ.
+- Faction Builder conserve l'état propre à Eron : lance **équipée mais inactive**, bâton actif. Le Catalogue v0.1.23 possède toutes les propriétés mécaniques.
+- Préflight avant création : si la lance canonique manque, aucun Actor Eron partiel. Aucun Actor existant ni équipement du reste du Conseil n'est automatiquement réécrit.
+- Dépendance minimale à H0D Catalogue **0.1.23**. La lance standard a aussi son Polyvalent corrigé en Tranchant dans le Catalogue.
+
 ## 0.6.14 — Bâton de marche d'Eron depuis H0D Catalogue
 
 - Premier équipement d'Eron des Racines centralisé sous `baton-de-marche-eron` dans H0D Catalogue **0.1.22** : **1d6+1 contondant**, deux mains, encombrement 1, critique 20/×2, sans bonus d'attaque ni trait supplémentaire.

@@ -23,7 +23,7 @@ for(const npc of source.characters){
  for(const item of npc.items){
    assert.ok(["weapon","armor","object"].includes(item.kind));
    if(item.catalogueKey){
-     assert.ok(["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok","baton-de-marche-eron"].includes(item.catalogueKey));
+     assert.ok(["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok","baton-de-marche-eron","lance-courte-secours-eron"].includes(item.catalogueKey));
      assert.equal(item.props,undefined,"Les props canoniques ne doivent pas être dupliquées.");
      if(item.kind==="weapon"){
        assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
@@ -64,7 +64,7 @@ globalThis.ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 globalThis.foundry={utils:{getRoute:x=>x,escapeHTML:x=>x},
   applications:{api:{DialogV2:{confirm:async()=>true}}}};
 globalThis.fetch=async()=>({ok:true,json:async()=>source});
-let catalogueAvailable=false,axeAvailable=false,tablierAvailable=false,eronAvailable=false;
+let catalogueAvailable=false,axeAvailable=false,tablierAvailable=false,eronAvailable=false,lanceAvailable=false;
 const brokCanonical={key:"marteau-de-brok",kind:"weapon",catalogue:{pret_pour_builder:true},
  props:{H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:"0",H0D_Arme_Degats:"1d8",
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
@@ -84,6 +84,12 @@ const eronCanonical={key:"baton-de-marche-eron",kind:"weapon",catalogue:{pret_po
  H0D_Arme_Degats:"1d6",H0D_Arme_Bonus_Degats:"1",H0D_Arme_Bonus_Attaque:"0",
  H0D_Arme_Type_Degats:"Contondant",H0D_Arme_Mains:"2",H0D_Arme_Encombrement:"1",
  H0D_Arme_Traits_Table:{},H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
+const eronLanceCanonical={key:"lance-courte-secours-eron",kind:"weapon",catalogue:{pret_pour_builder:true},
+ props:{H0D_Arme_Categorie:"melee",H0D_Arme_Carac_Attaque:"FOR",H0D_Arme_Carac_Degats:"FOR",
+ H0D_Arme_Degats:"1d8",H0D_Arme_Bonus_Degats:"1",H0D_Arme_Bonus_Attaque:"0",
+ H0D_Arme_Type_Degats:"Perforant",H0D_Arme_Mains:"1",H0D_Arme_Encombrement:"1",
+ H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"polyvalent",H0D_Arme_Trait_Parametre:"Tranchant",H0D_Arme_Trait_Valeur:0}},
+ H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
 const updated=[],folders=[],templateStub={id:"template",system:{props:{},templateSystemUniqueVersion:1},prototypeToken:{}};
 globalThis.Actor={implementation:{createDocuments:async([payload])=>{
  const items=[];items.get=id=>items.find(x=>x.id===id);
@@ -110,7 +116,8 @@ const council=await installCouncilUnique({
  ?(key==="marteau-de-brok"?structuredClone(brokCanonical)
  :key==="hache-de-recuperation-brok"&&axeAvailable?structuredClone(axeCanonical)
  :key==="tablier-plaques-forgeron-brok"&&tablierAvailable?structuredClone(tablierCanonical)
- :key==="baton-de-marche-eron"&&eronAvailable?structuredClone(eronCanonical):null):null
+ :key==="baton-de-marche-eron"&&eronAvailable?structuredClone(eronCanonical)
+ :key==="lance-courte-secours-eron"&&lanceAvailable?structuredClone(eronLanceCanonical):null):null
 });
 await assert.rejects(council.create("brok"),/Référence absente ou non prête dans H0D Catalogue/);
 assert.equal(game.actors.length,0,"Ne pas générer un Acteur partiel si le Catalogue est absent.");
@@ -154,6 +161,10 @@ await assert.rejects(council.create("eron"),/baton-de-marche-eron/);
 assert.equal(game.actors.filter(actor=>actor.name==="Eron des Racines").length,0,
  "Eron ne doit pas être créé si son bâton canonique est absent.");
 eronAvailable=true;
+await assert.rejects(council.create("eron"),/lance-courte-secours-eron/);
+assert.equal(game.actors.filter(actor=>actor.name==="Eron des Racines").length,0,
+ "La lance absente ne doit pas créer un Eron partiel.");
+lanceAvailable=true;
 const createdEron=await council.create("eron");
 const baton=createdEron.items.find(item=>item.name==="Bâton de marche d’Eron");
 assert.ok(baton);
@@ -165,6 +176,18 @@ assert.equal(baton.system.props.H0D_Arme_Encombrement,"1");
 assert.deepEqual(baton.system.props.H0D_Arme_Traits_Table,{});
 assert.equal(baton.system.props.H0D_Arme_Equipee,true);
 assert.equal(baton.system.props.H0D_Arme_Active,true);
+const eronLance=createdEron.items.find(item=>item.name==="Lance courte de secours");
+assert.ok(eronLance);
+assert.equal(eronLance.system.props.H0D_Arme_Degats,"1d8");
+assert.equal(eronLance.system.props.H0D_Arme_Bonus_Degats,"1");
+assert.equal(eronLance.system.props.H0D_Arme_Type_Degats,"Perforant");
+assert.equal(eronLance.system.props.H0D_Arme_Mains,"1");
+assert.equal(eronLance.system.props.H0D_Arme_Encombrement,"1");
+assert.equal(eronLance.system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Type,"polyvalent");
+assert.equal(eronLance.system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Parametre,"Tranchant");
+assert.equal(eronLance.system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Valeur,0);
+assert.equal(eronLance.system.props.H0D_Arme_Equipee,true);
+assert.equal(eronLance.system.props.H0D_Arme_Active,false);
 assert.equal(createdEron.items.length,5);
 const kael=source.characters.find(x=>x.key==="kael");
 const older={id:kael.sourceActorId,name:kael.name,img:"custom.png",items:[],system:{props:{PV:33}},flags:{},

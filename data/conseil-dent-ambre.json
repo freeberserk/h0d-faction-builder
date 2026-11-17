@@ -115,32 +115,9 @@
           "key": "brok-tablier-de-plaques-du-forgeron",
           "name": "Tablier de plaques du forgeron",
           "kind": "armor",
-          "props": {
-            "H0D_Armure_Type": "armure",
-            "H0D_Armure_Zone": "corps",
-            "H0D_Armure_Active": true,
-            "H0D_Armure_Bonus_Defense": 3,
-            "H0D_Armure_Encombrement": 2,
-            "H0D_Armure_Malus": "",
-            "H0D_Stockage": "PJ",
-            "H0D_Armure_Resistances": "Aucune",
-            "H0D_Armure_Resistance_Feu": 0,
-            "H0D_Armure_Resistance_Gel": 0,
-            "H0D_Armure_Resistance_Choc": 0,
-            "H0D_Armure_Resistance_Acide": 0,
-            "H0D_Armure_Etat": "Intacte",
-            "H0D_Armure_Origine": "Dent d’Ambre",
-            "H0D_Armure_Description": "Cuir épais et plaques de récupération adaptées au travail de forge.",
-            "H0D_Armure_Traits_Table": {},
-            "H0D_Armure_Trait_Attaque_Total": 0,
-            "H0D_Armure_Trait_Degats_Total": 0,
-            "H0D_Armure_Trait_DEF_Total": 0,
-            "H0D_Armure_Trait_Portee_Total": 0,
-            "H0D_Armure_Trait_Resistance_Feu_Total": 0,
-            "H0D_Armure_Trait_Resistance_Gel_Total": 0,
-            "H0D_Armure_Trait_Resistance_Choc_Total": 0,
-            "H0D_Armure_Trait_Resistance_Acide_Total": 0,
-            "H0D_Armure_Trait_Cooldown_Total": 0
+          "catalogueKey": "tablier-plaques-forgeron-brok",
+          "runtimeProps": {
+            "H0D_Armure_Active": true
           }
         },
         {

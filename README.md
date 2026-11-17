@@ -1,3 +1,5 @@
+**Conseil des neuf Maîtres — objets (v0.6.17)** : les 52 équipements des fiches créées à neuf proviennent du Catalogue v0.1.25 ; 9 Focus, 8 kits et nouvelles dotations Isha/Maela/Nerys/Sava liées par `catalogueKey`. Aucune migration automatique des Maîtres déjà créés. Les grenades et états sont gérés manuellement.
+
 ## v0.6.16 — Conseil : 28 équipements canoniques (17 novembre 2026)
 
 Les 28 armes et protections des neuf Maîtres du Cercle de la Dent d'Ambre utilisent désormais la clé explicite `catalogueKey` et les propriétés de H0D Catalogue **v0.1.24**, sans copie locale. Le Conseil conserve uniquement les états équipé/actif propres à chaque Maître. Toutes les fiches déjà présentes dans le monde Foundry restent inchangées : **pas de migration automatique**. Prévoir sauvegarde et vérification manuelle dans BAC avant de recréer les Maîtres.

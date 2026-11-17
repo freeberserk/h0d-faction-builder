@@ -1,3 +1,10 @@
+## 0.6.13 — Tablier de plaques du forgeron depuis H0D Catalogue
+
+- Troisième équipement de Brok centralisé : `tablier-plaques-forgeron-brok`, **DEF +3**, encombrement **2**, malus **−1,5 m de déplacement**, comme le Cuir renforcé de machine pour les contraintes, et FOR minimale **14** (contrôle manuel). Le Catalogue retient trois emplacements d'amélioration, zéro résistance élémentaire et aucun trait supplémentaire.
+- Le Faction Builder conserve uniquement la référence à l'armure et le statut d'équipement personnel **actif**, sans clone local des caractéristiques.
+- Préflight préservé : aucun nouvel Actor partiel si la référence est absente. Aucun Brok existant modifié.
+- Dépendance Catalogue minimale relevée à **0.1.21**.
+
 ## 0.6.12 — Hache de récupération de Brok depuis le Catalogue
 
 - Nouvelle deuxième arme du Conseil centralisée : la **Hache de récupération** de Brok (clé `hache-de-recuperation-brok`) dépend désormais exclusivement des caractéristiques du Catalogue 0.1.20, soit 1d8 Tranchant, une main, encombrement 1, trait **outil** sans bonus.

@@ -23,10 +23,15 @@ for(const npc of source.characters){
  for(const item of npc.items){
    assert.ok(["weapon","armor","object"].includes(item.kind));
    if(item.catalogueKey){
-     assert.ok(["marteau-de-brok","hache-de-recuperation-brok"].includes(item.catalogueKey));
-     assert.equal(item.props,undefined,"Les props des armes canoniques ne doivent pas être dupliquées.");
-     assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
-     assert.equal(item.runtimeProps.H0D_Arme_Active,item.catalogueKey==="marteau-de-brok");
+     assert.ok(["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok"].includes(item.catalogueKey));
+     assert.equal(item.props,undefined,"Les props canoniques ne doivent pas être dupliquées.");
+     if(item.kind==="weapon"){
+       assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
+       assert.equal(item.runtimeProps.H0D_Arme_Active,item.catalogueKey==="marteau-de-brok");
+     }else{
+       assert.equal(item.kind,"armor");
+       assert.equal(item.runtimeProps.H0D_Armure_Active,true);
+     }
      continue;
    }
    assert.ok(!Object.keys(item.props).some(k=>k.includes("_Container")),"Stale Item cache");
@@ -59,7 +64,7 @@ globalThis.ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 globalThis.foundry={utils:{getRoute:x=>x,escapeHTML:x=>x},
   applications:{api:{DialogV2:{confirm:async()=>true}}}};
 globalThis.fetch=async()=>({ok:true,json:async()=>source});
-let catalogueAvailable=false,axeAvailable=false;
+let catalogueAvailable=false,axeAvailable=false,tablierAvailable=false;
 const brokCanonical={key:"marteau-de-brok",kind:"weapon",catalogue:{pret_pour_builder:true},
  props:{H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:"0",H0D_Arme_Degats:"1d8",
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
@@ -69,6 +74,11 @@ const axeCanonical={key:"hache-de-recuperation-brok",kind:"weapon",catalogue:{pr
  H0D_Arme_Type_Degats:"Tranchant",H0D_Arme_Mains:"1",H0D_Arme_Encombrement:"1",
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
  H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
+const tablierCanonical={key:"tablier-plaques-forgeron-brok",kind:"armor",catalogue:{pret_pour_builder:true,
+ prerequis_port:{force_minimale:14},malus_vitesse_metres:-1.5,emplacements_amelioration_max:3},
+ props:{H0D_Armure_Type:"armure",H0D_Armure_Zone:"corps",H0D_Armure_Bonus_Defense:3,
+ H0D_Armure_Encombrement:2,H0D_Armure_Malus:"-1,5 m déplacement (réf. Template Manager)",
+ H0D_Armure_Traits_Table:{},H0D_Armure_Active:false}};
 const updated=[],folders=[],templateStub={id:"template",system:{props:{},templateSystemUniqueVersion:1},prototypeToken:{}};
 globalThis.Actor={implementation:{createDocuments:async([payload])=>{
  const items=[];items.get=id=>items.find(x=>x.id===id);
@@ -93,7 +103,8 @@ const council=await installCouncilUnique({
  itemData:(entry,kind)=>({name:entry.name,kind}),notify:()=>{},
  getCatalogueDefinition:key=>catalogueAvailable
  ?(key==="marteau-de-brok"?structuredClone(brokCanonical)
- :key==="hache-de-recuperation-brok"&&axeAvailable?structuredClone(axeCanonical):null):null
+ :key==="hache-de-recuperation-brok"&&axeAvailable?structuredClone(axeCanonical)
+ :key==="tablier-plaques-forgeron-brok"&&tablierAvailable?structuredClone(tablierCanonical):null):null
 });
 await assert.rejects(council.create("brok"),/Référence absente ou non prête dans H0D Catalogue/);
 assert.equal(game.actors.length,0,"Ne pas générer un Acteur partiel si le Catalogue est absent.");
@@ -101,6 +112,9 @@ catalogueAvailable=true;
 await assert.rejects(council.create("brok"),/hache-de-recuperation-brok/);
 assert.equal(game.actors.length,0,"Hache absente : Brok ne doit pas être créé partiellement.");
 axeAvailable=true;
+await assert.rejects(council.create("brok"),/tablier-plaques-forgeron-brok/);
+assert.equal(game.actors.length,0,"Tablier absent : Brok ne doit pas être créé partiellement.");
+tablierAvailable=true;
 const brok=await council.create("brok");
 assert.equal(brok.items[0].name,"Marteau de Brok");
 assert.equal(brok.items[0].system.props.H0D_Arme_Degats,"1d8");
@@ -116,6 +130,13 @@ assert.equal(brok.items[1].system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trai
 assert.equal(brok.items[1].system.props.H0D_Arme_Traits_Table["0"].H0D_Arme_Trait_Valeur,0);
 assert.equal(brok.items[1].system.props.H0D_Arme_Equipee,true);
 assert.equal(brok.items[1].system.props.H0D_Arme_Active,false);
+assert.equal(brok.items[2].name,"Tablier de plaques du forgeron");
+assert.equal(brok.items[2].system.props.H0D_Armure_Type,"armure");
+assert.equal(brok.items[2].system.props.H0D_Armure_Bonus_Defense,3);
+assert.equal(brok.items[2].system.props.H0D_Armure_Encombrement,2);
+assert.equal(brok.items[2].system.props.H0D_Armure_Malus,"-1,5 m déplacement (réf. Template Manager)");
+assert.deepEqual(brok.items[2].system.props.H0D_Armure_Traits_Table,{});
+assert.equal(brok.items[2].system.props.H0D_Armure_Active,true);
 assert.equal(brok.items.length,5);
 assert.ok(brok.img.endsWith("/brok.webp"));
 assert.ok(brok.prototypeToken.texture.src.includes("tokens/brok.webp"));

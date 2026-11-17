@@ -1,3 +1,12 @@
+## v0.6.17 — Conseil : 21 objets de départ audités (17 novembre 2026)
+
+- Les neuf Focus utilisent la seule définition canonique `focus-personnel` du Catalogue, confirmée dans les exports de trois PJ.
+- Huit kits liés à sept références canoniques (kit de garde partagé Kael/Tarek) ; mêmes usages, sans prix ni bonus ajoutés.
+- Quatre dotations de munitions : Isha 20 billes classiques ; Maela 20 flèches renforcées en acier ; Nerys 8 grenades IEM simples ; Sava 3 grenades simples de chaque élément Feu, Gel, Choc, Acide (12 grenades en quatre lots distincts).
+- Les frondes mécaniques utilisent `Bombe` : 1d6+FOR contondants à l'impact direct, splash 1,5 m (simple) ou 3 m (améliorée). IEM : 1d4 et DD12 contre le seul état Brouillée (1 round) ; Sava : +1d6 élémentaire sans état persistant. Effets manuels.
+- **52 Items chez les neuf Maîtres** : 28 armes/armures + 24 objets. Toutes les références Catalogue sont obligatoires au préflight de création. Dépendance minimale H0D Catalogue v0.1.25.
+- Aucun Maître existant dans un monde Foundry n'est modifié automatiquement. Sauvegarder et vérifier manuellement les Actor déjà créés.
+
 ## v0.6.16 — Conseil : 28 équipements canoniques (17 novembre 2026)
 
 Les 28 armes et protections des neuf Maîtres du Cercle de la Dent d'Ambre utilisent désormais la clé explicite `catalogueKey` et les propriétés de H0D Catalogue **v0.1.24**, sans copie locale. Le Conseil conserve uniquement les états équipé/actif propres à chaque Maître. Toutes les fiches déjà présentes dans le monde Foundry restent inchangées : **pas de migration automatique**. Prévoir sauvegarde et vérification manuelle dans BAC avant de recréer les Maîtres.

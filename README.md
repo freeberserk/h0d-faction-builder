@@ -1,3 +1,7 @@
+## Troisième équipement du Conseil — Tablier de plaques du forgeron
+
+`tablier-plaques-forgeron-brok` est une armure propre à Brok, distincte du `cuir-renforce-machine`, **DEF +3**, encombrement **2**. Elle en reprend le malus de déplacement **−1,5 m**, la **FOR min 14** mentionnée dans la référence Template Manager (à appliquer manuellement) et les **3 emplacements d'amélioration**. Aucun trait chiffré, aucune résistance supplémentaire. Les propriétés de l'armure sont lues exclusivement depuis H0D Catalogue v0.1.21 ; le Faction Builder ne conserve que la clé et l'état actif. Les fiches Foundry existantes ne sont pas réécrites.
+
 ## Deuxième équipement du Conseil — Hache de récupération
 
 Brok conserve la **Hache de récupération** (1d8 Tranchant, une main, encombrement 1, trait **outil**), désormais liée à `hache-de-recuperation-brok` dans H0D Catalogue v0.1.20. Le Faction Builder ne duplique plus les propriétés de cette arme et ne garde que `catalogueKey` ainsi que son état **équipée mais inactive**. Pas de bonus supplémentaire, de prix ni de recette inventés. En absence de cette référence, la création du nouveau Brok est refusée *avant* toute écriture de l'Actor. Un Brok déjà présent dans Foundry reste intact, notamment en mode « Adopter ».

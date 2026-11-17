@@ -8,8 +8,8 @@ assert.equal(source.characters.reduce((s,x)=>s+x.items.length,0),49);
 assert.deepEqual(source.characters.map(x=>x.key).sort(),["brok","eron","isha","kael","maela","nerys","odran","sava","tarek"]);
 const std=[8,10,12,13,14,15],stats=["FOR","DEX","CON","INT","SAG","CHA"];
 const attackTargets={brok:6,eron:2,isha:3,kael:4,maela:7,nerys:4,odran:4,sava:5,tarek:7};
-const preferred={brok:"Marteau de Brok",eron:"Bâton de marche d’Eron",isha:"Fronde simple",kael:"Lance courte du Conseil",
-maela:"Arc de chasse de Maela",nerys:"Fronde mécanique",odran:"Bâton-câble d’Odran",sava:"Fronde mécanique",tarek:"Lance courte du Mur-de-Fer"};
+const preferred={brok:"Marteau de Brok",eron:"Bâton de marche d’Eron",isha:"Fronde simple d’Isha",kael:"Lance courte du Conseil",
+maela:"Arc à bobine de Maela",nerys:"Fronde mécanique",odran:"Bâton-câble d’Odran",sava:"Fronde mécanique de récupération",tarek:"Lance courte du Mur-de-Fer"};
 for(const npc of source.characters){
  const p=npc.actor.props;
  assert.equal(p.H0D_Creature_Statut_PNJ,"Héroïque");
@@ -23,11 +23,11 @@ for(const npc of source.characters){
  for(const item of npc.items){
    assert.ok(["weapon","armor","object"].includes(item.kind));
    if(item.catalogueKey){
-     assert.ok(["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok","baton-de-marche-eron","lance-courte-secours-eron"].includes(item.catalogueKey));
+     assert.ok(item.catalogueKey && typeof item.catalogueKey==="string");
      assert.equal(item.props,undefined,"Les props canoniques ne doivent pas être dupliquées.");
      if(item.kind==="weapon"){
        assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
-       assert.equal(item.runtimeProps.H0D_Arme_Active,["marteau-de-brok","baton-de-marche-eron"].includes(item.catalogueKey));
+       assert.equal(item.runtimeProps.H0D_Arme_Active,npc.items.find(x=>x.kind==="weapon").key===item.key);
      }else{
        assert.equal(item.kind,"armor");
        assert.equal(item.runtimeProps.H0D_Armure_Active,true);
@@ -42,8 +42,10 @@ for(const npc of source.characters){
  }
  const weapon=npc.items.find(x=>x.name===preferred[npc.key]);
  assert.ok(weapon,npc.key+": missing main weapon");
- const weaponStats=weapon.props??(["marteau-de-brok","baton-de-marche-eron"].includes(weapon.catalogueKey)?
-   {H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:0}:null);
+ // Toutes les armes sont désormais canoniques : la catégorie d'attaque principale
+ // figure dans les références Catalogue et n'est pas dupliquée dans le JSON Conseil.
+ const preferredRange=["isha","maela","nerys","sava"].includes(npc.key);
+ const weaponStats=weapon.props??{H0D_Arme_Categorie:preferredRange?"distance":"melee",H0D_Arme_Bonus_Attaque:0};
  assert.ok(weaponStats,npc.key+": missing weapon stats");
  const cat=weaponStats.H0D_Arme_Categorie;
  const bonus=Number(p["H0D_Creature_"+(cat==="distance"?"DEX":"FOR")+"_MOD"]);
@@ -90,6 +92,19 @@ const eronLanceCanonical={key:"lance-courte-secours-eron",kind:"weapon",catalogu
  H0D_Arme_Type_Degats:"Perforant",H0D_Arme_Mains:"1",H0D_Arme_Encombrement:"1",
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"polyvalent",H0D_Arme_Trait_Parametre:"Tranchant",H0D_Arme_Trait_Valeur:0}},
  H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
+const extraMockDefinitions=new Map(
+  source.characters.flatMap(npc=>npc.items.filter(i=>i.catalogueKey).map(i=>[i.catalogueKey,{
+    key:i.catalogueKey,kind:i.kind,catalogue:{pret_pour_builder:true},
+    props:i.kind==="weapon"
+      ?{H0D_Arme_Equipee:false,H0D_Arme_Active:false,H0D_Arme_Bonus_Attaque:"0"}
+      :{H0D_Armure_Active:false}
+  }]))
+);
+assert.equal(source.characters.flatMap(c=>c.items).filter(i=>["weapon","armor"].includes(i.kind)).length,28);
+assert.equal(source.characters.flatMap(c=>c.items).filter(i=>["weapon","armor"].includes(i.kind)&&!!i.catalogueKey).length,28);
+for(const [key,expected] of Object.entries({brok:-1.5,eron:3,kael:-1.5,tarek:-1.5})){
+ assert.equal(Number(source.characters.find(c=>c.key===key).actor.props.H0D_Creature_Vitesse_Divers),expected);
+}
 const updated=[],folders=[],templateStub={id:"template",system:{props:{},templateSystemUniqueVersion:1},prototypeToken:{}};
 globalThis.Actor={implementation:{createDocuments:async([payload])=>{
  const items=[];items.get=id=>items.find(x=>x.id===id);
@@ -117,7 +132,8 @@ const council=await installCouncilUnique({
  :key==="hache-de-recuperation-brok"&&axeAvailable?structuredClone(axeCanonical)
  :key==="tablier-plaques-forgeron-brok"&&tablierAvailable?structuredClone(tablierCanonical)
  :key==="baton-de-marche-eron"&&eronAvailable?structuredClone(eronCanonical)
- :key==="lance-courte-secours-eron"&&lanceAvailable?structuredClone(eronLanceCanonical):null):null
+ :key==="lance-courte-secours-eron"&&lanceAvailable?structuredClone(eronLanceCanonical)
+ :extraMockDefinitions.has(key)?structuredClone(extraMockDefinitions.get(key)):null):null
 });
 await assert.rejects(council.create("brok"),/Référence absente ou non prête dans H0D Catalogue/);
 assert.equal(game.actors.length,0,"Ne pas générer un Acteur partiel si le Catalogue est absent.");

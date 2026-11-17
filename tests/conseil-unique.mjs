@@ -4,8 +4,25 @@ const source=JSON.parse(await readFile(new URL("../data/conseil-dent-ambre.json"
 const fsRoot=new URL("../",import.meta.url);
 assert.equal(source.schema,"h0d-council-unique-v1");
 assert.equal(source.characters.length,9);
-assert.equal(source.characters.reduce((s,x)=>s+x.items.length,0),49);
+assert.equal(source.characters.reduce((s,x)=>s+x.items.length,0),52);
 assert.deepEqual(source.characters.map(x=>x.key).sort(),["brok","eron","isha","kael","maela","nerys","odran","sava","tarek"]);
+
+const allItems=source.characters.flatMap(c=>c.items);
+const allObjects=allItems.filter(x=>x.kind==="object");
+assert.equal(allItems.length,52);
+assert.equal(allObjects.length,24);
+assert.ok(allItems.every(x=>x.catalogueKey&&x.props===undefined),"Aucune copie locale de propriétés.");
+assert.equal(allObjects.filter(x=>x.catalogueKey==="focus-personnel").length,9);
+assert.equal(allObjects.filter(x=>x.catalogueKey==="kit-de-garde-conseil").length,2);
+assert.equal(allObjects.filter(x=>["kit-de-forge-itinerant","trousse-de-soins-tribale","kit-de-garde-conseil",
+"kit-de-pisteur-maela","necessaire-des-yeux-bleus","kit-des-enclos","kit-de-recuperation-sava"].includes(x.catalogueKey)).length,8);
+const getNpc=k=>source.characters.find(c=>c.key===k);
+assert.equal(getNpc("isha").items.find(x=>x.catalogueKey==="billes-de-fronde").runtimeProps.H0D_Objet_Quantite,"20");
+assert.equal(getNpc("maela").items.find(x=>x.catalogueKey==="fleches-renforcees").runtimeProps.H0D_Objet_Quantite,"20");
+assert.equal(getNpc("nerys").items.find(x=>x.catalogueKey==="grenade-iem-simple").runtimeProps.H0D_Objet_Quantite,"8");
+for(const el of ["feu","gel","choc","acide"])assert.equal(getNpc("sava").items.find(x=>x.catalogueKey==="grenade-elementaire-"+el+"-simple").runtimeProps.H0D_Objet_Quantite,"3");
+assert.equal(getNpc("sava").items.filter(x=>x.catalogueKey?.startsWith("grenade-elementaire-")).length,4);
+
 const std=[8,10,12,13,14,15],stats=["FOR","DEX","CON","INT","SAG","CHA"];
 const attackTargets={brok:6,eron:2,isha:3,kael:4,maela:7,nerys:4,odran:4,sava:5,tarek:7};
 const preferred={brok:"Marteau de Brok",eron:"Bâton de marche d’Eron",isha:"Fronde simple d’Isha",kael:"Lance courte du Conseil",
@@ -28,9 +45,13 @@ for(const npc of source.characters){
      if(item.kind==="weapon"){
        assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
        assert.equal(item.runtimeProps.H0D_Arme_Active,npc.items.find(x=>x.kind==="weapon").key===item.key);
-     }else{
-       assert.equal(item.kind,"armor");
+     }else if(item.kind==="armor"){
        assert.equal(item.runtimeProps.H0D_Armure_Active,true);
+     }else{
+       assert.equal(item.kind,"object");
+       assert.equal(item.runtimeProps.H0D_Objet_Actif,true);
+       assert.equal(item.runtimeProps.H0D_Stockage,"PJ");
+       assert.ok(Number(item.runtimeProps.H0D_Objet_Quantite)>0);
      }
      continue;
    }
@@ -97,7 +118,8 @@ const extraMockDefinitions=new Map(
     key:i.catalogueKey,kind:i.kind,catalogue:{pret_pour_builder:true},
     props:i.kind==="weapon"
       ?{H0D_Arme_Equipee:false,H0D_Arme_Active:false,H0D_Arme_Bonus_Attaque:"0"}
-      :{H0D_Armure_Active:false}
+      :i.kind==="armor"?{H0D_Armure_Active:false}
+      :{H0D_Objet_Actif:false,H0D_Objet_Quantite:"1",H0D_Objet_Munition_Active:false}
   }]))
 );
 assert.equal(source.characters.flatMap(c=>c.items).filter(i=>["weapon","armor"].includes(i.kind)).length,28);

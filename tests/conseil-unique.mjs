@@ -23,11 +23,11 @@ for(const npc of source.characters){
  for(const item of npc.items){
    assert.ok(["weapon","armor","object"].includes(item.kind));
    if(item.catalogueKey){
-     assert.ok(["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok"].includes(item.catalogueKey));
+     assert.ok(["marteau-de-brok","hache-de-recuperation-brok","tablier-plaques-forgeron-brok","baton-de-marche-eron"].includes(item.catalogueKey));
      assert.equal(item.props,undefined,"Les props canoniques ne doivent pas être dupliquées.");
      if(item.kind==="weapon"){
        assert.equal(item.runtimeProps.H0D_Arme_Equipee,true);
-       assert.equal(item.runtimeProps.H0D_Arme_Active,item.catalogueKey==="marteau-de-brok");
+       assert.equal(item.runtimeProps.H0D_Arme_Active,["marteau-de-brok","baton-de-marche-eron"].includes(item.catalogueKey));
      }else{
        assert.equal(item.kind,"armor");
        assert.equal(item.runtimeProps.H0D_Armure_Active,true);
@@ -42,7 +42,7 @@ for(const npc of source.characters){
  }
  const weapon=npc.items.find(x=>x.name===preferred[npc.key]);
  assert.ok(weapon,npc.key+": missing main weapon");
- const weaponStats=weapon.props??(weapon.catalogueKey==="marteau-de-brok"?
+ const weaponStats=weapon.props??(["marteau-de-brok","baton-de-marche-eron"].includes(weapon.catalogueKey)?
    {H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:0}:null);
  assert.ok(weaponStats,npc.key+": missing weapon stats");
  const cat=weaponStats.H0D_Arme_Categorie;
@@ -64,7 +64,7 @@ globalThis.ui={notifications:{info:()=>{},warn:()=>{},error:()=>{}}};
 globalThis.foundry={utils:{getRoute:x=>x,escapeHTML:x=>x},
   applications:{api:{DialogV2:{confirm:async()=>true}}}};
 globalThis.fetch=async()=>({ok:true,json:async()=>source});
-let catalogueAvailable=false,axeAvailable=false,tablierAvailable=false;
+let catalogueAvailable=false,axeAvailable=false,tablierAvailable=false,eronAvailable=false;
 const brokCanonical={key:"marteau-de-brok",kind:"weapon",catalogue:{pret_pour_builder:true},
  props:{H0D_Arme_Categorie:"melee",H0D_Arme_Bonus_Attaque:"0",H0D_Arme_Degats:"1d8",
  H0D_Arme_Traits_Table:{"0":{H0D_Arme_Trait_Type:"outil",H0D_Arme_Trait_Valeur:0}},
@@ -79,6 +79,11 @@ const tablierCanonical={key:"tablier-plaques-forgeron-brok",kind:"armor",catalog
  props:{H0D_Armure_Type:"armure",H0D_Armure_Zone:"corps",H0D_Armure_Bonus_Defense:3,
  H0D_Armure_Encombrement:2,H0D_Armure_Malus:"-1,5 m déplacement (réf. Template Manager)",
  H0D_Armure_Traits_Table:{},H0D_Armure_Active:false}};
+const eronCanonical={key:"baton-de-marche-eron",kind:"weapon",catalogue:{pret_pour_builder:true},
+ props:{H0D_Arme_Categorie:"melee",H0D_Arme_Carac_Attaque:"FOR",H0D_Arme_Carac_Degats:"FOR",
+ H0D_Arme_Degats:"1d6",H0D_Arme_Bonus_Degats:"1",H0D_Arme_Bonus_Attaque:"0",
+ H0D_Arme_Type_Degats:"Contondant",H0D_Arme_Mains:"2",H0D_Arme_Encombrement:"1",
+ H0D_Arme_Traits_Table:{},H0D_Arme_Equipee:false,H0D_Arme_Active:false}};
 const updated=[],folders=[],templateStub={id:"template",system:{props:{},templateSystemUniqueVersion:1},prototypeToken:{}};
 globalThis.Actor={implementation:{createDocuments:async([payload])=>{
  const items=[];items.get=id=>items.find(x=>x.id===id);
@@ -104,7 +109,8 @@ const council=await installCouncilUnique({
  getCatalogueDefinition:key=>catalogueAvailable
  ?(key==="marteau-de-brok"?structuredClone(brokCanonical)
  :key==="hache-de-recuperation-brok"&&axeAvailable?structuredClone(axeCanonical)
- :key==="tablier-plaques-forgeron-brok"&&tablierAvailable?structuredClone(tablierCanonical):null):null
+ :key==="tablier-plaques-forgeron-brok"&&tablierAvailable?structuredClone(tablierCanonical)
+ :key==="baton-de-marche-eron"&&eronAvailable?structuredClone(eronCanonical):null):null
 });
 await assert.rejects(council.create("brok"),/Référence absente ou non prête dans H0D Catalogue/);
 assert.equal(game.actors.length,0,"Ne pas générer un Acteur partiel si le Catalogue est absent.");
@@ -143,6 +149,23 @@ assert.ok(brok.prototypeToken.texture.src.includes("tokens/brok.webp"));
 assert.equal(brok.system.props.H0D_Creature_Statut_PNJ,"Héroïque");
 await assert.rejects(council.create("brok"));
 await council.open("brok");assert.equal(brok.opened,true);
+// Eron : son bâton ne doit jamais être remplacé par un 1d8 ni enrichi artificiellement.
+await assert.rejects(council.create("eron"),/baton-de-marche-eron/);
+assert.equal(game.actors.filter(actor=>actor.name==="Eron des Racines").length,0,
+ "Eron ne doit pas être créé si son bâton canonique est absent.");
+eronAvailable=true;
+const createdEron=await council.create("eron");
+const baton=createdEron.items.find(item=>item.name==="Bâton de marche d’Eron");
+assert.ok(baton);
+assert.equal(baton.system.props.H0D_Arme_Degats,"1d6");
+assert.equal(baton.system.props.H0D_Arme_Bonus_Degats,"1");
+assert.equal(baton.system.props.H0D_Arme_Type_Degats,"Contondant");
+assert.equal(baton.system.props.H0D_Arme_Mains,"2");
+assert.equal(baton.system.props.H0D_Arme_Encombrement,"1");
+assert.deepEqual(baton.system.props.H0D_Arme_Traits_Table,{});
+assert.equal(baton.system.props.H0D_Arme_Equipee,true);
+assert.equal(baton.system.props.H0D_Arme_Active,true);
+assert.equal(createdEron.items.length,5);
 const kael=source.characters.find(x=>x.key==="kael");
 const older={id:kael.sourceActorId,name:kael.name,img:"custom.png",items:[],system:{props:{PV:33}},flags:{},
  getFlag:()=>undefined,update:async function(changes){this.flags["h0d-faction-builder"]={councilUnique:true,councilKey:"kael"};this.edits=changes;}};
